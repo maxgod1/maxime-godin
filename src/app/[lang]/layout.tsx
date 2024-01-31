@@ -16,7 +16,7 @@ const sans = Red_Hat_Display({
 });
 
 export async function generateStaticParams() {
-  return availableCountries.map((c) => ({ lang: c.langCode }));
+  return availableCountries?.map((c) => ({ lang: c.langCode }));
 }
 
 export async function generateMetadata({ params }: { params: { lang: LanguageStrings } }) {
