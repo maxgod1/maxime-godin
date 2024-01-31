@@ -5,7 +5,7 @@ export default async function Project() {
   return (
     <div className="w-full flex flex-col items-center gap-8 px-3">
       {projects.map((p, i) => (
-        <ProjectItem index={i} data={p} />
+        <ProjectItem key={p.title} index={i} data={p} />
       ))}
     </div>
   );
