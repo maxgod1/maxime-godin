@@ -2,7 +2,7 @@ import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 export function useOutsideClick<T>(callback: () => void) {
   const ref = useRef<T>(null);
-  const cback = useCallback(callback, []);
+  const cback = useCallback(callback, [callback]);
 
   useEffect(() => {
     const handleClick = (event: Event) => {
@@ -20,7 +20,7 @@ export function useOutsideClick<T>(callback: () => void) {
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, []);
+  }, [cback]);
 
   return ref;
 }
