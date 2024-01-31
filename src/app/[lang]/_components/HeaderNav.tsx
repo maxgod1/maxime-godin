@@ -37,7 +37,7 @@ const HeaderNav = () => {
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
                   <Link
-                    href={href}
+                    href={`/${lang}/${href}`}
                     // onClick={(e) => {
                     //   e.preventDefault();
                     //   navigate(href);
