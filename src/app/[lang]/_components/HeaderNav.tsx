@@ -3,24 +3,24 @@
 import DarkModeToggle from "./DarkModeToggle";
 import LanguageSelect from "./LanguageSelect";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MouseEvent, useContext } from "react";
 import { GlobalContext } from "../providers";
 import Link from "next/link";
 
 const HeaderNav = () => {
   const { setAnimatePagePath, animatePagePath, duration, strings, lang } = useContext(GlobalContext);
-  const router = useRouter();
 
+  const path = usePathname().split(lang)[1] || "/";
   const links = [
     { href: "/", label: strings.me, color: "bg-orange-300 dark:bg-orange-700", colorbg: "orange" },
     { href: "/projects", label: strings.projects, color: "bg-blue-300 dark:bg-blue-800", colorbg: "blue" },
     { href: "/stack", label: strings.stack, color: "bg-green-300 dark:bg-green-800", colorbg: "green" },
   ];
-  const navigate = (path: string) => {
-    setTimeout(() => router.push(`/${lang}/${path}`), duration * 1000);
-    setAnimatePagePath(path);
-  };
+  // const navigate = (path: string) => {
+  //   setTimeout(() => router.push(`/${lang}/${path}`), duration * 1000);
+  //   setAnimatePagePath(path);
+  // };
 
   return (
     <header
@@ -33,15 +33,15 @@ const HeaderNav = () => {
         <ul className="w-full flex items-center lg:justify-between gap-2 justify-center flex-wrap-reverse rounded">
           <li className="flex items-center gap-5 ">
             {links.map(({ href, label, color }) => {
-              const selected = (animatePagePath || "/") === href;
+              const selected = (path || "/") === href;
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
                   <Link
                     href={href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      navigate(href);
-                    }}
+                    // onClick={(e) => {
+                    //   e.preventDefault();
+                    //   navigate(href);
+                    // }}
                     className="relative py-1"
                   >
                     {selected ? (

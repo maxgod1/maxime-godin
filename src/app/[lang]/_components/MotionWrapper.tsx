@@ -37,22 +37,23 @@ export default function MotionWrapper({ children }: { children: React.ReactNode 
   return (
     <div
       className={` ${
-        animatePagePath === "/"
+        pathname === "/"
           ? " bg-orange-300 dark:bg-orange-800"
-          : animatePagePath === "/stack"
+          : pathname === "/stack"
           ? "bg-green-300 dark:bg-green-800"
-          : animatePagePath === "/projects"
+          : pathname === "/projects"
           ? "bg-blue-300 dark:bg-blue-800"
           : ""
       } transition-all duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll  bg-opacity-70   flex-col items-center justify-start py-24 h-view`}
     >
-      <AnimatePresence mode="wait">
+      {children}
+      {/* <AnimatePresence mode="wait">
         {on && (
           <motion.div key={path} variants={variants} initial="initial" animate="animate" exit="exit">
             {children}
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 }
