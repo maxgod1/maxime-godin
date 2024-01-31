@@ -14,7 +14,7 @@ export default function Stack() {
       <p className="text-3xl font-bold mb-10">{strings.the_tech_i_use}</p>
       <div className="grid lg:grid-cols-3 items-center gap-24 px-2 py-14 w-full mx-auto">
         {logos.map((l) => (
-          <motion.div initial={initial} animate={animate} className=" relative w-full h-[50px]">
+          <motion.div key={l} initial={initial} animate={animate} className=" relative w-full h-[50px]">
             <Image key={l + theme} style={{ objectFit: "contain" }} src={`/images/${l}-${theme}.png`} fill alt={l + theme} />
           </motion.div>
         ))}
