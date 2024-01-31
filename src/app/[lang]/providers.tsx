@@ -2,11 +2,11 @@
 
 import { LanguageStrings } from "../../types/countries";
 import { Dispatch, SetStateAction, createContext, useState } from "react";
-import posthog from "posthog-js";
+// import posthog from "posthog-js";
 // import { PostHogProvider } from "posthog-js/react";
 import { usePathname } from "next/navigation";
 // import { useEffect } from "react";
-import { env } from "../../../env.mjs";
+// import { env } from "../../../env.mjs";
 
 type Props = {
   children: React.ReactNode;
@@ -33,12 +33,12 @@ export const GlobalContext = createContext<{
   duration: 0.5,
 });
 
-if (typeof window !== "undefined") {
-  posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
-    api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
-    capture_pageview: false, // Disable automatic pageview capture, as we capture manually
-  });
-}
+// if (typeof window !== "undefined") {
+//   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
+//     api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
+//     capture_pageview: false, // Disable automatic pageview capture, as we capture manually
+//   });
+// }
 
 // export function PostHogPageview(): JSX.Element {
 //   const pathname = usePathname();
