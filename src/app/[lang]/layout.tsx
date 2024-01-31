@@ -2,12 +2,10 @@ import { availableCountries } from "../../utils/constants/countries";
 import { LanguageStrings } from "../../types/countries";
 import HeaderNav from "./_components/HeaderNav";
 import "./globals.css";
-import { ContextProvider, PHProvider, PostHogPageview } from "./providers";
+import { ContextProvider } from "./providers";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
 import { Red_Hat_Display } from "next/font/google";
 import { getTheme } from "../../actions/cookieActions";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Suspense } from "react";
 import { headers } from "next/headers";
 import MotionWrapper from "./_components/MotionWrapper";
 
@@ -70,23 +68,23 @@ export default async function RootLayout({ children, params }: { children: React
 
   return (
     <html lang={params.lang} className={`${sans.className} ${theme}`} style={{ colorScheme: theme }}>
-      <SpeedInsights />
+      {/* <SpeedInsights />
       <Suspense>
         <PostHogPageview />
       </Suspense>
-      <PHProvider>
-        <ContextProvider params={params} theme={theme} previousUrl={referer || ""} strings={strings}>
-          <body className="w-screen overflow-hidden ">
-            <main>
-              <HeaderNav />
-              <MotionWrapper>
-                <div className="lg:-mt-[50px] -mt-[90px] lg:pt-[90px] pt-[140px] h-view overflow-auto no-scrollbar">{children}</div>
-              </MotionWrapper>
-            </main>
-          </body>
-          {/* <CookieBanner strings={strings} /> */}
-        </ContextProvider>
-      </PHProvider>
+      <PHProvider> */}
+      <ContextProvider params={params} theme={theme} previousUrl={referer || ""} strings={strings}>
+        <body className="w-screen overflow-hidden ">
+          <main>
+            <HeaderNav />
+            <MotionWrapper>
+              <div className="lg:-mt-[50px] -mt-[90px] lg:pt-[90px] pt-[140px] h-view overflow-auto no-scrollbar">{children}</div>
+            </MotionWrapper>
+          </main>
+        </body>
+        {/* <CookieBanner strings={strings} /> */}
+      </ContextProvider>
+      {/* </PHProvider> */}
     </html>
   );
 }
