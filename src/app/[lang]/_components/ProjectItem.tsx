@@ -14,7 +14,7 @@ export default function ProjectItem({ data, index }: { data: ProjectItem; index:
   const { lang, strings } = useContext(GlobalContext);
 
   const variants = {
-    initial: { opacity: 1, y: 50 },
+    initial: { opacity: 0, y: 50 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 + index * 0.1 } },
   };
 
