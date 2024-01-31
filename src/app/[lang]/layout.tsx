@@ -6,6 +6,7 @@ import { ContextProvider } from "./providers";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
 import { Red_Hat_Display } from "next/font/google";
 import { getTheme } from "../../actions/cookieActions";
+
 import { headers } from "next/headers";
 import MotionWrapper from "./_components/MotionWrapper";
 
@@ -16,7 +17,7 @@ const sans = Red_Hat_Display({
 });
 
 export async function generateStaticParams() {
-  return availableCountries?.map((c) => ({ lang: c.langCode }));
+  return availableCountries.map((c) => ({ lang: c.langCode }));
 }
 
 export async function generateMetadata({ params }: { params: { lang: LanguageStrings } }) {

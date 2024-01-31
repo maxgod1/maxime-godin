@@ -1,6 +1,5 @@
 // app/template.tsx
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../providers";
@@ -44,7 +43,7 @@ export default function MotionWrapper({ children }: { children: React.ReactNode 
           : pathname === "/projects"
           ? "bg-blue-300 dark:bg-blue-800"
           : ""
-      } transition-all duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll  bg-opacity-70   flex-col items-center justify-start py-24 h-view`}
+      } transition-colors duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll  bg-opacity-70   flex-col items-center justify-start py-24 h-view`}
     >
       {children}
       {/* <AnimatePresence mode="wait">
