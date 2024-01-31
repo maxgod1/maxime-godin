@@ -7,7 +7,8 @@ import { GlobalContext } from "../providers";
 
 export default function MotionWrapper({ children }: { children: React.ReactNode }) {
   const { lang, animatePagePath, duration } = useContext(GlobalContext);
-  const path = animatePagePath || usePathname().split(lang)[1] || "/";
+  const pathname = usePathname().split(lang)[1] || "/";
+  const path = animatePagePath || pathname;
 
   const variants = {
     initial: { opacity: 0 },
