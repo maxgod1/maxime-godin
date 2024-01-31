@@ -1,7 +1,8 @@
-import { MutableRefObject, useEffect, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 export function useOutsideClick<T>(callback: () => void) {
   const ref = useRef<T>(null);
+  const cback = useCallback(callback, []);
 
   useEffect(() => {
     const handleClick = (event: Event) => {
@@ -10,7 +11,7 @@ export function useOutsideClick<T>(callback: () => void) {
         //@ts-ignore
         !ref.current.contains(event.target)
       ) {
-        callback();
+        cback();
       }
     };
 
