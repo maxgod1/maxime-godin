@@ -6,11 +6,11 @@ import { useContext, useRef } from "react";
 import { GlobalContext } from "../providers";
 import { useIsVisible } from "../../../hooks/ElementVisible";
 
-export default function EducationItem({ data, index }: { data: Education; index: number }) {
+export default function EducationItem({ data }: { data: Education }) {
   const { name, dates, location, description, link } = data || {};
   const ref = useRef(null);
 
-  const { lang, strings } = useContext(GlobalContext);
+  const { lang } = useContext(GlobalContext);
   const isVisible = useIsVisible(ref);
 
   const startDate = dates?.[0].toLocaleDateString("en-us", { year: "numeric", month: "short" });
