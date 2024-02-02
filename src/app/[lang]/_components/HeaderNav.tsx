@@ -24,14 +24,14 @@ const HeaderNav = () => {
 
   return (
     <header
-      className={`lg:h-[50px] h-[90px] lg:min-w-[800px] min-w-0 max-w-[calc(100vw-30px)] 
-      w-[800px] bg-white dark:bg-opacity-30 bg-opacity-50 
-      lg:rounded-full rounded-3xl mx-auto absolute left-1/2 -translate-x-1/2 top-5 z-40 backdrop-blur 
+      className={`lg:h-[50px] h-[100px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)] w-full 
+      lg:w-[800px] bg-white dark:bg-opacity-30 bg-opacity-50 
+      lg:rounded-full rounded-0 mx-auto absolute left-1/2 -translate-x-1/2 lg:top-5 bottom-0 z-40 backdrop-blur 
       flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 px-6`}
     >
       <nav className="w-full flex items-center h-full">
-        <ul className="w-full flex items-center lg:justify-between gap-2 justify-center flex-wrap-reverse rounded">
-          <li className="flex items-center gap-5 ">
+        <ul className="w-full flex items-center lg:justify-between gap-2 justify-center flex-wrap rounded">
+          <li className="flex items-center gap-5  lg:pt-0 pt-2">
             {links.map(({ href, label, color }) => {
               const selected = (path || "/") === href;
               return (

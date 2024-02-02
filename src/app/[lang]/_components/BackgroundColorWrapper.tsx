@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../providers";
 
-export default function MotionWrapper({ children }: { children: React.ReactNode }) {
+export default function BackgroundColorWrapper({ children }: { children: React.ReactNode }) {
   const { lang, animatePagePath, duration } = useContext(GlobalContext);
   const pathname = usePathname().split(lang)[1] || "/";
   const path = animatePagePath || pathname;
@@ -35,15 +35,16 @@ export default function MotionWrapper({ children }: { children: React.ReactNode 
 
   return (
     <div
-      className={` ${
+      className={`bg-gradient-to-b to-80% ${
         pathname === "/"
-          ? " bg-orange-300 dark:bg-orange-800"
+          ? " from-orange-300 to-orange-100 dark:from-orange-800 dark:to-orange-950"
           : pathname === "/stack"
-          ? "bg-green-300 dark:bg-green-800"
+          ? "from-green-300 to-green-100 dark:from-green-800 dark:to-green-950"
           : pathname === "/projects"
-          ? "bg-blue-300 dark:bg-blue-800"
+          ? "from-blue-300 to-blue-100 dark:from-blue-800 dark:to-blue-950"
           : ""
-      } transition-colors duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll  bg-opacity-70   flex-col items-center justify-start py-24 h-view`}
+      } transition-colors duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll 
+      bg-opacity-70 flex-col items-center justify-start lg:pt-24 lg:pb-14 pt-14 pb-44 h-view`}
     >
       {children}
       {/* <AnimatePresence mode="wait">
