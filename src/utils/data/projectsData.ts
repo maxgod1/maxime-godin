@@ -1,7 +1,7 @@
-import { ProjectItem } from "../../types/project";
+import { Project } from "../../types/project";
 
 
-const data: ProjectItem[] = [{
+export const projectsData: Project[] = [{
     title: "Forgigs",
     subtitle: "CEO/CTO - 2020",
     description: {
@@ -45,4 +45,4 @@ const data: ProjectItem[] = [{
 }
     ,
 ];
-export default data;
+export default projectsData;

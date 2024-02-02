@@ -8,7 +8,7 @@ import { Red_Hat_Display } from "next/font/google";
 import { getTheme } from "../../actions/cookieActions";
 
 import { headers } from "next/headers";
-import MotionWrapper from "./_components/MotionWrapper";
+import BackgroundColorWrapper from "./_components/BackgroundColorWrapper";
 
 const sans = Red_Hat_Display({
   subsets: ["latin"],
@@ -78,9 +78,7 @@ export default async function RootLayout({ children, params }: { children: React
         <body className="w-screen overflow-hidden ">
           <main>
             <HeaderNav />
-            <MotionWrapper>
-              <div className="lg:-mt-[50px] -mt-[90px] lg:pt-[90px] pt-[140px] h-view overflow-auto no-scrollbar">{children}</div>
-            </MotionWrapper>
+            <BackgroundColorWrapper>{children}</BackgroundColorWrapper>
           </main>
         </body>
         {/* <CookieBanner strings={strings} /> */}

@@ -1,6 +1,6 @@
 import { LanguageStrings, } from "./countries";
 
-export interface ProjectItem {
+export interface Project {
     image: string;
     subtitle: string;
     title: string;
