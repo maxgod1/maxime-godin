@@ -18,11 +18,11 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
           <ResumeSideBar />
           <ResumeTitle title={strings.experience} />
           {experiencesData.map((data) => (
-            <ExperienceItem data={data} />
+            <ExperienceItem key={data.title} data={data} />
           ))}
           <ResumeTitle title={strings.education} />
           {educationData.map((data) => (
-            <EducationItem data={data} />
+            <EducationItem key={data.name} data={data} />
           ))}
         </div>
       </div>
