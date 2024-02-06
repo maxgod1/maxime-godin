@@ -1,10 +1,9 @@
 "use client";
 
 import { LanguageStrings } from "../../types/countries";
-import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { createContext } from "react";
 // import posthog from "posthog-js";
 // import { PostHogProvider } from "posthog-js/react";
-import { usePathname } from "next/navigation";
 // import { useEffect } from "react";
 // import { env } from "../../../env.mjs";
 
@@ -19,17 +18,13 @@ export const GlobalContext = createContext<{
   lang: LanguageStrings;
   theme: "dark" | "light";
   previousUrl: string;
-  animatePagePath: string;
   strings: Record<string, string>;
-  setAnimatePagePath: Dispatch<SetStateAction<string>>;
   duration: number;
 }>({
   lang: "en-US",
   theme: "light",
   previousUrl: "",
   strings: {},
-  animatePagePath: "",
-  setAnimatePagePath: () => null,
   duration: 0.5,
 });
 
@@ -64,9 +59,6 @@ export const GlobalContext = createContext<{
 // }
 
 export const ContextProvider = ({ children, params, theme, previousUrl, strings }: Props) => {
-  const pathname = usePathname();
-  const [animatePagePath, setAnimatePagePath] = useState(pathname.split(params.lang)[1] || "/");
-
   return (
     <GlobalContext.Provider
       value={{
@@ -75,8 +67,6 @@ export const ContextProvider = ({ children, params, theme, previousUrl, strings 
         theme,
         previousUrl,
         strings,
-        animatePagePath,
-        setAnimatePagePath,
       }}
     >
       {children}

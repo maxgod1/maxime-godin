@@ -2,11 +2,12 @@
   "me": "Moi",
   "projects": "Projets",
   "stack": "Stack",
-  "me_descritpion": "En tant que développeur Full-Stack spécialisé dans Next.js et Expo, j'apporte un mélange unique d'expertise technique et de sens des affaires au monde du développement web et mobile. Avec de plus de 5 ans d'expérience en développement full-stack, j'ai une compréhension approfondie des dernières technologies et frameworks, sur lesquels je reste constamment à jour, garantissant une expérience client optimale. Mon parcours en finance et ma carrière de plus de 10 ans dans l’industrie du streaming musical et du conseil spécialisé dans l'entrée au marché Japonais ont affiné ma capacité  à élaborer des stratégies en ayant à l'esprit l'utilisateur final. Mon attention ne se porte pas uniquement sur les aspects techniques, mais aussi sur les problèmes concrets que chaque projet vise à résoudre. Cette combinaison unique de compétences en ingénierie et de connaissances en affaires me positionne en tant que développeur qui comprend véritablement les besoins du client et de l'utilisateur final, ce qui fait de moi un atout précieux pour toute initiative technologique.",
+  "me_descritpion": "En tant que développeur Full-Stack expérimenté avec une spécialisation en Next.js et Expo, je propose un mélange unique de compétences techniques et de perspectives commerciales dans le domaine du développement web et mobile à rythme rapide. Avec environ {{years}} années d'expérience en développement Full-Stack, je possède une compréhension approfondie des technologies et des frameworks contemporains, cherchant continuellement à rester à la pointe des évolutions de l'industrie. Mon parcours en mathématiques et en finance, complété par plus d'une décennie dans le streaming musical et le conseil en entrée sur le marché japonais, a affiné mes compétences non seulement en développement, mais aussi en réflexion stratégique tournée vers l'utilisateur final.",
   "the_tech_i_use": "Les technologies que j'utilise",
   "age": "{{age}} ans",
   "see_projects": "Voir mes projets",
   "see_stack": "Voir les technologies que j'utilise",
+  "read_more": "En savoir plus",
   "experience": "Expérience",
   "education": "Éducation"
 }

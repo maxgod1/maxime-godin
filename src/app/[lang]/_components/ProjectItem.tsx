@@ -34,17 +34,25 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       variants={variants}
       initial="hidden"
       animate={controls}
-      className=" max-w-[800px] lg:min-w-[800px] min-w-[200px] flex lg:flex-row flex-col gap-4 rounded-2xl bg-white dark:bg-slate-900 bg-opacity-50 dark:bg-opacity-50 px-3 py-4"
+      className=" max-w-[800px] lg:min-w-[800px] min-w-[200px] flex lg:flex-row flex-col-reverse gap-4 px-3 py-4"
     >
-      <div className="lg:w-1/3 h-52 relative">
-        <Link href={link}>
+      <div className="lg:w-1/3 h-52 relative lg:-mt-2 mt-4">
+        <Link href={link} target="_blank" rel="noopener noreferrer">
           <Image
-            className="p-0 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
+            className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
             alt={image}
             src={`/images/projects/${image}`}
             fill
             style={{ objectFit: "contain" }}
           />
+          <div
+            className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
+            hover:backdrop-blur hover:text-black hover:dark:text-white hover:dark:bg-slate-950/60 hover:bg-white/60
+            text-transparent transition-all bg-white/0 supports-backdrop-blur:bg-white/60 sdark:upports-backdrop-blur:bg-slate-950/60
+            "
+          >
+            <span className="text-center">{link}</span>
+          </div>
         </Link>
       </div>
       <div className="lg:w-2/3 relative pl-3">
