@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: { lang: LanguageStr
     openGraph: {
       title: "Maxime Godin",
       description: description,
-      url: "https://mgodin.com",
+      url: "https://maxime-godin.com",
       siteName: "Maxime Godin",
       images: [
         {
