@@ -1,4 +1,8 @@
 {
-  "title": "Maxime Godin",
-  "description": "Portfolio de Maxime Godin en tant que développeur web"
+  "title": "Maxime Godin - CV",
+  "description": "CV de Maxime Godin",
+  "title_projects": "Maxime Godin - Mes projets de développement",
+  "description_projects": "Projets de développement de Maxime Godin en tant que développeur full stack et chef de produit",
+  "title_stack": "Maxime Godin - Les technologies utilisées",
+  "description_stack": "Technologies préférées de Maxime Godin et utilisation sur différents projets"
 }

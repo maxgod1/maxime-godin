@@ -154,7 +154,7 @@ const Modal = ({
     <dialog
       key={title?.[lang]}
       ref={modalRef}
-      className="backdrop-blur max-w-screen max-h-screen bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur"
+      className="relative backdrop-blur max-w-screen max-h-90px bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur"
     >
       <div className="max-w-[800px]" ref={outsideClickRef}>
         <div className="group-hover:opacity-50 transition-all duration-300 pr-11">
@@ -173,18 +173,18 @@ const Modal = ({
             </Link>
           )}
         </div>
-        <div className="absolute right-2 top-2">
-          {/* if there is a button in form, it will close the modal */}
-          <button
-            className="outline-none"
-            onClick={() => {
-              modalRef?.current?.close();
-              setOpen(false);
-            }}
-          >
-            <XCircleIcon className=" w-7 h-7" />
-          </button>
-        </div>
+      </div>
+      <div className="fixed right-2 top-2">
+        {/* if there is a button in form, it will close the modal */}
+        <button
+          className="outline-none"
+          onClick={() => {
+            modalRef?.current?.close();
+            setOpen(false);
+          }}
+        >
+          <XCircleIcon className=" w-7 h-7" />
+        </button>
       </div>
     </dialog>
   );

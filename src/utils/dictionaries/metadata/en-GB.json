@@ -1,4 +1,8 @@
 {
-  "title": "Maxime Godin",
-  "description": "Maxime Godin's protfolio as a web developer"
+  "title": "Maxime Godin - Resume",
+  "description": "Maxime Godin's resume",
+  "title_projects": "Maxime Godin - My dev projects",
+  "description_projects": "Maxime Godin's developemnt project as a full stack developer and product manager",
+  "title_stack": "Maxime Godin - The tech I use",
+  "description_stack": "Maxime Godin's favourite stack and technology use on various projects"
 }
