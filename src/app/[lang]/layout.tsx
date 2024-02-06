@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: { lang: LanguageStr
       siteName: "Maxime Godin",
       images: [
         {
-          url: "/api/og",
+          url: "/images/og-image.jpg",
           width: 800,
           height: 600,
         },
