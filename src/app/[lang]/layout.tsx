@@ -75,7 +75,7 @@ export default async function RootLayout({ children, params }: { children: React
       </Suspense>
       <PHProvider> */}
       <ContextProvider params={params} theme={theme} previousUrl={referer || ""} strings={strings}>
-        <body className="w-screen overflow-hidden ">
+        <body className="w-screen overflow-hidden lg:bg-gradient-to-b bg-gradient-to-t lg:to-80% to-80% from-gray-300 to-white dark:from-slate-950 dark:to-slate-700">
           <main>
             <HeaderNav />
             <BackgroundColorWrapper>{children}</BackgroundColorWrapper>
