@@ -12,7 +12,7 @@ import Button from "./_components/Button";
 export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
   const strings = await getDictionary("home", params.lang);
   return (
-    <div className="fade-in w-full flex flex-col gap-10 items-center lg:mb-10 ">
+    <div className="fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 ">
       <ResumeIntro strings={strings} />
       <div className="max-w-[800px] w-full lg:px-0 px-4">
         <div className="pl-[7px] flex flex-col items-start gap-6 w-full relative">
