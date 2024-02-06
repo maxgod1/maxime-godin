@@ -1,4 +1,8 @@
 {
-  "title": "マキシム・ゴダン",
-  "description": "ウェブ開発者としてのマキシム・ゴダンのポートフォリオ"
+  "title": "Maxime Godin - 履歴書",
+  "description": "Maxime Godinの履歴書",
+  "title_projects": "Maxime Godin - 私の開発プロジェクト",
+  "description_projects": "Maxime Godinのフルスタック開発者およびプロダクトマネージャーとしての開発プロジェクト",
+  "title_stack": "Maxime Godin - 使用したテクノロジー",
+  "description_stack": "Maxime Godinのお気に入りのスタックとさまざまなプロジェクトでの技術の使用"
 }

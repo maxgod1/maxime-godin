@@ -3,7 +3,7 @@ import ProjectItem from "../_components/ProjectItem";
 
 export default async function Project() {
   return (
-    <div className="w-full flex flex-col items-center gap-8 px-3">
+    <div className="w-full flex flex-col items-center gap-8 lg:px-3">
       {projectsData
         .map<React.ReactNode>((p, i) => <ProjectItem key={p.title} index={i} data={p} />)
         .reduce((prev, curr) => [
