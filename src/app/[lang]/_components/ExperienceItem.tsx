@@ -102,7 +102,7 @@ const Position = ({ position, data }: { position: Position; data?: Experience })
           <div className="flex items-center">
             <div className="h-[2px] w-[8px] bg-gradient-to-l -ml-[7px] from-black/20 to-black/70 dark:from-white/20 dark:to-white/70 fade-in" />
             <div
-              className={`text-2lg pt-3 px-3 group-hover:opacity-50 transition-all duration-300  ${
+              className={`text-2lg pt-3 pl-3 group-hover:opacity-50 transition-all duration-300  ${
                 isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
               }`}
             >
