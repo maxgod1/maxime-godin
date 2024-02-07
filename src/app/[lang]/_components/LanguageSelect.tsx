@@ -30,7 +30,7 @@ const LanguageSelect = () => {
   }, [lang]);
 
   return (
-    <div className="fade-in relative flex items-center justify-center" ref={ref}>
+    <div className="fade-in relative flex items-center justify-center lg:gap-3 gap-5" ref={ref}>
       {availableCountries
         .filter((l) => l.langCode !== lang)
         .map((l) => {
@@ -40,10 +40,10 @@ const LanguageSelect = () => {
           return (
             <button
               key={l.langCode}
-              className={`px-1 flex items-center ${isSelected ? "cursor-default" : "cursor-pointer hover:opacity-60"} `}
+              className={`flex items-center rounded-full overflow-hidden ${isSelected ? "cursor-default" : "cursor-pointer hover:opacity-60"} `}
               onClick={() => (!isSelected ? selectLanguage(l.langCode) : null)}
             >
-              <Flag className="w-7 h-7 px-1" />
+              <Flag className="h-5" />
             </button>
           );
         })}

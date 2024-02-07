@@ -61,7 +61,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
         <p className="whitespace-pre-wrap text-sm">{data.description[lang]}</p>
         <div className="flex gap-2 flex-wrap mt-3">
           {tags.map((t) => (
-            <span key={t} className="rounded bg-white bg-opacity-100 dark:bg-opacity-20 px-1 text-sm">
+            <span key={t} className="rounded bg-white/60 dark:bg-slate-950/40 px-1 text-sm">
               {t}
             </span>
           ))}

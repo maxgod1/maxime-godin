@@ -8,7 +8,7 @@ import { useIsVisible } from "../../../hooks/ElementVisible";
 import formatDates from "../../../helper/date-calculator";
 
 export default function EducationItem({ data }: { data: Education }) {
-  const { name, dates, location, description, link } = data || {};
+  const { name, dates, description } = data || {};
   const ref = useRef(null);
 
   const { lang } = useContext(GlobalContext);
