@@ -9,9 +9,9 @@ export default async function Project() {
         .reduce((prev, curr) => [
           prev,
           <div key={prev?.toString()} className="flex w-full max-w-[1000px]">
-            <div className="h-[3px] w-1/2 bg-gradient-to-r  to-black/20 from-black/0 dark:to-white/20 dark:from-white/0" />
-            <div className="h-[3px] w-1/2 bg-black/20 dark:bg-white/20" />
-            <div className="h-[3px] w-1/2 bg-gradient-to-r  from-black/20 to-black/0 dark:from-white/20 dark:to-white/0" />
+            <div className="h-[2px] lg:w-1/3 w-1/2 bg-gradient-to-r  to-white/50 from-black/0 dark:to-black/30 dark:from-black/0" />
+            <div className="h-[2px] lg:w-1/3 w-1/2 bg-white/50 dark:bg-black/30" />
+            <div className="h-[2px] lg:w-1/3 w-1/2 bg-gradient-to-r  from-white/50 to-black/0 dark:from-black/30 dark:to-black/0" />
           </div>,
           curr,
         ])}
