@@ -6,7 +6,7 @@ export interface Position {
     title: Partial<Record<LanguageStrings, string>>;
     location: Partial<Record<LanguageStrings, string>>;
     link?: string;
-    tags: string[];
+    tags?: string[];
 
 }
 

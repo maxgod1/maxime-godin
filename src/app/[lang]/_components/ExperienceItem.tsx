@@ -138,7 +138,7 @@ const Modal = ({
   setOpen: (open: boolean) => void;
 }) => {
   const { lang } = useContext(GlobalContext);
-  const { title, description, dates, positions, link } = data;
+  const { title, description, dates, positions, link, tags } = data;
 
   const { startDate, endDate } = formatDates(
     [min(positions?.map((p) => p.dates[0])) || dates?.[0], max(positions?.map((p) => p.dates[1])) || dates?.[1]],
@@ -166,9 +166,16 @@ const Modal = ({
             </span>
           </p>
           <p className="text-lg ">{title?.[lang]}</p>
+          <div className="flex gap-2 flex-wrap mt-3">
+            {tags?.map((t) => (
+              <span key={t} className="rounded bg-white/60 dark:bg-slate-950/40 px-1 text-sm">
+                {t}
+              </span>
+            ))}
+          </div>
           <p className="text-2lg py-3 ">{description?.[lang]}</p>
           {link && (
-            <Link href={link} className="text-2lg py-3 italic outline-none" target="_blank" rel="noopener noreferrer">
+            <Link href={link} className="text-2lg py-3 italic outline-none hover:opacity-70 transition-all" target="_blank" rel="noopener noreferrer">
               {link}
             </Link>
           )}
