@@ -3,12 +3,13 @@
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
-import { LanguageStrings } from "../../../types/countries";
-import { Project } from "../../../types/project";
+import { LanguageStrings } from "../../../../types/countries";
+import { Project } from "../../../../types/project";
 import { useContext, useEffect, useRef } from "react";
-import { GlobalContext } from "../providers";
+import { GlobalContext } from "../../providers";
 import Link from "next/link";
-import { useIsVisible } from "../../../hooks/ElementVisible";
+import { useIsVisible } from "../../../../hooks/ElementVisible";
+import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ProjectItem({ data, index }: { data: Project; index: number }) {
   const { title, description, image, link, videoLink, stackLogos, tags } = data;
@@ -45,9 +46,12 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
             fill
             style={{ objectFit: "contain" }}
           />
+          <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
+            <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
+          </div>
           <div
             className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
-            hover:backdrop-blur hover:text-black hover:dark:text-white hover:dark:bg-slate-950/60 hover:bg-white/60
+            lg:hover:backdrop-blur lg:hover:text-black lg:hover:dark:text-white lg:hover:dark:bg-slate-950/60 lg:hover:bg-white/60
             text-transparent transition-all bg-white/0 supports-backdrop-blur:bg-white/60 sdark:upports-backdrop-blur:bg-slate-950/60
             "
           >
