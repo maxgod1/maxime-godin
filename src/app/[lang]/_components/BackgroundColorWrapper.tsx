@@ -25,11 +25,11 @@ export default function BackgroundColorWrapper({ children }: { children: React.R
     <div
       className={`${
         pathname === "/"
-          ? " bg-orange-300/50  dark:bg-orange-600/50 "
+          ? " bg-sky-300/50  dark:bg-sky-600/50 "
           : pathname === "/stack"
           ? "bg-green-300/50  dark:bg-green-500/30 "
           : pathname === "/projects"
-          ? "bg-blue-300/50  dark:bg-blue-500/30 "
+          ? "bg-teal-300/50  dark:bg-teal-500/30 "
           : ""
       } transition-colors duration-1000 no-scrollbar w-screen px-auto h-screen dark:blue-800 overflow-scroll 
       bg-opacity-70 flex-col items-center justify-start lg:pt-24 lg:pb-14 pt-5 pb-44 h-view`}

@@ -13,7 +13,7 @@ import { LanguageIcon } from "@heroicons/react/24/outline";
 export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
   const strings = await getDictionary("home", params.lang);
   return (
-    <div className="fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 ">
+    <div className="fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 pt-3 ">
       <ResumeIntro strings={strings} />
       <div className="max-w-[800px] w-full lg:px-0 px-4">
         <div className="pl-[7px] flex flex-col items-start gap-6 w-full relative">

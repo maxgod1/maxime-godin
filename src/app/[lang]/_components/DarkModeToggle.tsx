@@ -19,7 +19,7 @@ const DarkModeToggle = () => {
   const Icon = !isDark ? MoonIcon : SunIcon;
 
   return (
-    <div className="fade-in relative flex flex-col lg:items-end w-full ">
+    <div className="fade-in relative flex flex-col lg:items-end w-full">
       <div className="text  text-gray-700 dark:text-gray-200  w-full justify-end flex">
         <label className="relative inline-flex items-center  cursor-pointer">
           <input type="checkbox" value={theme} className="sr-only peer w-14" checked={isDark} onChange={handleChange} />
