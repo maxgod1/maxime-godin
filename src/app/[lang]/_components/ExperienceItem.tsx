@@ -180,18 +180,18 @@ const Modal = ({
             </Link>
           )}
         </div>
-      </div>
-      <div className="absolute right-2 top-2">
-        {/* if there is a button in form, it will close the modal */}
-        <button
-          className="outline-none"
-          onClick={() => {
-            modalRef?.current?.close();
-            setOpen(false);
-          }}
-        >
-          <XCircleIcon className=" w-7 h-7" />
-        </button>
+        <div className="absolute right-2 top-2">
+          {/* if there is a button in form, it will close the modal */}
+          <button
+            className="outline-none"
+            onClick={() => {
+              modalRef?.current?.close();
+              setOpen(false);
+            }}
+          >
+            <XCircleIcon className=" w-7 h-7" />
+          </button>
+        </div>
       </div>
     </dialog>
   );
