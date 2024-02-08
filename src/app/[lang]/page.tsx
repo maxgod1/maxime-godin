@@ -54,10 +54,10 @@ const ResumeSideBar = () => (
 const ResumeIntro = ({ strings }: { strings: Record<string, string> }) => (
   <div className="max-w-[800px] lg:px-1 px-5">
     <p className="text-3xl font-bold">Maxime Godin</p>
-    <p className="text-md">
+    <p className="text-xs mb-1">{injectVariables(strings.age, { age: _calculateAge(new Date("1989/01/07")) })} • Tokyo, JP</p>
+    <p className="text-xs font-light">
       <LanguageIcon className="w-5 h-5 inline -mt-[6px] mr-1" /> {strings.spoken_languages}
     </p>
-    <p className="text-sm font-light">{injectVariables(strings.age, { age: _calculateAge(new Date("1989/01/07")) })} • Tokyo, JP</p>
     <p className="w-full py-3 lg:text-lg ">{injectVariables(strings.me_descritpion, { years: _calculateAge(new Date("2019/01/01")) })}</p>
     <div className="py-3 flex gap-3">
       <Link href="/projects">
