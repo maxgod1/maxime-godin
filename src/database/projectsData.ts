@@ -5,9 +5,9 @@ export const projectsData: Project[] = [{
     title: "Forgigs",
     subtitle: "CEO/CTO - 2020",
     description: {
-        "en-GB": "While I working for nearly 10 years in music streaming I noticed a gap between the distribution side of the music industry and the live performance. I set myself on a journey to bridge that gap and make is as easy for independent artists to organize tours than is it for them to distribute their music on all streaming platforms.",
-        fr: "Pendant que je travaillais depuis près de 10 ans dans la diffusion de musique, j'ai remarqué un écart entre le côté distribution de l'industrie musicale et la performance en direct. Je me suis lancé dans un voyage pour combler cet écart et faciliter aux artistes indépendants l'organisation de tournées aussi facilement que la distribution de leur musique sur toutes les plateformes de streaming.",
-        ja: "音楽ストリーミング業界で10年近く働いていた間、音楽業界の配信側とライブ演奏の間にギャップを感じました。独立したアーティストがツアーを企画するのが音楽をすべてのストリーミングプラットフォームに配信するのと同じくらい簡単になるよう、そのギャップを埋めるための旅に出ました。"
+        "en-GB": "While I was working for nearly 10 years in music streaming, I noticed a gap between the distribution side of the music industry and live performances. I set myself on a journey to bridge that gap and make it as easy for independent artists to organize tours as it is for them to distribute their music on streaming platforms. Forgigs streamlines the process of organizing tours for independent artists by offering one platform for artists, venues, promoters, bookers, and music fans, covering seamlessly everything from booking, ticketing, merchandising, tipping, settlements, and more...",
+        fr: "Durant mes 10 ans dans l'industrie du streaming musucal, j'ai remarqué un écart entre le côté distribution et l'industrie du concert. Je me suis lancé dans le projet de combler cet écart et faciliter aux artistes indépendants l'organisation de tournées. L'idée est de rendre aussi facile l'organisation de concerts que la distribution de leur musique sur les plateformes de streaming.",
+        ja: "音楽ストリーミング業界で10年間働いた間に、音楽業界の配信側とライブパフォーマンスの間にギャップがあることに気付きました。私はそのギャップを埋めるための取り組みを始め、独立アーティストがツアーを組織することを容易にすることを目指しました。コンサートの組織をストリーミングプラットフォームでの音楽配信と同じくらい簡単にすることがアイデアです。"
     },
     image: "forgigs.png",
     link: "https://forgigs.com",
