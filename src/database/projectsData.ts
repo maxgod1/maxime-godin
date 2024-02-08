@@ -6,8 +6,8 @@ export const projectsData: Project[] = [{
     subtitle: "CEO/CTO - 2020",
     description: {
         "en-GB": "While I working for nearly 10 years in music streaming I noticed a gap between the distribution side of the music industry and the live performance. I set myself on a journey to bridge that gap and make is as easy for independent artists to organize tours than is it for them to distribute their music on all streaming platforms.",
-        fr: "Pendant que je travaillais depuis près de 10 ans dans la diffusion de musique, j'ai remarqué un écart entre le côté distribution de l'industrie musicale et la performance en direct. Je me suis lancé dans un voyage pour combler cet écart et faciliter aux artistes indépendants l'organisation de tournées aussi facilement que la distribution de leur musique sur toutes les plateformes de streaming. www.forgigs.com",
-        ja: "音楽ストリーミング業界で10年近く働いていた間、音楽業界の配信側とライブ演奏の間にギャップを感じました。独立したアーティストがツアーを企画するのが音楽をすべてのストリーミングプラットフォームに配信するのと同じくらい簡単になるよう、そのギャップを埋めるための旅に出ました。www.forgigs.com"
+        fr: "Pendant que je travaillais depuis près de 10 ans dans la diffusion de musique, j'ai remarqué un écart entre le côté distribution de l'industrie musicale et la performance en direct. Je me suis lancé dans un voyage pour combler cet écart et faciliter aux artistes indépendants l'organisation de tournées aussi facilement que la distribution de leur musique sur toutes les plateformes de streaming.",
+        ja: "音楽ストリーミング業界で10年近く働いていた間、音楽業界の配信側とライブ演奏の間にギャップを感じました。独立したアーティストがツアーを企画するのが音楽をすべてのストリーミングプラットフォームに配信するのと同じくらい簡単になるよう、そのギャップを埋めるための旅に出ました。"
     },
     image: "forgigs.png",
     link: "https://forgigs.com",
@@ -19,9 +19,9 @@ export const projectsData: Project[] = [{
     title: "Tempura Magazine",
     subtitle: "CTO - 2021",
     description: {
-        "en-GB": "As part of the original team of the paper magazine Tempura (tempuramag.com) I managed every aspect of the digital platforms: the creation of a Shopify store, the creation of Tempura's landing page and the creation and development of a full subscription plateform",
-        fr: "En tant que membre original de l'équipe du magazine papier Tempura (tempuramag.com), j'ai géré tous les aspects des plateformes numériques : la création d'une boutique Shopify, la création de la page d'accueil de Tempura et la création et le développement d'une plateforme d'abonnement complète.",
-        ja: "ペーパーマガジンのTempura (tempuramag.com) の元のチームの一員として、デジタルプラットフォームのあらゆる側面を管理しました：Shopifyストアの作成、Tempuraのランディングページの作成、そして完全な定期購読プラットフォームの作成と開発。"
+        "en-GB": "As part of the original team of the paper magazine Tempura I managed every aspect of the digital platforms: the creation of a Shopify store, the creation of Tempura's landing page and the creation and development of a full subscription plateform",
+        fr: "En tant que membre original de l'équipe du magazine papier Tempura, j'ai géré tous les aspects des plateformes numériques : la création d'une boutique Shopify, la création de la page d'accueil de Tempura et la création et le développement d'une plateforme d'abonnement complète.",
+        ja: "ペーパーマガジンのTempura の元のチームの一員として、デジタルプラットフォームのあらゆる側面を管理しました：Shopifyストアの作成、Tempuraのランディングページの作成、そして完全な定期購読プラットフォームの作成と開発。"
     },
     image: "tempura.png",
     link: "https://tempuramag.com",

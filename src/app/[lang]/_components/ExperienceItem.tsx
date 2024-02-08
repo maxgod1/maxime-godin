@@ -33,14 +33,16 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
             <div className="h-full w-full left-0 rounded-sm bg-black/70 dark:bg-white/70" />
           </div>
           <div
-            className={"group cursor-pointer"}
+            className={`${description ? "group cursor-pointer" : ""}`}
             onClick={() => {
-              modalRef.current?.showModal?.();
-              setOpen(true);
+              if (description) {
+                modalRef.current?.showModal?.();
+                setOpen(true);
+              }
             }}
           >
             <div
-              className={`cursor-pointer transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between
+              className={`transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between
           ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
               ref={ref}
             >

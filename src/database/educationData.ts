@@ -4,7 +4,7 @@ import { Education } from "../types/education";
 export const educationData: Education[] = [{
     name: "HEC Montreal",
     logo: "hec.png",
-    dates: [new Date(2008, 0, 1), new Date(2010, 0, 1)],
+    dates: [new Date(2008, 0, 1), new Date(2011, 0, 1)],
     location: {
         "en-GB": "Montreal, Canada",
         fr: "Montréal, Canada",

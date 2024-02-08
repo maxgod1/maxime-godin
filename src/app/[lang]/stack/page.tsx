@@ -15,7 +15,15 @@ export default function Stack() {
       <div className="flex flex-wrap items-center justify-center lg:gap-24 gap-14 lg:px-2 px-3 pt-14 w-fit mx-auto">
         {logos.map((l) => (
           <motion.div key={l} initial={initial} animate={animate} className=" relative lg:w-[200px] lg:h-[50px] w-[100px] h-[30px]">
-            <Image key={l + theme} style={{ objectFit: "contain" }} src={`/images/${l}-${theme}.png`} fill alt={l + theme} />
+            <Image
+              blurDataURL={`/images/${l}-${theme}.png`}
+              key={l + theme}
+              style={{ objectFit: "contain" }}
+              src={`/images/${l}-${theme}.png`}
+              fill
+              alt={l + theme}
+              placeholder="blur"
+            />
           </motion.div>
         ))}
       </div>

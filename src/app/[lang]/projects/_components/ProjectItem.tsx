@@ -40,11 +40,13 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       <div className="lg:w-1/3 h-52 relative lg:-mt-2 mt-4">
         <Link href={link} target="_blank" rel="noopener noreferrer">
           <Image
+            blurDataURL="/images/projects/blur.png"
             className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
             alt={image}
             src={`/images/projects/${image}`}
             fill
             style={{ objectFit: "contain" }}
+            placeholder="blur"
           />
           <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
             <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
