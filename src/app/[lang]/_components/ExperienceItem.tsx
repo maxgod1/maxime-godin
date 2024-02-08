@@ -181,7 +181,7 @@ const Modal = ({
           )}
         </div>
       </div>
-      <div className="fixed right-2 top-2">
+      <div className="absolute right-2 top-2">
         {/* if there is a button in form, it will close the modal */}
         <button
           className="outline-none"
