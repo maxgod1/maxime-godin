@@ -17,9 +17,9 @@ export const experiencesData: Experience[] = [
             ja: "東京、日本"
         },
         description: {
-            "en-GB": "Spearheaded the integration and localization of Qobuz's download and streaming services for the Japanese market, following the acquisition of local hig-res downlaod service: e-onkyo music. Led a cross-cultural team to adapt the platform to align with the unique preferences and trends of the Japanese audience. Focused on cultural adaptation, content localization, and technology integration to ensure a seamless user experience. Successfully managed the end-to-end project lifecycle from strategic planning to execution, resulting in the effective launch of a localized streaming service tailored for the Japanese market.",
-            fr: "",
-            ja: ""
+            "en-GB": "Spearheaded the integration and localization of Qobuz's download and streaming services for the Japanese market, following the acquisition of local high-res download service: e-onkyo music. Led a cross-cultural team to adapt the platform to align with the unique preferences and trends of the Japanese audience. Focused on cultural adaptation, content localization, and technology integration to ensure a seamless user experience.",
+            fr: "J'ai dirigé l'intégration et la localisation des services de téléchargement et de streaming de Qobuz pour le marché japonais, suite à l'acquisition du service de téléchargement local haute résolution : e-onkyo music. J'ai dirigé une équipe pluriculturelle pour adapter la plateforme afin de correspondre aux préférences et tendances uniques du public japonais. J'ai mis l'accent sur l'adaptation culturelle, la localisation du contenu et l'intégration technologique afin d'assurer une expérience utilisateur fluide.",
+            ja: "日本市場向けにQobuzのダウンロードおよびストリーミングサービスの統合とローカライゼーションを牽引しました。これは、現地のハイレゾダウンロードサービスであるe-onkyo musicを買収した後の取り組みです。日本の観客のユニークな嗜好やトレンドに合わせてプラットフォームを適応するため、異文化チームのリーダーとなりました。文化的な適応、コンテンツのローカライゼーション、テクノロジーの統合に焦点を当て、シームレスなユーザーエクスペリエンスを確保するために努めました。"
         },
         tags: ["Product localization", "Market entry"],
         link: "https://qobuz.com",
@@ -38,9 +38,9 @@ export const experiencesData: Experience[] = [
             ja: "東京、日本 / パリ、フランス"
         },
         description: {
-            "en-GB": "While I working for nearly 10 years in music streaming I noticed a gap between the distribution side of the music industry and the live performance. I set myself on a journey to bridge that gap and make is as easy for independent artists to organize tours than is it for them to distribute their music on streaming platforms. Forgigs streamilines the process of organizing tours for independent artists by oferring one platform for artists, venues, promoters, boomers and music fans covering seemlessly everything from booking, ticketing, merchandizin, tipping, settlements and more...",
-            fr: "Pendant que je travaillais depuis près de 10 ans dans la diffusion de musique, j'ai remarqué un écart entre le côté distribution de l'industrie musicale et la performance en direct. Je me suis lancé dans un voyage pour combler cet écart et faciliter aux artistes indépendants l'organisation de tournées aussi facilement que la distribution de leur musique sur toutes les plateformes de streaming. Forgigs.",
-            ja: "音楽ストリーミング業界で10年近く働いていた間、音楽業界の配信側とライブ演奏の間にギャップを感じました。独立したアーティストがツアーを企画するのが音楽をすべてのストリーミングプラットフォームに配信するのと同じくらい簡単になるよう、そのギャップを埋めるための旅に出ました。www.forgigs.com"
+            "en-GB": "While I was working for nearly 10 years in music streaming, I noticed a gap between the distribution side of the music industry and live performances. I set myself on a journey to bridge that gap and make it as easy for independent artists to organize tours as it is for them to distribute their music on streaming platforms. Forgigs streamlines the process of organizing tours for independent artists by offering one platform for artists, venues, promoters, bookers, and music fans, covering seamlessly everything from booking, ticketing, merchandising, tipping, settlements, and more...",
+            fr: "Durant mes 10 ans dans l'industrie du streaming musucal, j'ai remarqué un écart entre le côté distribution et l'industrie du concert. Je me suis lancé dans le projet de combler cet écart et faciliter aux artistes indépendants l'organisation de tournées. L'idée est de rendre aussi facile l'organisation de concerts que la distribution de leur musique sur les plateformes de streaming.",
+            ja: "音楽ストリーミング業界で10年間働いた間に、音楽業界の配信側とライブパフォーマンスの間にギャップがあることに気付きました。私はそのギャップを埋めるための取り組みを始め、独立アーティストがツアーを組織することを容易にすることを目指しました。コンサートの組織をストリーミングプラットフォームでの音楽配信と同じくらい簡単にすることがアイデアです。"
         },
         link: "https://forgigs.com",
         tags: ["React", "React-native", "Next.js", "Expo", "Typescript", "NodeJs", "Mongodb", "AWS", "Vercel", "Stripe", "Sendgrid", "Google Analytics"]
@@ -60,9 +60,9 @@ export const experiencesData: Experience[] = [
             ja: "東京、日本 / パリ、フランス"
         },
         description: {
-            "en-GB": "Jave is the podcast/media division of Japanese radio J-WAVE operating under the brand name Spinear. I oversaw relationships with key streaming platforms, enhancing JAVE's podcast distribution network. Provided advice on podcast production, aligning content strategy with market trends and platform capabilities.",
-            fr: "Jave est la division podcast/media de la radio japonaise J-WAVE opérant sous le nom de marque Spinear. J'y ai supervisé les relations avec les principales plateformes de streaming, renforçant le réseau de distribution de podcasts de JAVE. Fourni des conseils sur la production de podcasts, alignant la stratégie de contenu sur les tendances du marché et les capacités de la plateforme.",
-            ja: "Javeは、日本のラジオJ-WAVEのポッドキャスト/メディア部門で、Spinearというブランド名で運営されています。私は、主要なストリーミングプラットフォームとの関係を監督し、JAVEのポッドキャスト配信ネットワークを強化しました。ポッドキャストの制作に関するアドバイスを提供し、コンテンツ戦略を市場のトレンドとプラットフォームの能力に合わせるようにしました。"
+            "en-GB": "JAVE is the podcast/media division of Japanese radio station J-WAVE, operating under the brand name Spinear. I oversaw relationships with key streaming platforms, enhancing J-WAVE's podcast distribution network. Provided advice on podcast production, aligning content strategy with market trends and platform capabilities.",
+            fr: "JAVE est la division podcast/médias de la station de radio japonaise J-WAVE, opérant sous le nom de marque Spinear. J'ai supervisé les relations avec les principales plateformes de streaming, améliorant le réseau de distribution de podcasts de J-WAVE. J'ai donné des conseils sur la production de podcasts, en alignant la stratégie de contenu avec les tendances du marché et les capacités de la plateforme.",
+            ja: "JAVEは、日本のラジオ局J-WAVEのポッドキャスト/メディア部門で、Spinearというブランド名で運営されています。私は主要なストリーミングプラットフォームとの関係を監督し、J-WAVEのポッドキャスト配信ネットワークを強化しました。ポッドキャスト制作に関するアドバイスを提供し、コンテンツ戦略を市場のトレンドとプラットフォームの機能に合わせて調整しました。"
         },
         link: "https://spinear.com/",
         tags: ["Business Development", "Streaming distribution", "Product"]
@@ -143,6 +143,27 @@ export const experiencesData: Experience[] = [
                 },
             },
         ]
+    },
+    {
+        companyName: "NOVA",
+        companyLogo: "nova.png",
+        dates: [new Date(2012, 1, 1), new Date(2023, 10, 1)],
+        title: {
+            "en-GB": "French Language Instructor",
+            fr: "Enseignant de langue française",
+            ja: "フランス語講師"
+        },
+
+    },
+    {
+        companyName: "HSBC",
+        companyLogo: "hsbc.png",
+        dates: [new Date(2011, 2, 1), new Date(2023, 11, 1)],
+        title: {
+            "en-GB": "Personal Banker",
+            fr: "Conseiller financier",
+            ja: "パーソナルバンカー "
+        },
     }
 
 

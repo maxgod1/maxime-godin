@@ -33,8 +33,8 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
 }
 
 const ResumeTitle = ({ title }: { title: string }) => (
-  <div className="w-full text-center fade-in">
-    <p className="text-3xl font-bold mb-2 ">{title}</p>
+  <div className="w-full text-start fade-in ">
+    <p className="text-4xl font-bold mb-2 pl-5">{title}</p>
     <div className="-mt-[5px] flex w-full">
       <div className="h-[2px] w-1/2 bg-black/20 dark:bg-white/20" />
       <div className="h-[2px] w-1/2 bg-black/20 dark:bg-white/20" />

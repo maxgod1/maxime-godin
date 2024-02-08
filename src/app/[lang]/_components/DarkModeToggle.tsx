@@ -32,7 +32,7 @@ const DarkModeToggle = () => {
             after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:dark:bg-white/75 after:bg-slate-800/75  after:shadow after:border-opacity-700 after:rounded-full after:h-5 after:w-5 after:transition-all
             `}
           >
-            <Icon className="w-4 h-4" />
+            <Icon className="w-4 h-4" color={theme === "dark" ? "yellow" : "lightBlack"} />
           </div>
         </label>
       </div>
