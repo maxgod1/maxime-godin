@@ -40,7 +40,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       <div className="lg:w-1/3 h-52 relative lg:-mt-2 mt-4">
         <Link href={link} target="_blank" rel="noopener noreferrer">
           <Image
-            blurDataURL="/images/projects/blur.png"
+            blurDataURL={`/images/projects/${image}`}
             className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
             alt={image}
             src={`/images/projects/${image}`}
