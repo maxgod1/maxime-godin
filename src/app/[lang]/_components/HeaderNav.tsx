@@ -13,26 +13,26 @@ const HeaderNav = () => {
 
   const path = usePathname().split(lang)[1] || "/";
   const links = [
-    { href: "/", label: strings.me, color: "bg-sky-300 dark:bg-sky-700", colorbg: "sky" },
+    { href: "/", label: strings.about, color: "bg-sky-300 dark:bg-sky-700", colorbg: "sky" },
     { href: "/projects", label: strings.projects, color: "bg-teal-300 dark:bg-teal-700", colorbg: "teal" },
     { href: "/stack", label: strings.stack, color: "bg-green-300 dark:bg-green-700", colorbg: "green" },
   ];
 
   return (
     <header
-      className={`lg:h-[50px] h-[100px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)] w-full 
+      className={`lg:h-[50px] h-[120px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)] w-full 
       lg:w-[800px] bg-white/50 dark:bg-slate-950/30
       lg:rounded-full rounded-0 mx-auto absolute left-1/2 -translate-x-1/2 lg:top-5 bottom-0 z-40 backdrop-blur 
-      flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 supports-backdrop-blur:bg-slate-950/95 px-3`}
+      flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 supports-backdrop-blur:bg-slate-950/95`}
     >
       <nav className="w-full flex items-center h-full">
         <ul className="w-full flex items-center lg:justify-between gap-3 justify-center flex-wrap rounded">
-          <li className="flex items-center gap-5">
+          <li className="flex items-center gap-5 no-scrollbar overflow-x-auto px-3">
             {links.map(({ href, label, color }) => {
               const selected = (path || "/") === href;
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
-                  <Link href={`/${lang}/${href}`} className="relative py-1">
+                  <Link href={`/${lang}/${href}`} className="relative">
                     {selected ? (
                       <motion.div
                         // t={{ delay: 200 }}
@@ -40,7 +40,7 @@ const HeaderNav = () => {
                         className={`${color} transition-colors absolute top-0 w-full h-full lg:rounded-full rounded-xl dark:bg-opacity-80 bg-opacity-80 -z-10`}
                       />
                     ) : null}
-                    <span className="px-3 text-md font-semibold">{label}</span>
+                    <span className={`px-3 text-nowrap lg:text-base ${lang === "ja" ? "text-xs" : "text-sm"} font-semibold`}>{label}</span>
                   </Link>
                 </div>
               );

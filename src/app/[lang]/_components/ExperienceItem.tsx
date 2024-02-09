@@ -62,7 +62,7 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
                   </div>
                 )}
               </div>
-              {
+              {description && (
                 <div
                   onClick={() => {
                     modalRef.current?.showModal?.();
@@ -72,7 +72,7 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
                 >
                   <Button customClass="bg-" title={strings.read_more} />
                 </div>
-              }
+              )}
             </div>
             {positions?.map((p, i) => (
               <Position position={p} key={i.toString() + p.title} data={data} />
@@ -133,7 +133,7 @@ const Modal = ({
   open,
   setOpen,
 }: {
-  companyName?: String;
+  companyName?: string;
   data: Experience;
   modalRef: RefObject<HTMLDialogElement>;
   open: boolean;
@@ -156,7 +156,9 @@ const Modal = ({
     <dialog
       key={title?.[lang]}
       ref={modalRef}
-      className="relative backdrop-blur max-w-screen max-h-90px bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur"
+      className={`${
+        open ? "opacity-100 backdrop-opacity-100" : "opacity-0 backdrop-opacity-0"
+      } duration-500 relative backdrop-blur max-w-screen max-h-90px bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}
     >
       <div className="max-w-[800px]" ref={outsideClickRef}>
         <div className="group-hover:opacity-50 transition-all duration-300 pr-11">
