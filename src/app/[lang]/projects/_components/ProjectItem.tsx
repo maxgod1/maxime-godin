@@ -10,9 +10,12 @@ import { GlobalContext } from "../../providers";
 import Link from "next/link";
 import { useIsVisible } from "../../../../hooks/ElementVisible";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
+import artemisImage from "../../../../../public/images/projects/artemis.png";
+import forgigsImage from "../../../../../public/images/projects/forgigs.png";
+import tempuraImage from "../../../../../public/images/projects/tempura.png";
 
 export default function ProjectItem({ data, index }: { data: Project; index: number }) {
-  const { title, description, image, link, videoLink, stackLogos, tags } = data;
+  const { title, description, image, link, videoLink, tags } = data;
   const { lang, strings } = useContext(GlobalContext);
   const controls = useAnimation();
   const ref = useRef(null);
@@ -28,6 +31,8 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 + index * 0.1 } },
   };
 
+  const src = [artemisImage, forgigsImage, tempuraImage].find((s) => s.src.includes(image));
+
   return (
     <motion.div
       ref={ref}
@@ -39,15 +44,16 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     >
       <div className="lg:w-1/3 h-52 relative lg:-mt-2 mt-4">
         <Link href={link} target="_blank" rel="noopener noreferrer">
-          <Image
-            blurDataURL={`/images/projects/${image}`}
-            className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
-            alt={image}
-            src={`/images/projects/${image}`}
-            fill
-            style={{ objectFit: "contain" }}
-            placeholder="blur"
-          />
+          {src && (
+            <Image
+              // blurDataURL={source}
+              className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
+              alt={image}
+              src={src}
+              fill
+              style={{ objectFit: "contain" }}
+            />
+          )}
           <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
             <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
           </div>

@@ -7,6 +7,5 @@ export interface Project {
     description: Partial<Record<LanguageStrings, string>>;
     link: string;
     videoLink?: string;
-    stackLogos: string[];
     tags: string[];
 };
