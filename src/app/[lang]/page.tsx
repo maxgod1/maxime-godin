@@ -9,6 +9,7 @@ import EducationItem from "./_components/EducationItem";
 import ExperienceItem from "./_components/ExperienceItem";
 import Button from "./_components/Button";
 import { LanguageIcon } from "@heroicons/react/24/outline";
+import ResumeIntro from "./_components/ResumeIntro";
 
 export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
   const strings = await getDictionary("home", params.lang);
@@ -48,24 +49,5 @@ const ResumeSideBar = () => (
     <div className="absolute w-[2px] h-[60px] -mt-[60px] bg-gradient-to-b to-black/20 dark:to-white/20 from-transparent " />
     <div className="w-[2px] h-full bg-black/20 dark:bg-white/20" />
     <div className="absolute w-[2px] h-[30px] -mb-[30px]  bg-gradient-to-b from-black/20 dark:from-white/20 to-transparent rounded-b-full" />
-  </div>
-);
-
-const ResumeIntro = ({ strings }: { strings: Record<string, string> }) => (
-  <div className="max-w-[800px] lg:px-1 px-5">
-    <p className="text-3xl font-bold">Maxime Godin</p>
-    <p className="text-xs mb-1">{injectVariables(strings.age, { age: _calculateAge(new Date("1989/01/07")) })} • Tokyo, JP</p>
-    <p className="text-xs font-light">
-      <LanguageIcon className="w-5 h-5 inline -mt-[6px] mr-1" /> {strings.spoken_languages}
-    </p>
-    <p className="w-full py-3 lg:text-lg ">{injectVariables(strings.me_descritpion, { years: _calculateAge(new Date("2019/01/01")) })}</p>
-    <div className="py-3 flex gap-3">
-      <Link href="/projects">
-        <Button title={strings.see_projects} />
-      </Link>
-      <Link href="/stack">
-        <Button title={strings.see_stack} />
-      </Link>
-    </div>
   </div>
 );

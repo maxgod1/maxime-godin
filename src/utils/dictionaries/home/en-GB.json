@@ -1,8 +1,9 @@
 {
-  "me": "Me",
-  "projects": "Projects",
+  "about": "About",
+  "projects": "Dev Projects",
   "stack": "Stack",
-  "me_descritpion": "As a seasoned Full-Stack Developer with a specialization in Next.js and Expo, I offer a unique mix of technical skills and business insight in the realm of rapid-paced web and mobile development. With about {{years}} years experience in full-stack development, I possess a profound understanding of contemporary technologies and frameworks, continuously striving to remain at the forefront of industry advancements. My education in math and finance, augmented by over a decade-long journey in music streaming and Japan market entry consulting, has sharpened my skills in not just building, but also strategically thinking with the end-user in mind.",
+  "short_description": "Finance grad with 10yrs in music streaming & Japan entry consulting + {{years}} years of full-stack dev. Skilled in both business strategy and tech development.",
+  "me_description": "As a seasoned Full-Stack Developer with a specialization in Next.js and Expo, I offer a unique mix of technical skills and business insight in the realm of rapid-paced web and mobile development. With about {{years}} years experience in full-stack development, I possess a profound understanding of contemporary technologies and frameworks, continuously striving to remain at the forefront of industry advancements. My education in math and finance, augmented by over a decade-long journey in music streaming and Japan market entry consulting, has sharpened my skills in not just building, but also strategically thinking with the end-user in mind.",
   "the_tech_i_use": "The tech I use all the time",
   "age": "{{age}} yo",
   "see_projects": "See my projects",
