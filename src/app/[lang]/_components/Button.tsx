@@ -8,9 +8,15 @@ import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   customClass?: string;
+  Icon?: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref"> & {
+      title?: string | undefined;
+      titleId?: string | undefined;
+    } & React.RefAttributes<SVGSVGElement>
+  >;
 }
 
-export default function Button({ title, customClass, ...rest }: Props) {
+export default function Button({ title, customClass, Icon = ArrowRightCircleIcon, ...rest }: Props) {
   const router = useRouter();
   return (
     <button
@@ -18,7 +24,7 @@ export default function Button({ title, customClass, ...rest }: Props) {
       {...rest}
     >
       <span>{title}</span>
-      <ArrowRightCircleIcon className="lg:h-6 lg:w-6 w-5 h-5 inline-block" />
+      <Icon className="lg:h-6 lg:w-6 w-5 h-5 inline-block" />
     </button>
   );
 }

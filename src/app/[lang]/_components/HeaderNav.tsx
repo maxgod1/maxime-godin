@@ -16,6 +16,7 @@ const HeaderNav = () => {
     { href: "/", label: strings.about, color: "bg-sky-300 dark:bg-sky-700", colorbg: "sky" },
     { href: "/projects", label: strings.projects, color: "bg-teal-300 dark:bg-teal-700", colorbg: "teal" },
     { href: "/stack", label: strings.stack, color: "bg-green-300 dark:bg-green-700", colorbg: "green" },
+    { href: "/contact", label: strings.contact, color: "bg-indigo-300 dark:bg-indigo-700", colorbg: "indigo" },
   ];
 
   return (
@@ -29,7 +30,7 @@ const HeaderNav = () => {
     >
       <nav className="w-full flex items-center h-full">
         <ul className="w-full flex items-center lg:justify-between gap-3 justify-center flex-wrap rounded">
-          <li className="flex items-center gap-5 no-scrollbar overflow-x-auto px-3">
+          <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
             {links.map(({ href, label, color }) => {
               const selected = (path || "/") === href;
               return (
