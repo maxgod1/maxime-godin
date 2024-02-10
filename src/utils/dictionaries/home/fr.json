@@ -1,8 +1,9 @@
 {
   "about": "À propos",
-  "projects": "Projets Dev",
+  "projects": "Projets",
   "stack": "Stack",
-  "short_description": "Diplômé en finance avec 10 ans d'expérience dans le streaming musical et le conseil d'entrée au Japon, plus {{years}} années de développement full-stack. Compétent à la fois en stratégie commerciale et en développement technologique.",
+  "contact": "Contact",
+  "short_description": "Diplômé en finance avec 10 ans d'expérience dans le streaming musical et le conseil d'entrée au Japon, plus {{years}} années de développement full-stack. Compétent à la fois en stratégie commerciale et en développement technologique...",
   "me_description": "En tant que développeur Full-Stack expérimenté avec une spécialisation en Next.js et Expo, je propose un mélange unique de compétences techniques et de perspectives commerciales dans le domaine du développement web et mobile à rythme rapide. Avec environ {{years}} années d'expérience en développement Full-Stack, je possède une compréhension approfondie des technologies et des frameworks contemporains, cherchant continuellement à rester à la pointe des évolutions de l'industrie. Mon parcours en mathématiques et en finance, complété par plus d'une décennie dans le streaming musical et le conseil en entrée sur le marché japonais, a affiné mes compétences non seulement en développement, mais aussi en réflexion stratégique tournée vers l'utilisateur final.",
   "the_tech_i_use": "Les technologies que j'utilise",
   "age": "{{age}} ans",
@@ -12,5 +13,8 @@
   "experience": "Expérience",
   "education": "Éducation",
   "spoken_languages": "Français (natif), Anglais (niveau natif), Japonais (courrant)",
-  "visit": "Visiter"
+  "visit": "Visiter",
+  "skills": "Compétences",
+  "description": "Description",
+  "toTop": "Top"
 }

@@ -2,7 +2,7 @@
 "use client";
 
 import { Experience, Position } from "../../../types/experience";
-import { RefObject, useContext, useEffect, useRef, useState } from "react";
+import { RefObject, useContext, useRef, useState } from "react";
 import { GlobalContext } from "../providers";
 import { useIsVisible } from "../../../hooks/ElementVisible";
 import Button from "./Button";
@@ -158,7 +158,7 @@ const Modal = ({
       ref={modalRef}
       className={`${
         open ? "opacity-100 backdrop-opacity-100" : "opacity-0 backdrop-opacity-0"
-      } duration-500 relative backdrop-blur max-w-screen max-h-90px bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}
+      } duration-500 relative backdrop-blur max-w-screen bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}
     >
       <div className="max-w-[800px]" ref={outsideClickRef}>
         <div className="group-hover:opacity-50 transition-all duration-300 pr-11">

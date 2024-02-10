@@ -20,10 +20,12 @@ const HeaderNav = () => {
 
   return (
     <header
-      className={`lg:h-[50px] h-[120px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)] w-full 
-      lg:w-[800px] bg-white/50 dark:bg-slate-950/30
-      lg:rounded-full rounded-0 mx-auto absolute left-1/2 -translate-x-1/2 lg:top-5 bottom-0 z-40 backdrop-blur 
-      flex-none transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 supports-backdrop-blur:bg-slate-950/95`}
+      className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none 
+      lg:w-[800px] lg:h-[50px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)]
+      h-[120px]  w-full 
+      rounded-0 mx-auto -translate-x-1/2 lg:rounded-full 
+      backdrop-blur bg-white/50 dark:bg-slate-950/30 
+      transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 supports-backdrop-blur:bg-slate-950/95`}
     >
       <nav className="w-full flex items-center h-full">
         <ul className="w-full flex items-center lg:justify-between gap-3 justify-center flex-wrap rounded">
@@ -49,9 +51,9 @@ const HeaderNav = () => {
 
           <li className="lg:w-0 w-full ">
             <div className="flex w-full max-w-[1000px]">
-              <div className="h-[3px] w-1/4 bg-gradient-to-r  to-black/20 from-black/0 dark:to-white/20 dark:from-white/0" />
-              <div className="h-[3px] w-2/4 bg-black/20 dark:bg-white/20" />
-              <div className="h-[3px] w-1/4 bg-gradient-to-r  from-black/20 to-black/0 dark:from-white/20 dark:to-white/0" />
+              <div className="h-[2px] w-1/4 bg-gradient-to-r  to-black/20 from-black/0 dark:to-white/20 dark:from-white/0" />
+              <div className="h-[2px] w-2/4 bg-black/20 dark:bg-white/20" />
+              <div className="h-[2px] w-1/4 bg-gradient-to-r  from-black/20 to-black/0 dark:from-white/20 dark:to-white/0" />
             </div>
           </li>
           <li className=" items-center justify-center px-2 flex lg:gap-1 gap-3">

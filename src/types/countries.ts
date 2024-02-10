@@ -1,10 +1,6 @@
 enum Languages {
-  "en-US" = "en-US",
   "en-GB" = "en-GB",
-  "es" = "es",
   "fr" = "fr",
-  "de" = "de",
-  "it" = "it",
   "ja" = "ja",
 }
 
