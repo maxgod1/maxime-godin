@@ -11,9 +11,9 @@ import Link from "next/link";
 const HeaderNav = () => {
   const { strings, lang } = useContext(GlobalContext);
 
-  const path = usePathname().split(lang)[1] || "/";
+  const path = usePathname().split(lang)[1] || "";
   const links = [
-    { href: "/", label: strings.about, color: "bg-sky-300 dark:bg-sky-700", colorbg: "sky" },
+    { href: "", label: strings.about, color: "bg-sky-300 dark:bg-sky-700", colorbg: "sky" },
     { href: "/projects", label: strings.projects, color: "bg-teal-300 dark:bg-teal-700", colorbg: "teal" },
     { href: "/stack", label: strings.stack, color: "bg-green-300 dark:bg-green-700", colorbg: "green" },
     { href: "/contact", label: strings.contact, color: "bg-indigo-300 dark:bg-indigo-700", colorbg: "indigo" },
@@ -32,7 +32,9 @@ const HeaderNav = () => {
         <ul className="w-full h-full lg:py-0 py-2 flex items-center lg:justify-between justify-evenly flex-wrap rounded">
           <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
             {links.map(({ href, label, color }) => {
-              const selected = (path || "/") === href;
+              const selected = (path || "") === href;
+              console.log(href, path, selected);
+
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
                   <Link href={`/${lang}/${href}`} className="relative">
@@ -44,7 +46,7 @@ const HeaderNav = () => {
                       />
                     ) : null}
                     <span
-                      className={`px-3 lg:pb-0 pb-[1px] lg:h-[30px] h-[27px] flex items-center text-nowrap lg:text-base ${
+                      className={`px-3 lg:pb-0 pb-[1px] lg:h-[30px] h-[27px] flex items-center text-nowrap sm:text-base ${
                         lang === "ja" ? "text-xs" : "text-sm"
                       } font-semibold`}
                     >
