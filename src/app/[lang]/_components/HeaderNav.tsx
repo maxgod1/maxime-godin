@@ -23,13 +23,13 @@ const HeaderNav = () => {
     <header
       className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none lg:px-2 px-0
       lg:w-[800px] lg:h-[50px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)]
-      h-[120px]  w-full 
+      h-[110px]  w-full 
       rounded-0 mx-auto -translate-x-1/2 lg:rounded-full 
       backdrop-blur bg-white/50 dark:bg-slate-950/30 
       transition-colors duration-500 lg:z-50 supports-backdrop-blur:bg-white/95 supports-backdrop-blur:bg-slate-950/95`}
     >
       <nav className="w-full flex items-center h-full">
-        <ul className="w-full flex items-center lg:justify-between gap-3 justify-center flex-wrap rounded">
+        <ul className="w-full flex items-center lg:justify-between gap-[13px] justify-center flex-wrap rounded">
           <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
             {links.map(({ href, label, color }) => {
               const selected = (path || "/") === href;
@@ -43,7 +43,9 @@ const HeaderNav = () => {
                         className={`${color} transition-colors absolute top-0 w-full h-full lg:rounded-full rounded-xl dark:bg-opacity-80 bg-opacity-80 -z-10`}
                       />
                     ) : null}
-                    <span className={`px-3 text-nowrap lg:text-base ${lang === "ja" ? "text-xs" : "text-sm"} font-semibold`}>{label}</span>
+                    <span className={`px-3 itemd-center text-nowrap lg:text-base ${lang === "ja" ? "text-xs" : "text-sm"} font-semibold`}>
+                      {label}
+                    </span>
                   </Link>
                 </div>
               );
