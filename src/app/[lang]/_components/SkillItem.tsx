@@ -34,7 +34,7 @@ const Subskill = ({ data, index }: { data: Skill["subSkills"][0]; index: number 
   return (
     <div
       ref={ref}
-      className={`bg-slate-950/20 xl:text-base lg:text-sm text-xs rounded px-2 py-1 transition-all duration-300 ${
+      className={`bg-slate-950/20 xl:text-base lg:text-sm text-sm rounded px-2 py-1 transition-all duration-300 ${
         isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
       }`}
     >
