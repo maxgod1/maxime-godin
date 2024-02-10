@@ -77,7 +77,7 @@ export default async function RootLayout({ children, params }: { children: React
       <ContextProvider params={params} theme={theme} previousUrl={referer || ""} strings={strings}>
         <body className="">
           <HeaderNav />
-          <main className="scroll-smooth w-screen h-screen overflow-scroll transition-all lg:bg-gradient-to-b bg-gradient-to-t lg:to-80% to-80% from-gray-300 to-white dark:from-slate-950 dark:to-slate-700">
+          <main className="scroll-smooth w-screen h-[100dvh] overflow-scroll transition-all lg:bg-gradient-to-b bg-gradient-to-t lg:to-80% to-80% from-gray-300 to-white dark:from-slate-950 dark:to-slate-700">
             <BackgroundColorWrapper>{children}</BackgroundColorWrapper>
           </main>
         </body>
