@@ -30,7 +30,6 @@ const Subskill = ({ data, index }: { data: Skill["subSkills"][0]; index: number 
   const isVisible = useIsVisible(ref);
   const { lang } = useContext(GlobalContext);
   const duration = (index + 1) * 100;
-  console.log(duration);
 
   return (
     <div
@@ -41,11 +40,11 @@ const Subskill = ({ data, index }: { data: Skill["subSkills"][0]; index: number 
     >
       <p>{data[lang]} </p>
       <p>
-        {Array.from(Array(data.ranking).keys()).map(() => (
-          <span>★</span>
+        {Array.from(Array(data.ranking).keys()).map((_i, index) => (
+          <span key={index}>★</span>
         ))}
-        {Array.from(Array(5 - data.ranking).keys()).map(() => (
-          <span>☆</span>
+        {Array.from(Array(5 - data.ranking).keys()).map((_i, index) => (
+          <span key={index}>☆</span>
         ))}
       </p>
     </div>

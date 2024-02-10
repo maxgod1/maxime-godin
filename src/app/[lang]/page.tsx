@@ -29,7 +29,7 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
         <div className="flex lg:flex-col flex-row gap-2 items-end xl:border-r">
           {sideTab.map((tab) => (
-            <SideBarTab title={strings[tab.id]} id={tab.id} Icon={tab.Icon} />
+            <SideBarTab key={tab.id} title={strings[tab.id]} id={tab.id} Icon={tab.Icon} />
           ))}
         </div>
       </div>
@@ -75,8 +75,8 @@ const SideBarTab = ({
     } & React.RefAttributes<SVGSVGElement>
   >;
 }) => (
-  <Link scroll={true} href={"#" + id} className="group hover:bg-white/20 pl-1 pr-3 transition-all lg:rounded-r-none rounded">
-    <div className="flex items-center gap-1 group-hover:translate-x-1 transition-all">
+  <Link scroll={true} href={"#" + id} className="group hover:bg-white/20 pl-3 pr-1 transition-all lg:rounded-r-none rounded">
+    <div className="flex items-center gap-1 group-hover:-translate-x-1 transition-all">
       {title}
       <Icon className="h-4" />
     </div>
