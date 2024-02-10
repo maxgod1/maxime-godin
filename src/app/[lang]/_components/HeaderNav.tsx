@@ -21,7 +21,7 @@ const HeaderNav = () => {
 
   return (
     <header
-      className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none 
+      className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none lg:px-2 px-0
       lg:w-[800px] lg:h-[50px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)]
       h-[120px]  w-full 
       rounded-0 mx-auto -translate-x-1/2 lg:rounded-full 
