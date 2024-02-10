@@ -2,8 +2,8 @@ import { LanguageStrings, } from "./countries";
 
 export interface Project {
     image: string;
-    subtitle: string;
     title: string;
+    subtitle: Partial<Record<LanguageStrings, string>>;
     description: Partial<Record<LanguageStrings, string>>;
     link: string;
     videoLink?: string;

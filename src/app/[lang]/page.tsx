@@ -20,6 +20,7 @@ const sideTab = [
 
 export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
   const strings = await getDictionary("home", params.lang);
+
   return (
     <>
       <div className="relative">
@@ -27,14 +28,14 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
       </div>
       <div className="absolute flex items-center transition-all lg:right-0  xl:right-[5%] 2xl:right-[15%] lg:top-[20%] top-0 p-2 lg:p-0 lg:w-auto w-full overflow-auto z-30 backdrop-blur-sm no-scrollbar">
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
-        <div className="flex lg:flex-col flex-row gap-2 items-end xl:border-r">
+        <div className="flex lg:flex-col flex-row gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20">
           {sideTab.map((tab) => (
             <SideBarTab key={tab.id} title={strings[tab.id]} id={tab.id} Icon={tab.Icon} />
           ))}
         </div>
       </div>
 
-      <div className=" fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 lg:pt-3 pt-10 ">
+      <div className=" fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 lg:pt-3 pt-14 ">
         <ResumeIntro strings={strings} />
         <div className="max-w-[800px] w-full md:px-0 px-1">
           <div className="pl-[6px] flex flex-col items-start gap-6 w-full relative">
@@ -75,8 +76,12 @@ const SideBarTab = ({
     } & React.RefAttributes<SVGSVGElement>
   >;
 }) => (
-  <Link scroll={true} href={"#" + id} className="group hover:bg-white/20 pl-3 pr-1 transition-all lg:rounded-r-none rounded">
-    <div className="flex items-center gap-1 group-hover:-translate-x-1 transition-all">
+  <Link
+    scroll={true}
+    href={"#" + id}
+    className="group  dark:hover:bg-white/20 hover:bg-slate-950/20  lg:pl-3 pl-1 lg:pr-1 pr-3 transition-all lg:rounded-r-none rounded"
+  >
+    <div className="flex items-center gap-1 lg:group-hover:-translate-x-1 group-hover:translate-x-1  transition-all">
       {title}
       <Icon className="h-4" />
     </div>

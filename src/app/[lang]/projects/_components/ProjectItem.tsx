@@ -69,7 +69,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       </div>
       <div className="lg:w-2/3 relative pl-3">
         <p className="text-xl font-black mb-2">{data.title}</p>
-        <p className="text-md font-black mb-2">{data.subtitle}</p>
+        <p className="text-md font-black mb-2">{data.subtitle?.[lang]}</p>
         <p className="whitespace-pre-wrap text-sm">{data.description[lang]}</p>
         <div className="flex gap-2 flex-wrap mt-3">
           {tags.map((t) => (
