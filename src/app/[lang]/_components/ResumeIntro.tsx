@@ -18,9 +18,9 @@ export default function ResumeIntro({ strings }: { strings: Record<string, strin
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="max-w-[800px] lg:px-1 px-5">
+    <div className="max-w-[800px] lg:px-1 px-3">
       <div className="lg:hidden block w-full h-28 full relative rounded-lg overflow-hidden mb-2">
-        <Image src={meMobileImage} fill alt="me" style={{ objectFit: "cover", objectPosition: "top" }} />
+        <Image src={meMobileImage} fill alt="me" style={{ objectFit: "cover" }} />
       </div>
       <div className="flex items-center justify-start gap-3">
         <div className="lg:block hidden">
@@ -35,22 +35,25 @@ export default function ResumeIntro({ strings }: { strings: Record<string, strin
           </p>
         </div>
       </div>
-      <p className="w-full py-3 lg:text-lg ">{injectVariables(strings.short_description, { years: _calculateAge(new Date("2019/01/01")) })}</p>
-      <div className="py-3 flex gap-3">
+      <p className="w-full pt-3 pb-2 lg:text-lg ">{injectVariables(strings.short_description, { years: _calculateAge(new Date("2019/01/01")) })}</p>
+      <div className="w-full mb-2">
         <Button
+          customClass=" bg-transparent dark:bg-slate-950/0 px-0 font-light"
           title={strings.read_more}
           onClick={() => {
             modalRef.current?.showModal?.();
             setOpen(true);
           }}
         />
+      </div>
+      {/* <div className="py-3 flex flex-wrap gap-3">
         <Link href="/projects">
           <Button title={strings.see_projects} />
         </Link>
         <Link href="/stack">
           <Button title={strings.see_stack} />
         </Link>
-      </div>
+      </div> */}
       <Modal
         modalRef={modalRef}
         open={open}
@@ -87,10 +90,10 @@ const Modal = ({
       data-modal-target="modal"
       className={`${
         open ? "opacity-100 backdrop-opacity-100" : "opacity-0 backdrop-opacity-0"
-      } duration-500 relative backdrop-blur max-w-screen max-h-90px bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}
+      } duration-500 relative backdrop-blur max-w-screen bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}
     >
       <div className="max-w-[800px]" ref={outsideClickRef}>
-        <div className="group-hover:opacity-50 transition-all duration-300 pt-6">
+        <div className="group-hover:opacity-50 transition-all duration-300 pt-3">
           <p className="w-full py-3 lg:text-lg ">{description}</p>
         </div>
         <div className="absolute right-2 top-2">
