@@ -21,7 +21,7 @@ export const GlobalContext = createContext<{
   strings: Record<string, string>;
   duration: number;
 }>({
-  lang: "en-US",
+  lang: "en-GB",
   theme: "light",
   previousUrl: "",
   strings: {},
