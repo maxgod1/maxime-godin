@@ -11,7 +11,7 @@ export const projectsData: Project[] = [{
     },
     image: "forgigs",
     link: "https://forgigs.com",
-
+    logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
     videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
     tags: ["React", "React-native", "Next.js", "Expo", "Typescript", "NodeJs", "Mongodb", "AWS", "Vercel", "Stripe", "Sendgrid", "Google Analytics"]
 },
@@ -25,7 +25,7 @@ export const projectsData: Project[] = [{
     },
     image: "tempura",
     link: "https://tempuramag.com",
-
+    logo: { light: "tempura_logo-light", dark: "tempura_logo-dark" },
     videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
     tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Stripe", "Mailchimp", "Calameo", "Google Analytics"]
 },
@@ -39,7 +39,7 @@ export const projectsData: Project[] = [{
     },
     image: "artemis",
     link: "https://staging.artemis-care.com",
-
+    logo: { light: "artemis_logo-light", dark: "artemis_logo-dark" },
     videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
     tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Stripe", "Openai API", "PostHog"]
 }
