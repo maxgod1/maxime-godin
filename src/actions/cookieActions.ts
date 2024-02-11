@@ -7,6 +7,6 @@ export async function setThemeCookie(theme: "dark" | "light") {
 }
 
 export async function getTheme() {
-  const theme = (await cookies().get("theme")?.value) === "dark" ? "dark" : "light";
+  const theme = (await cookies().get("theme")?.value) as "dark" | "light" | undefined;
   return theme;
 }

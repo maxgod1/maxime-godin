@@ -68,7 +68,7 @@ export default async function RootLayout({ children, params }: { children: React
   const referer = headersList.get("referer");
 
   return (
-    <html lang={params.lang} className={`${sans.className} ${theme} scroll-smooth`} style={{ colorScheme: theme }}>
+    <html lang={params.lang} className={`${sans.className} ${theme || "dark"} scroll-smooth`} style={{ colorScheme: theme || "dark" }}>
       {/* <SpeedInsights />
       <Suspense>
         <PostHogPageview />

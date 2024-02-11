@@ -26,7 +26,13 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
       <div className="relative">
         <div id="toTop" className="absolute -top-[100px]" />
       </div>
-      <div className="absolute flex items-center transition-all right-0  xl:right-[5%] 2xl:right-[15%] lg:top-[20%] bottom-[120px] py-2 lg:pl-2 pl-1 pr-2 lg:p-0 w-auto overflow-auto z-30 backdrop-blur-sm no-scrollbar lg:bg-transaprent lg:dark:bg-transaprent dark:bg-slate-950/20 bg-white/20 rounded-l-lg">
+      <div
+        className="absolute transition-all w-auto overflow-auto z-30 no-scrollbar
+      right-0  xl:right-[5%] 2xl:right-[15%] lg:top-[150px] lg:bottom-0 bottom-[120px] 
+      py-2 lg:pl-2 pl-1 pr-2 lg:p-0 
+      backdrop-blur-sm lg:bg-transparent lg:dark:bg-transparent dark:bg-slate-950/20 bg-white/20 
+      rounded-l-lg"
+      >
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
         <div className="flex flex-col gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20">
           {sideTab.map((tab) => (
@@ -82,7 +88,7 @@ const SideBarTab = ({
     className="group  lg:dark:hover:bg-white/20 lg:hover:bg-slate-950/20  lg:pl-3 pl-2 lg:pr-1 pr-0 transition-all lg:rounded-r-none rounded"
   >
     <div className="flex items-center gap-1 group-hover:-translate-x-1  transition-all">
-      <span className="lg:visible hidden">{title}</span>
+      <span className="lg:block hidden">{title}</span>
       <Icon className="lg:h-4 h-5" />
     </div>
   </Link>

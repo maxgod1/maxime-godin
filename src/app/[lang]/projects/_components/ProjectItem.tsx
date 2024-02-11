@@ -89,30 +89,32 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
         <div className="w-[2px] h-1/3 bg-white/50 dark:bg-black/30" />
         <div className="w-[2px] h-1/3 bg-gradient-to-b  from-white/50 to-black/0 dark:from-black/30 dark:to-black/0" />
       </div>
-      <div className="lg:w-1/3 relative lg:-mt-2 mt-4">
-        <Link href={link} target="_blank" rel="noopener noreferrer">
-          {src && (
-            <Image
-              // blurDataURL={source}
-              className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
-              alt={image}
-              src={src}
-              fill
-              style={{ objectFit: "contain" }}
-            />
-          )}
-          <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
-            <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
-          </div>
-          <div
-            className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
+      <div className="lg:w-1/3 relative lg:-mt-2 mt-4 flex items-center">
+        <div className="h-52 w-full relative">
+          <Link href={link} target="_blank" rel="noopener noreferrer">
+            {src && (
+              <Image
+                // blurDataURL={source}
+                className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
+                alt={image}
+                src={src}
+                fill
+                style={{ objectFit: "contain" }}
+              />
+            )}
+            <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
+              <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
+            </div>
+            <div
+              className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
             lg:hover:backdrop-blur lg:hover:text-black lg:hover:dark:text-white lg:hover:dark:bg-slate-950/60 lg:hover:bg-white/60
             text-transparent transition-all bg-white/0 supports-backdrop-blur:bg-white/60 sdark:upports-backdrop-blur:bg-slate-950/60
             "
-          >
-            <span className="text-center">{link}</span>
-          </div>
-        </Link>
+            >
+              <span className="text-center">{link}</span>
+            </div>
+          </Link>
+        </div>
       </div>
     </motion.div>
   );

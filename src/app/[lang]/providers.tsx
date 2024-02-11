@@ -1,7 +1,8 @@
 "use client";
 
+import { setThemeCookie } from "../../actions/cookieActions";
 import { LanguageStrings } from "../../types/countries";
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 // import posthog from "posthog-js";
 // import { PostHogProvider } from "posthog-js/react";
 // import { useEffect } from "react";
@@ -10,7 +11,7 @@ import { createContext } from "react";
 type Props = {
   children: React.ReactNode;
   params: { lang: LanguageStrings };
-  theme: "dark" | "light";
+  theme: "dark" | "light" | undefined;
   previousUrl: string;
   strings: Record<string, string>;
 };
@@ -59,12 +60,23 @@ export const GlobalContext = createContext<{
 // }
 
 export const ContextProvider = ({ children, params, theme, previousUrl, strings }: Props) => {
+  const [initTheme, setInitTheme] = useState<"dark" | "light">("dark");
+  useEffect(() => {
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      setInitTheme("dark");
+      if (!theme) setThemeCookie("dark");
+    } else {
+      setInitTheme("light");
+      if (!theme) setThemeCookie("light");
+    }
+  }, [theme]);
+
   return (
     <GlobalContext.Provider
       value={{
         duration: 0.3,
         lang: params.lang,
-        theme,
+        theme: theme || initTheme,
         previousUrl,
         strings,
       }}
