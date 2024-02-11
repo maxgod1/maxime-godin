@@ -54,7 +54,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       variants={variants}
       initial="hidden"
       animate={controls}
-      className=" max-w-[800px] lg:min-w-[800px] min-w-[200px] flex lg:flex-row items-strech gap-4 lg:px-3 px-1 py-4 relative"
+      className=" max-w-[800px] lg:min-w-[800px] min-w-[200px] flex lg:flex-row flex-col items-strech gap-4 lg:px-3 px-1 py-4 relative"
     >
       <div className="lg:w-2/3 relative pl-3">
         <div className="flex gap-2 items-center mb-2">
