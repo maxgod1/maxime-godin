@@ -8,4 +8,5 @@ export interface Project {
     link: string;
     videoLink?: string;
     tags: string[];
+    logo: { light: string, dark: string; },
 };
