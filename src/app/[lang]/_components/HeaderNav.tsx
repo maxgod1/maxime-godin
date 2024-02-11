@@ -38,7 +38,6 @@ const HeaderNav = () => {
           <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
             {links.map(({ href, label, color, colorbg }) => {
               const selected = loaded && path === href;
-              console.log(href, color, path, selected);
 
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
