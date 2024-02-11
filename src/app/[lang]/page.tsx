@@ -26,16 +26,16 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
       <div className="relative">
         <div id="toTop" className="absolute -top-[100px]" />
       </div>
-      <div className="absolute flex items-center transition-all lg:right-0  xl:right-[5%] 2xl:right-[15%] lg:top-[20%] top-0 p-2 lg:p-0 lg:w-auto w-full overflow-auto z-30 backdrop-blur-sm no-scrollbar">
+      <div className="absolute flex items-center transition-all right-0  xl:right-[5%] 2xl:right-[15%] lg:top-[20%] bottom-[20%] py-2 lg:pl-2 pl-1 pr-2 lg:p-0 w-auto overflow-auto z-30 backdrop-blur-sm no-scrollbar lg:bg-transaprent lg:dark:bg-transaprent dark:bg-slate-950/10 bg-white/10 rounded-l">
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
-        <div className="flex lg:flex-col flex-row gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20">
+        <div className="flex flex-col gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20">
           {sideTab.map((tab) => (
             <SideBarTab key={tab.id} title={strings[tab.id]} id={tab.id} Icon={tab.Icon} />
           ))}
         </div>
       </div>
 
-      <div className=" fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 lg:pt-3 pt-14 ">
+      <div className=" fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 lg:pt-3 pt-3 ">
         <ResumeIntro strings={strings} />
         <div className="max-w-[800px] w-full md:px-0 px-1">
           <div className="pl-[6px] flex flex-col items-start gap-6 w-full relative">
@@ -79,11 +79,11 @@ const SideBarTab = ({
   <Link
     scroll={true}
     href={"#" + id}
-    className="group  dark:hover:bg-white/20 hover:bg-slate-950/20  lg:pl-3 pl-1 lg:pr-1 pr-3 transition-all lg:rounded-r-none rounded"
+    className="group  lg:dark:hover:bg-white/20 lg:hover:bg-slate-950/20  lg:pl-3 pl-2 lg:pr-1 pr-0 transition-all lg:rounded-r-none rounded"
   >
-    <div className="flex items-center gap-1 lg:group-hover:-translate-x-1 group-hover:translate-x-1  transition-all">
-      {title}
-      <Icon className="h-4" />
+    <div className="flex items-center gap-1 group-hover:-translate-x-1  transition-all">
+      <span className="lg:visible hidden">{title}</span>
+      <Icon className="lg:h-4 h-5" />
     </div>
   </Link>
 );
