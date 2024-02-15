@@ -89,7 +89,7 @@ const SideBarTab = ({
   >
     <div className="flex items-center gap-1 group-hover:-translate-x-1  transition-all">
       <span className="lg:block hidden">{title}</span>
-      <Icon className="lg:h-4 h-5" />
+      <Icon className="lg:h-4 h-6 lg:m-0 m-1" />
     </div>
   </Link>
 );
