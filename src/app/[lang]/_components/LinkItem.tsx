@@ -28,7 +28,7 @@ export default function LinkData({ data }: { data: ResumeLink }) {
           ref={ref}
         >
           <Link href={link} className="flex gap-2 items-center" target="_blank" rel="noopener noreferrer">
-            <span className="mr-1">
+            <span className="italic">
               <LinkIcon className="h-4 w-4 inline mr-1" />
               {title[lang]}
             </span>
