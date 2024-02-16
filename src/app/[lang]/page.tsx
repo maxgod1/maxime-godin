@@ -2,6 +2,7 @@ import Link from "next/link";
 import _calculateAge from "../../helper/age-calucator";
 import { LanguageStrings } from "../../types/countries";
 import educationData from "../../database/educationData";
+import linkData from "../../database/linkData";
 import experiencesData from "../../database/experiencesData";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
 import EducationItem from "./_components/EducationItem";
@@ -9,13 +10,15 @@ import ExperienceItem from "./_components/ExperienceItem";
 import ResumeIntro from "./_components/ResumeIntro";
 import { skillsData } from "../../database/skillsData";
 import SkillItem from "./_components/SkillItem";
-import { AcademicCapIcon, AdjustmentsHorizontalIcon, ArrowUpIcon, BriefcaseIcon } from "@heroicons/react/24/solid";
+import { AcademicCapIcon, AdjustmentsHorizontalIcon, ArrowUpIcon, BriefcaseIcon, LinkIcon } from "@heroicons/react/24/solid";
+import LinkData from "./_components/LinkItem";
 
 const sideTab = [
   { id: "toTop", Icon: ArrowUpIcon },
   { id: "skills", Icon: AdjustmentsHorizontalIcon },
   { id: "experience", Icon: BriefcaseIcon },
   { id: "education", Icon: AcademicCapIcon },
+  { id: "links", Icon: LinkIcon },
 ];
 
 export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
@@ -60,6 +63,10 @@ export default async function Home({ params }: { params: { lang: LanguageStrings
             <ResumeTitle title={strings.education} id="education" />
             {educationData.map((data) => (
               <EducationItem key={data.name} data={data} />
+            ))}
+            <ResumeTitle title={strings.links} id="links" />
+            {linkData.map((data) => (
+              <LinkData key={data.title[params.lang]} data={data} />
             ))}
           </div>
         </div>
