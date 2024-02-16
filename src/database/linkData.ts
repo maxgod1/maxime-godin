@@ -5,9 +5,9 @@ import { ResumeLink } from "../types/link";
 export const educationData: ResumeLink[] = [{
     logo: "snds.png",
     title: {
-        "en-GB": "Music Production, Song-Writing, and Sound Engineering",
-        fr: "Production musicale, Song-Writing et ingénierie du son",
-        ja: "音楽制作、作詞作曲、サウンド・エンジニアリング"
+        "en-GB": "Song-Writing, and Sound Engineering",
+        fr: "Song-Writing et ingénierie du son",
+        ja: "作詞作曲、サウンド・エンジニアリング"
     },
     link: "https://open.spotify.com/intl-fr/artist/5vTUEI2bu9H6HpuQcEtPoD",
 },
