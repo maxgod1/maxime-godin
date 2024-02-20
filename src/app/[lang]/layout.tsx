@@ -2,13 +2,15 @@ import { availableCountries } from "../../utils/constants/countries";
 import { LanguageStrings } from "../../types/countries";
 import HeaderNav from "./_components/HeaderNav";
 import "./globals.css";
-import { ContextProvider } from "./providers";
+import { ContextProvider, PostHogPageview } from "./providers";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
 import { Red_Hat_Display } from "next/font/google";
 import { getTheme } from "../../actions/cookieActions";
 
 import { headers } from "next/headers";
 import BackgroundColorWrapper from "./_components/BackgroundColorWrapper";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Suspense } from "react";
 
 const sans = Red_Hat_Display({
   subsets: ["latin"],
@@ -69,11 +71,10 @@ export default async function RootLayout({ children, params }: { children: React
 
   return (
     <html lang={params.lang} className={`${sans.className} ${theme || "dark"} scroll-smooth`} style={{ colorScheme: theme || "dark" }}>
-      {/* <SpeedInsights />
+      <SpeedInsights />
       <Suspense>
         <PostHogPageview />
       </Suspense>
-      <PHProvider> */}
       <ContextProvider params={params} theme={theme} previousUrl={referer || ""} strings={strings}>
         <body className="">
           <HeaderNav />
@@ -83,7 +84,6 @@ export default async function RootLayout({ children, params }: { children: React
         </body>
         {/* <CookieBanner strings={strings} /> */}
       </ContextProvider>
-      {/* </PHProvider> */}
     </html>
   );
 }
