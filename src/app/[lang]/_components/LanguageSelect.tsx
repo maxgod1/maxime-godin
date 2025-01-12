@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import Flags from "country-flag-icons/react/3x2";
+import * as Flags from "country-flag-icons/react/3x2";
 import { LanguageStrings } from "../../../types/countries";
 import { useOutsideClick } from "../../../hooks/ClickOutside";
 import { GlobalContext } from "../providers";
@@ -19,7 +19,6 @@ const LanguageSelect = () => {
 
   const ref = useOutsideClick<HTMLDivElement>(() => setOpen(false));
 
-  const SelectedFlag = Flags[availableCountries.find((l) => l.langCode === lang)?.countryCode || "GB"];
   const selectLanguage = async (langCode: LanguageStrings) => {
     setOpen(false);
     router.push(`/${langCode}/${pathname.split(`/${lang}`)[1]}`);

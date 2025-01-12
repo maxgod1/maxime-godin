@@ -1,6 +1,6 @@
 import { LanguageStrings, } from "./countries";
 
-export interface Position {
+export interface PositionType {
 
     dates: [Date, Date | null];
     title: Partial<Record<LanguageStrings, string>>;
@@ -19,5 +19,5 @@ export interface Experience {
     description?: Partial<Record<LanguageStrings, string>>;
     link?: string;
     tags?: string[];
-    positions?: Position[];
+    positions?: PositionType[];
 };

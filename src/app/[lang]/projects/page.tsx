@@ -1,6 +1,4 @@
-import { useRef } from "react";
 import projectsData from "../../../database/projectsData";
-import { useIsVisible } from "../../../hooks/ElementVisible";
 import ProjectItem from "./_components/ProjectItem";
 import Divider from "./_components/Divider";
 
