@@ -3,25 +3,30 @@
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
-import { LanguageStrings } from "../../../../types/countries";
 import { Project } from "../../../../types/project";
 import { useContext, useEffect, useRef } from "react";
 import { GlobalContext } from "../../providers";
 import Link from "next/link";
-import { useIsVisible } from "../../../../hooks/ElementVisible";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
-import artemisImage from "../../../../../public/images/projects/artemis.png";
-import artemisLogoImageLight from "../../../../../public/images/projects/artemis_logo-light.webp";
-import artemisLogoImageDark from "../../../../../public/images/projects/artemis_logo-dark.webp";
-import forgigsImage from "../../../../../public/images/projects/forgigs.png";
-import forgigsLogoImageLight from "../../../../../public/images/projects/forgigs_logo-light.png";
-import forgigsLogoImageDark from "../../../../../public/images/projects/forgigs_logo-dark.png";
-import tempuraImage from "../../../../../public/images/projects/tempura.png";
-import tempuraLogoImageLight from "../../../../../public/images/projects/tempura_logo-light.png";
-import tempuraLogoImageDark from "../../../../../public/images/projects/tempura_logo-dark.png";
+
+import images from "../../../../database/image-data";
+import { getStaticImgUrl } from "../../../../utils/utils";
+
+const artemisImage = images["artemis"];
+const artemisLogoImageLight = images["artemis_logo-light"];
+const artemisLogoImageDark = images["artemis_logo-dark"];
+const forgigsImage = images["forgigs"];
+const forgigsLogoImageLight = images["forgigs_logo-light"];
+const forgigsLogoImageDark = images["forgigs_logo-dark"];
+const tempuraImage = images["tempura"];
+const tempuraLogoImageLight = images["tempura_logo-light"];
+const tempuraLogoImageDark = images["tempura_logo-dark"];
+const jbtcImage = images["jbtc"];
+const jbtcLogoImageLight = images["jbtc_logo-light"];
+const jbtcLogoImageDark = images["jbtc_logo-dark"];
 
 export default function ProjectItem({ data, index }: { data: Project; index: number }) {
-  const { title, description, image, link, logo, tags } = data;
+  const { title,  image, link,  tags } = data;
   const { lang, strings, theme } = useContext(GlobalContext);
   const controls = useAnimation();
   const ref = useRef(null);
@@ -37,7 +42,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 + index * 0.1 } },
   };
 
-  const src = [artemisImage, forgigsImage, tempuraImage].find((s) => s.src.includes(image));
+  const src = [artemisImage, forgigsImage, tempuraImage, jbtcImage].find((s) => s.title.includes(image));
   const logoSrc = [
     artemisLogoImageLight,
     artemisLogoImageDark,
@@ -45,7 +50,11 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     forgigsLogoImageDark,
     tempuraLogoImageLight,
     tempuraLogoImageDark,
-  ].find((s) => s.src.includes(theme) && s.src.includes(image) && s.src.includes("logo"));
+    jbtcLogoImageLight,
+    jbtcLogoImageDark
+  ].find((s) => s.title.includes(theme) && s.title.includes(image) && s.title.includes("logo"));
+
+  console.log({title,logoSrc})
 
   return (
     <motion.div
@@ -64,7 +73,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
                 // blurDataURL={source}
                 className=""
                 alt={image}
-                src={logoSrc}
+                src={getStaticImgUrl(logoSrc.fileKey)}
                 fill
                 style={{ objectFit: "contain" }}
               />
@@ -97,7 +106,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
                 // blurDataURL={source}
                 className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
                 alt={image}
-                src={src}
+                src={getStaticImgUrl(src.fileKey)}
                 fill
                 style={{ objectFit: "contain" }}
               />

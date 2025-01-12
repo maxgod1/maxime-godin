@@ -13,8 +13,8 @@ import { useOutsideClick } from "../../../hooks/ClickOutside";
 import formatDates from "../../../helper/date-calculator";
 import Link from "next/link";
 
-export default function ExperienceItem({ data, index }: { data?: Experience; index?: number }) {
-  const { companyName, companyLogo, title, dates, positions, location, description, link, tags } = data || {};
+export default function ExperienceItem({ data }: { data?: Experience; }) {
+  const { companyName,  title, dates, positions, location, description,  } = data || {};
   const ref = useRef(null);
   const modalRef = useRef<HTMLDialogElement>(null);
   const isVisible = useIsVisible(ref);
@@ -75,7 +75,7 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
               )}
             </div>
             {positions?.map((p, i) => (
-              <Position position={p} key={i.toString() + p.title} data={data} />
+              <Position position={p} key={i.toString() + p.title}  />
             ))}
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
   );
 }
 
-const Position = ({ position, data }: { position: PositionType; data?: Experience }) => {
+const Position = ({ position }: { position: PositionType;  }) => {
   const { lang } = useContext(GlobalContext);
   const { title, dates, location } = position;
   const { startDate, endDate } = formatDates(dates, lang);

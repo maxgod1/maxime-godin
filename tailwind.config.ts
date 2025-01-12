@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from 'tailwindcss/plugin'
 
 
 const config: Config = {
@@ -25,6 +26,32 @@ const config: Config = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    require('tailwindcss-animate'),
+    require('tailwindcss-motion'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+          '.grainy-background::before': {
+              content: '""',
+              position: 'absolute',
+              top: '0',
+              left: '0',
+              right: '0',
+              bottom: '0',
+              backgroundImage: "url('/noise/noise.svg')",
+              backgroundRepeat: 'repeat',
+              opacity: '0.4',
+              mixBlendMode: 'multiply',
+              pointerEvents: 'none',
+              zIndex: '1',
+              filter: 'invert(1)',
+          },
+          '.dark .grainy-background::before': {
+              filter: 'invert(0)',
+              
+          },
+      })
+  }),
   ],
+  
 };
 export default config;
