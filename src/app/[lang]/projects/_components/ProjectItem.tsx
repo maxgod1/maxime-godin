@@ -54,8 +54,6 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     jbtcLogoImageDark
   ].find((s) => s.title.includes(theme) && s.title.includes(image) && s.title.includes("logo"));
 
-  console.log({title,logoSrc})
-
   return (
     <motion.div
       ref={ref}
