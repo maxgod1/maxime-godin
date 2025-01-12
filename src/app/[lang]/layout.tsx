@@ -11,6 +11,8 @@ import { headers } from "next/headers";
 import BackgroundColorWrapper from "./_components/BackgroundColorWrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
+import images from "../../database/image-data";
+import { getStaticImgUrl } from "../../utils/utils";
 
 const sans = Red_Hat_Display({
   subsets: ["latin"],
@@ -42,7 +44,7 @@ export async function generateMetadata(props: { params: Promise<{ lang: Language
       siteName: "Maxime Godin",
       images: [
         {
-          url: "/images/og-image.jpg",
+          url: getStaticImgUrl(images["og-image"].fileKey),
           width: 800,
           height: 600,
         },

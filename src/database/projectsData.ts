@@ -1,7 +1,22 @@
 import { Project } from "../types/project";
 
 
-export const projectsData: Project[] = [{
+export const projectsData: Project[] = [
+    {
+        title: "JBTimeConcept",
+        subtitle: { "en-GB": "CTO - 2024", fr: "CTO - 2024", ja: "CTO - 2024" },
+        description: {
+            "en-GB": "JBTime Concept is a calculation center specialized in amateur and historical car rallies. I developed a comprehensive system including an admin interface for creating and managing rallies, a participant-facing platform for real-time rankings and rally information consultation with live SMS notifications, and a live monitoring interface for organizers to track the event in real-time.",
+            fr: "JBTime Concept est un centre de calcul spécialisé dans les rallyes automobiles amateurs et historiques. J'ai développé un système complet comprenant une interface administrateur pour la création et la gestion des rallyes, une plateforme destinée aux participants pour consulter les classements en temps réel et les informations du rallye avec notifications SMS en direct, ainsi qu'une interface de suivi en direct pour les organisateurs.",
+            ja: "JBTime Conceptはアマチュアやヒストリックカーラリーに特化した計算センターです。ラリーの作成と管理のための管理者インターフェース、参加者がリアルタイムのランキングやラリー情報を確認できるSMSによるリアルタイム通知機能付きプラットフォーム、そして主催者がイベントをリアルタイムで追跡できるモニタリングインターフェースを含む包括的なシステムを開発しました。"
+        },
+        image: "jbtc",
+        link: "https://new.jbtc.be/live/yhr2024",
+        logo: { light: "jbtc_logo-light", dark: "jbtc_logo-dark" },
+        videoLink: "",
+        tags: ["React", "Next.js", "Typescript", "NodeJs", "Express", "Supabase", "Vercel", "Twilio", "PostHog"]
+    },
+    {
     title: "Forgigs",
     subtitle: { "en-GB": "CEO/CTO - 2020", fr: "CEO/CTO - 2020", ja: "CEO/CTO - 2020" },
     description: {

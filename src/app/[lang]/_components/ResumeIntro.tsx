@@ -2,15 +2,17 @@
 
 import _calculateAge from "../../../helper/age-calucator";
 import injectVariables from "../../../utils/dictionaries/injectVariables";
-import meImage from "../../../../public/images/me.webp";
-import meMobileImage from "../../../../public/images/me-mobile.webp";
 import Image from "next/image";
-import Link from "next/link";
 import Button from "./Button";
 import { XCircleIcon } from "@heroicons/react/24/solid";
-import { RefObject, useContext, useRef, useState } from "react";
-import { GlobalContext } from "../providers";
+import { RefObject,  useRef, useState } from "react";
 import { useOutsideClick } from "../../../hooks/ClickOutside";
+
+import images from "../../../database/image-data";
+import { getStaticImgUrl } from "../../../utils/utils";
+
+const meImage = getStaticImgUrl(images["me"].fileKey);
+const meMobileImage = getStaticImgUrl(images["me-mobile"].fileKey);
 
 export default function ResumeIntro({ strings }: { strings: Record<string, string> }) {
   const modalRef = useRef<HTMLDialogElement>(null);
@@ -75,7 +77,6 @@ const Modal = ({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
-  const { lang } = useContext(GlobalContext);
 
   const outsideClickRef = useOutsideClick<HTMLDivElement>(() => {
     if (open) {
@@ -86,7 +87,7 @@ const Modal = ({
   return (
     <dialog
       key={description || ""}
-      ref={modalRef}
+      ref={modalRef as RefObject<HTMLDialogElement>}
       data-modal-target="modal"
       className={`${
         open ? "opacity-100 backdrop-opacity-100" : "opacity-0 backdrop-opacity-0"

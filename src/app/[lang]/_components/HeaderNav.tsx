@@ -3,8 +3,8 @@
 import DarkModeToggle from "./DarkModeToggle";
 import LanguageSelect from "./LanguageSelect";
 import { motion } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
-import { MouseEvent, useContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import {  useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../providers";
 import Link from "next/link";
 

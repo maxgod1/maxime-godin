@@ -1,4 +1,3 @@
-import { Education } from "../types/education";
 import { ResumeLink } from "../types/link";
 
 

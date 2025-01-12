@@ -4,32 +4,29 @@
 import { useContext, useRef } from "react";
 import { GlobalContext } from "../providers";
 import { Skill } from "../../../types/skill";
-import { LanguageStrings } from "../../../types/countries";
-import Link from "next/link";
-import Button from "./Button";
+
 import { useIsVisible } from "../../../hooks/ElementVisible";
 
 export default function SkillItem({ data }: { data?: Skill; index?: number }) {
-  const { subSkills, links } = data || {};
+  const { subSkills } = data || {};
   const { lang } = useContext(GlobalContext);
 
   return (
     <div className="px-3">
       <div className="text-xl font-bold mb-3 fade-in">{data?.[lang]}</div>
       <div className="flex gap-2 flex-wrap">
-        {subSkills?.map((subSkill, index) => (
-          <Subskill data={subSkill} key={subSkill[lang]} index={index} />
+        {subSkills?.map((subSkill, ) => (
+          <Subskill data={subSkill} key={subSkill[lang]}  />
         ))}
       </div>
     </div>
   );
 }
 
-const Subskill = ({ data, index }: { data: Skill["subSkills"][0]; index: number }) => {
+const Subskill = ({ data }: { data: Skill["subSkills"][0];  }) => {
   const ref = useRef(null);
   const isVisible = useIsVisible(ref);
   const { lang } = useContext(GlobalContext);
-  const duration = (index + 1) * 100;
 
   return (
     <div

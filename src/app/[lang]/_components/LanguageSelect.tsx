@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import * as Flags from "country-flag-icons/react/3x2";
 import { LanguageStrings } from "../../../types/countries";
-import { useOutsideClick } from "../../../hooks/ClickOutside";
 import { GlobalContext } from "../providers";
 import { usePathname, useRouter } from "next/navigation";
 import { availableCountries } from "../../../utils/constants/countries";
@@ -15,12 +14,9 @@ const LanguageSelect = () => {
   const { lang } = useContext(GlobalContext);
   const pathname = usePathname();
 
-  const [open, setOpen] = useState(false);
 
-  const ref = useOutsideClick<HTMLDivElement>(() => setOpen(false));
 
   const selectLanguage = async (langCode: LanguageStrings) => {
-    setOpen(false);
     router.push(`/${langCode}/${pathname.split(`/${lang}`)[1]}`);
   };
 
@@ -29,7 +25,7 @@ const LanguageSelect = () => {
   }, [lang]);
 
   return (
-    <div className="fade-in relative flex items-center justify-center lg:gap-3 gap-5" ref={ref}>
+    <div className="fade-in relative flex items-center justify-center lg:gap-3 gap-5" >
       {availableCountries
         .filter((l) => l.langCode !== lang)
         .map((l) => {

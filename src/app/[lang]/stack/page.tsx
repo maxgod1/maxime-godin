@@ -4,24 +4,27 @@ import { useContext } from "react";
 import { GlobalContext } from "../providers";
 import { motion } from "framer-motion";
 
-import nextjsDark from "../../../../public/images/nextjs-dark.png";
-import nextjsLight from "../../../../public/images/nextjs-light.png";
-import vercelDark from "../../../../public/images/vercel-dark.png";
-import vercelLight from "../../../../public/images/vercel-light.png";
-import tailwindcssDark from "../../../../public/images/tailwindcss-dark.png";
-import tailwindcssLight from "../../../../public/images/tailwindcss-light.png";
-import supabaseDark from "../../../../public/images/supabase-dark.png";
-import supabaseLight from "../../../../public/images/supabase-light.png";
-import mongodbDark from "../../../../public/images/mongodb-dark.png";
-import mongodbLight from "../../../../public/images/mongodb-light.png";
-import typescriptDark from "../../../../public/images/typescript-dark.png";
-import typescriptLight from "../../../../public/images/typescript-light.png";
-import expoDark from "../../../../public/images/expo-dark.png";
-import expoLight from "../../../../public/images/expo-light.png";
-import stripeDark from "../../../../public/images/stripe-dark.png";
-import stripeLight from "../../../../public/images/stripe-light.png";
-import shadcnDark from "../../../../public/images/shadcn:ui-dark.png";
-import shadcnLight from "../../../../public/images/shadcn:ui-light.png";
+import images from "../../../database/image-data";
+import { getStaticImgUrl } from "../../../utils/utils";
+
+const nextjsDark = images["nextjs-dark"]
+const nextjsLight = images["nextjs-light"]
+const vercelDark = images["vercel-dark"]
+const vercelLight = images["vercel-light"]
+const tailwindcssDark = images["tailwindcss-dark"]
+const tailwindcssLight = images["tailwindcss-light"]
+const supabaseDark = images["supabase-dark"]
+const supabaseLight = images["supabase-light"]
+const mongodbDark = images["mongodb-dark"]
+const mongodbLight = images["mongodb-light"]
+const typescriptDark = images["typescript-dark"]
+const typescriptLight = images["typescript-light"]
+const expoDark = images["expo-dark"]
+const expoLight = images["expo-light"]
+const stripeDark = images["stripe-dark"]
+const stripeLight = images["stripe-light"]
+const shadcnDark = images["shadcn:ui-dark"]
+const shadcnLight = images["shadcn:ui-light"]
 
 export default function Stack() {
   const { theme, strings } = useContext(GlobalContext);
@@ -34,8 +37,8 @@ export default function Stack() {
       <p className="lg:text-3xl lg:px-0 text-2xl font-bold lg:mb-8 mb-4 mt-10 px-6 text-center fade-in duration-500">{strings.the_tech_i_use}</p>
       <div className="flex flex-wrap items-center justify-center lg:gap-24 gap-14 lg:px-2 px-3 pt-14 w-fit mx-auto">
         {(theme === "dark" ? logosDark : logosLight).map((l) => (
-          <motion.div key={l.src} initial={initial} animate={animate} className=" relative lg:w-[200px] lg:h-[50px] w-[100px] h-[30px]">
-            <Image key={l + theme} style={{ objectFit: "contain" }} src={l} fill alt={l + theme} />
+          <motion.div key={l.title + theme} initial={initial} animate={animate} className=" relative lg:w-[200px] lg:h-[50px] w-[100px] h-[30px]">
+            <Image key={l.title + theme} style={{ objectFit: "contain" }} src={getStaticImgUrl(l.fileKey)} fill alt={l.title + theme} />
           </motion.div>
         ))}
       </div>
