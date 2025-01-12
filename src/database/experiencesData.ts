@@ -5,7 +5,7 @@ export const experiencesData: Experience[] = [
     {
         companyName: "Qobuz",
         companyLogo: "qobuz.png",
-        dates: [new Date(2021, 0, 11), null],
+        dates: [new Date(2021, 0, 11), new Date(2024, 4, 1)],
         title: {
             "en-GB": "Japan market entry and product localization consultant",
             fr: "Consultant en entrée sur le marché japonais et localisation de produit",
