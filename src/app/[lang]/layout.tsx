@@ -22,7 +22,8 @@ export async function generateStaticParams() {
   return availableCountries.map((c) => ({ lang: c.langCode }));
 }
 
-export async function generateMetadata({ params }: { params: { lang: LanguageStrings } }) {
+export async function generateMetadata(props: { params: Promise<{ lang: LanguageStrings }> }) {
+  const params = await props.params;
   const { title, description } = await getDictionary("metadata", params.lang);
   return {
     title,
@@ -64,9 +65,17 @@ export async function generateMetadata({ params }: { params: { lang: LanguageStr
   };
 }
 
-export default async function RootLayout({ children, params }: { children: React.ReactNode; params: { lang: LanguageStrings } }) {
+export default async function RootLayout(
+  props: { children: React.ReactNode; params: Promise<{ lang: LanguageStrings }> }
+) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
   const [theme, strings] = await Promise.all([getTheme(), getDictionary("home", params.lang)]);
-  const headersList = headers();
+  const headersList = await headers();
   const referer = headersList.get("referer");
 
   return (

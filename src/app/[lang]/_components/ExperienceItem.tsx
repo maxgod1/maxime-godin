@@ -1,7 +1,7 @@
 // app/banner.js
 "use client";
 
-import { Experience, Position } from "../../../types/experience";
+import { Experience, PositionType } from "../../../types/experience";
 import { RefObject, useContext, useRef, useState } from "react";
 import { GlobalContext } from "../providers";
 import { useIsVisible } from "../../../hooks/ElementVisible";
@@ -80,13 +80,13 @@ export default function ExperienceItem({ data, index }: { data?: Experience; ind
           </div>
         </div>
 
-        {data && <Modal companyName={companyName} data={data} modalRef={modalRef} open={open} setOpen={setOpen} />}
+        {data && modalRef.current && <Modal companyName={companyName} data={data} modalRef={modalRef} open={open} setOpen={setOpen} />}
       </div>
     </>
   );
 }
 
-const Position = ({ position, data }: { position: Position; data?: Experience }) => {
+const Position = ({ position, data }: { position: PositionType; data?: Experience }) => {
   const { lang } = useContext(GlobalContext);
   const { title, dates, location } = position;
   const { startDate, endDate } = formatDates(dates, lang);
@@ -135,7 +135,7 @@ const Modal = ({
 }: {
   companyName?: string;
   data: Experience;
-  modalRef: RefObject<HTMLDialogElement>;
+  modalRef: RefObject<HTMLDialogElement | null>;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
@@ -155,7 +155,7 @@ const Modal = ({
   return (
     <dialog
       key={title?.[lang]}
-      ref={modalRef}
+      ref={modalRef as RefObject<HTMLDialogElement>}
       className={`${
         open ? "opacity-100 backdrop-opacity-100" : "opacity-0 backdrop-opacity-0"
       } duration-500 relative backdrop-blur max-w-screen bg-white/30 dark:bg-slate-950/30 transition-all p-4 rounded-xl very-rounded backdrop:backdrop-blur`}

@@ -38,7 +38,7 @@ export const projectsData: Project[] = [{
         ja: "Artemis Careはフランス拠点のプロジェクトで、不妊について簡単に理解できる情報にアクセスできるようにすることを目指しています。その人が単に好奇心を持っているだけでなく、自分の妊娠力について心配している人やすでに不妊の問題を抱えている人にも。このプロジェクトでは、ユーザーが参照してお気に入りに追加できるリソースのリスト、リソースに基づいた信頼性の高い情報をユーザーに提供することができるAIアシスタント、必要な情報をより詳しく案内するための予備診断などの追加機能から構成されるプラットフォームを構築しました。"
     },
     image: "artemis",
-    link: "https://staging.artemis-care.com",
+    link: "https://artemis-1mv4jyjbu-forgigs.vercel.app",
     logo: { light: "artemis_logo-light", dark: "artemis_logo-dark" },
     videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
     tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Stripe", "Openai API", "PostHog"]

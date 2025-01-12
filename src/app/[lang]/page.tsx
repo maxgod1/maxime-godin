@@ -21,7 +21,8 @@ const sideTab = [
   { id: "links", Icon: LinkIcon },
 ];
 
-export default async function Home({ params }: { params: { lang: LanguageStrings } }) {
+export default async function Home(props: { params: Promise<{ lang: LanguageStrings }> }) {
+  const params = await props.params;
   const strings = await getDictionary("home", params.lang);
 
   return (

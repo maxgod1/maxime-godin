@@ -36,12 +36,12 @@ const HeaderNav = () => {
       <nav className="w-full flex items-center h-full">
         <ul className="w-full h-full lg:py-0 py-2 flex items-center lg:justify-between justify-evenly flex-wrap rounded">
           <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
-            {links.map(({ href, label, color, colorbg }) => {
+            {links.map(({ href, label, color, }) => {
               const selected = loaded && path === href;
 
               return (
                 <div key={href} className={!selected ? "hover:opacity-50 transition-opacity duration-500" : ""}>
-                  <Link href={`/${lang}/${href}`} className="relative">
+                  <Link href={`/${lang}/${href}`} className="relative" prefetch>
                     {selected && (
                       <motion.div
                         // t={{ delay: 200 }}

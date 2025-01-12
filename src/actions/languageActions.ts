@@ -10,6 +10,6 @@ const [lang0, ...rest] = [...availableCountries.map((c) => c.langCode)];
 export async function setLanguageCookie(lang: LanguageStrings) {
   const schema = z.object({ lang: z.enum([lang0, ...rest]) });
   const data = schema.parse({ lang });
-  cookies().set("lang", data.lang);
+  (await cookies()).set("lang", data.lang);
   return { selectedLang: data.lang };
 }

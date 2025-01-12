@@ -2,7 +2,7 @@
 
 import { setThemeCookie } from "../../actions/cookieActions";
 import { LanguageStrings } from "../../types/countries";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, type JSX } from "react";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 import { env } from "../../../env.mjs";

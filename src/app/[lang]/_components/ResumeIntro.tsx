@@ -71,7 +71,7 @@ const Modal = ({
   setOpen,
 }: {
   description?: string;
-  modalRef: RefObject<HTMLDialogElement>;
+  modalRef: RefObject<HTMLDialogElement | null>;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
