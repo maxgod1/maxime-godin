@@ -1,17 +1,17 @@
 import Link from "next/link";
-import _calculateAge from "../../helper/age-calucator";
+import _calculateAge from "../../utils/age-calucator";
 import { LanguageStrings } from "../../types/countries";
 import educationData from "../../database/educationData";
 import linkData from "../../database/linkData";
 import experiencesData from "../../database/experiencesData";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
-import EducationItem from "./_components/EducationItem";
-import ExperienceItem from "./_components/ExperienceItem";
-import ResumeIntro from "./_components/ResumeIntro";
+import EducationItem from "../components/about/EducationItem";
+import ExperienceItem from "../components/about/ExperienceItem";
+import ResumeIntro from "../components/about/ResumeIntro";
 import { skillsData } from "../../database/skillsData";
-import SkillItem from "./_components/SkillItem";
+import SkillItem from "../components/about/SkillItem";
 import { AcademicCapIcon, AdjustmentsHorizontalIcon, ArrowUpIcon, BriefcaseIcon, LinkIcon } from "@heroicons/react/24/solid";
-import LinkData from "./_components/LinkItem";
+import LinkData from "../components/about/LinkItem";
 
 const sideTab = [
   { id: "toTop", Icon: ArrowUpIcon },

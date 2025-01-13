@@ -2,7 +2,7 @@
 "use client";
 
 import { useContext, useRef } from "react";
-import { GlobalContext } from "../providers";
+import { GlobalContext } from "../../providers/GlobalProvider";
 import { Skill } from "../../../types/skill";
 
 import { useIsVisible } from "../../../hooks/ElementVisible";

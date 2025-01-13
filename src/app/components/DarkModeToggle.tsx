@@ -2,8 +2,8 @@
 
 import React, { useContext, useState } from "react";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
-import { setThemeCookie } from "../../../actions/cookieActions";
-import { GlobalContext } from "../providers";
+import { setThemeCookie } from "../../actions/cookieActions";
+import { GlobalContext } from "../providers/GlobalProvider";
 
 const DarkModeToggle = () => {
   const { theme: initTheme, strings } = useContext(GlobalContext);

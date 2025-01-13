@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { cookies } from "next/headers";
-import { availableCountries } from "../utils/constants/countries";
+import { availableCountries } from "../database/countries";
 import { LanguageStrings } from "../types/countries";
 
 const [lang0, ...rest] = [...availableCountries.map((c) => c.langCode)];

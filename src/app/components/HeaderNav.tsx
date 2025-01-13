@@ -5,7 +5,7 @@ import LanguageSelect from "./LanguageSelect";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import {  useContext, useEffect, useState } from "react";
-import { GlobalContext } from "../providers";
+import { GlobalContext } from "../providers/GlobalProvider";
 import Link from "next/link";
 
 const HeaderNav = () => {

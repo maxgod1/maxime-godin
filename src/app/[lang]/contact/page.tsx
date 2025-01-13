@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
-import { GlobalContext } from "../providers";
-import Button from "../_components/Button";
+import { GlobalContext } from "../../providers/GlobalProvider";
+import Button from "../../components/Button";  
 import Link from "next/link";
 import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 

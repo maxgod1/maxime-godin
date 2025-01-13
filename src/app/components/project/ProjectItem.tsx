@@ -3,14 +3,14 @@
 
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
-import { Project } from "../../../../types/project";
+import { Project } from "../../../types/project";
 import { useContext, useEffect, useRef } from "react";
-import { GlobalContext } from "../../providers";
+import { GlobalContext } from "../../providers/GlobalProvider";
 import Link from "next/link";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 
-import images from "../../../../database/image-data";
-import { getStaticImgUrl } from "../../../../utils/utils";
+import images from "../../../database/image-data";
+import { getStaticImgUrl } from "../../../utils/utils";
 
 const artemisImage = images["artemis"];
 const artemisLogoImageLight = images["artemis_logo-light"];

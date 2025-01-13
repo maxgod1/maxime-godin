@@ -2,11 +2,11 @@
 
 import React, { useContext, useEffect } from "react";
 import * as Flags from "country-flag-icons/react/3x2";
-import { LanguageStrings } from "../../../types/countries";
-import { GlobalContext } from "../providers";
+import { LanguageStrings } from "../../types/countries";
+import { GlobalContext } from "../providers/GlobalProvider";
 import { usePathname, useRouter } from "next/navigation";
-import { availableCountries } from "../../../utils/constants/countries";
-import { setLanguageCookie } from "../../../actions/languageActions";
+import { availableCountries } from "../../database/countries";
+import { setLanguageCookie } from "../../actions/languageActions";
 
 const LanguageSelect = () => {
   const router = useRouter();

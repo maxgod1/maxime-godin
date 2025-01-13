@@ -1,9 +1,9 @@
 "use client";
 
-import _calculateAge from "../../../helper/age-calucator";
+import _calculateAge from "../../../utils/age-calucator";
 import injectVariables from "../../../utils/dictionaries/injectVariables";
 import Image from "next/image";
-import Button from "./Button";
+import Button from "../Button";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { RefObject,  useRef, useState } from "react";
 import { useOutsideClick } from "../../../hooks/ClickOutside";
