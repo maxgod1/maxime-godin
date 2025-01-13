@@ -1,4 +1,4 @@
-import { CountryCodeStrings, CurrencyCodesStrings, LanguageStrings } from "../../types/countries";
+import { CountryCodeStrings, CurrencyCodesStrings, LanguageStrings } from "../types/countries";
 
 export const availableCountries: {
   countryCode: CountryCodeStrings;

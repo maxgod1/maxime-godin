@@ -1,14 +1,14 @@
-import { availableCountries } from "../../utils/constants/countries";
+import { availableCountries } from "../../database/countries";
 import { LanguageStrings } from "../../types/countries";
-import HeaderNav from "./_components/HeaderNav";
+  import HeaderNav from "../components/HeaderNav";
 import "./globals.css";
-import { ContextProvider, PostHogPageview } from "./providers";
+import { ContextProvider, PostHogPageview } from "../providers/GlobalProvider";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
 import { Red_Hat_Display } from "next/font/google";
 import { getTheme } from "../../actions/cookieActions";
 
 import { headers } from "next/headers";
-import BackgroundColorWrapper from "./_components/BackgroundColorWrapper";
+import BackgroundColorWrapper from "../components/BackgroundColorWrapper";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Suspense } from "react";
 import images from "../../database/image-data";

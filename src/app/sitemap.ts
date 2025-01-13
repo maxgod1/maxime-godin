@@ -1,5 +1,5 @@
 import flattenDeep from "lodash/flatMapDeep";
-import { availableCountries } from "../utils/constants/countries";
+import { availableCountries } from "../database/countries";
 
 export default async function Sitemap() {
   const baseUrl = "https://www.maxime-godin.com";

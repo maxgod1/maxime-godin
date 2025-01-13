@@ -1,6 +1,6 @@
 import projectsData from "../../../database/projectsData";
-import ProjectItem from "./_components/ProjectItem";
-import Divider from "./_components/Divider";
+import ProjectItem from "../../components/project/ProjectItem";
+import Divider from "../../components/project/Divider";
 
 export default async function Project() {
   return (

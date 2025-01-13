@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useContext } from "react";
-import { GlobalContext } from "../providers";
+import { GlobalContext } from "../../providers/GlobalProvider";
 import { motion } from "framer-motion";
 
 import images from "../../../database/image-data";

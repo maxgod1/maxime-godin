@@ -2,8 +2,8 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { useContext,  } from "react";
-import { GlobalContext } from "../providers";
-import { cn } from "../../../utils/utils";
+import { GlobalContext } from "../providers/GlobalProvider";
+import { cn } from "../../utils/utils";
 
 export default function BackgroundColorWrapper({ children }: { children: React.ReactNode }) {
   const { lang } = useContext(GlobalContext);

@@ -3,14 +3,14 @@
 
 import { Experience, PositionType } from "../../../types/experience";
 import { RefObject, useContext, useRef, useState } from "react";
-import { GlobalContext } from "../providers";
+import { GlobalContext } from "../../providers/GlobalProvider";
 import { useIsVisible } from "../../../hooks/ElementVisible";
-import Button from "./Button";
+import Button from "../Button";
 import { MapPinIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import min from "lodash/min";
 import max from "lodash/max";
 import { useOutsideClick } from "../../../hooks/ClickOutside";
-import formatDates from "../../../helper/date-calculator";
+import formatDates from "../../../utils/date-calculator";
 import Link from "next/link";
 
 export default function ExperienceItem({ data }: { data?: Experience; }) {

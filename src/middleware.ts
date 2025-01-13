@@ -2,7 +2,7 @@ import { match } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 
 import { NextResponse, type NextRequest } from "next/server";
-import { availableCountries } from "./utils/constants/countries";
+import { availableCountries } from "./database/countries";
 
 // -> 'en-US'
 
