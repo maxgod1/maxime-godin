@@ -23,8 +23,7 @@ export default function LinkData({ data }: { data: ResumeLink }) {
           <div className="h-full w-full left-0 rounded-sm bg-black/70 dark:bg-white/70" />
         </div>
         <div
-          className={`transition-all ease-in-out duration-500
-          ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
+          className={`transition-all ease-in-out duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
           ref={ref}
         >
           <Link href={link} className="flex gap-2 items-center" target="_blank" rel="noopener noreferrer">

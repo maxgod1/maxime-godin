@@ -24,6 +24,8 @@ export default function ExperienceItem({ data }: { data?: Experience; }) {
     lang
   );
   const [open, setOpen] = useState(false);
+
+  
   return (
     <>
       <div className="flex items-center w-full relative">
@@ -42,8 +44,7 @@ export default function ExperienceItem({ data }: { data?: Experience; }) {
             }}
           >
             <div
-              className={`transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between
-          ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
+              className={`transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"}`}
               ref={ref}
             >
               <div className={`group-hover:opacity-50 transition-all duration-300`}>
@@ -80,7 +81,7 @@ export default function ExperienceItem({ data }: { data?: Experience; }) {
           </div>
         </div>
 
-        {data && modalRef.current && <Modal companyName={companyName} data={data} modalRef={modalRef} open={open} setOpen={setOpen} />}
+        {data &&  <Modal companyName={companyName} data={data} modalRef={modalRef} open={open} setOpen={setOpen} />}
       </div>
     </>
   );
@@ -97,8 +98,7 @@ const Position = ({ position }: { position: PositionType;  }) => {
     <>
       <div
         ref={ref}
-        className="transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between
-    cursor-pointer w-full"
+        className="transition-all ease-in-out duration-500 flex lg:flex-row  flex-col lg:items-center justify-between cursor-pointer w-full"
       >
         <div className="">
           <div className="flex items-center">
