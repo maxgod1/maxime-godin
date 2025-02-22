@@ -30,6 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!loaded) return;
+    console.log(loaded)
     const handleScroll = () => {
       // Get all sections
       const sections = sideTab.map(tab => ({
@@ -95,8 +96,8 @@ export default function Home() {
           setActiveSection(hash as typeof activeSection);
         }
       }, 0);
-      setLoaded(true);
     }
+    setLoaded(true);
   }, []); // Run once on mount
 
   return (
