@@ -12,8 +12,8 @@ export default function SkillItem({ data }: { data?: Skill; index?: number }) {
   const { lang } = useContext(GlobalContext);
 
   return (
-    <div className="px-3">
-      <div className="text-xl font-bold mb-3 fade-in">{data?.[lang]}</div>
+    <div className="px-3 flex flex-col gap-2">
+      <div className="text-xl font-bold fade-in">{data?.[lang]}</div>
       <div className="flex gap-2 flex-wrap">
         {subSkills?.map((subSkill, ) => (
           <Subskill data={subSkill} key={subSkill[lang]}  />
