@@ -10,7 +10,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
-  params: { lang: LanguageStrings };
+   lang: LanguageStrings ;
   theme: "dark" | "light" | undefined;
   previousUrl: string;
   strings: Record<string, string>;
@@ -59,7 +59,7 @@ export function PHProvider({ children }: { children: React.ReactNode }) {
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 }
 
-export const ContextProvider = ({ children, params, theme, previousUrl, strings }: Props) => {
+export const ContextProvider = ({ children, lang, theme, previousUrl, strings }: Props) => {
   const [initTheme, setInitTheme] = useState<"dark" | "light">("dark");
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -76,7 +76,7 @@ export const ContextProvider = ({ children, params, theme, previousUrl, strings 
       <GlobalContext.Provider
         value={{
           duration: 0.3,
-          lang: params.lang,
+          lang: lang,
           theme: theme || initTheme,
           previousUrl,
           strings,

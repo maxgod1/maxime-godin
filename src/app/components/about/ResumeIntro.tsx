@@ -20,7 +20,7 @@ export default function ResumeIntro({ strings }: { strings: Record<string, strin
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="max-w-[800px] lg:px-1 px-3">
+    <div className="scroll-mt-[100px] max-w-[800px] lg:px-1 px-3">
       <div className="lg:hidden block w-full h-28 full relative rounded-lg overflow-hidden mb-2">
         <Image src={meMobileImage} fill alt="me" style={{ objectFit: "cover" }} />
       </div>
