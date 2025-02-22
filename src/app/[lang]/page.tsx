@@ -105,10 +105,10 @@ export default function Home() {
       
       <div
       
-        className="absolute transition-all w-auto z-30 no-scrollbar right-0 xl:right-[5%] 2xl:right-[15%] lg:top-[150px] lg:bottom-0 bottom-[120px] py-2 lg:pl-2 pl-1 pr-2 lg:p-0  backdrop-blur-sm lg:bg-transparent lg:dark:bg-transparent dark:bg-slate-950/20 bg-white/20  rounded-l-lg"
+        className="absolute transition-all w-auto z-30 no-scrollbar right-0 xl:right-[5%] 2xl:right-[15%] lg:top-[150px] lg:bottom-auto bottom-[120px] py-2 lg:pl-2 pl-1 pr-2 lg:p-0  backdrop-blur-sm  lg:bg-transparent lg:dark:bg-transparent dark:bg-slate-950/20 bg-white/20  rounded-l-lg"
       >
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
-        <div className="flex flex-col gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20">
+        <div className="flex flex-col gap-2 flex-wrap items-end xl:border-r-2 border-slate-950/20 dark:border-white/20 ">
           {sideTab.map((tab) => (
             <SideBarTab key={tab.id} title={strings[tab.id]} id={tab.id} Icon={tab.Icon} activeSection={activeSection} />
           ))}
@@ -129,9 +129,11 @@ export default function Home() {
 <div id="skills" className="scroll-mt-[100px] w-full">
 
             <ResumeTitle title={strings.skills}  />
+            <div className="flex flex-col gap-3">
             {skillsData.map((data, i) => (
               <SkillItem key={i + data["en-GB"]} data={data} />
             ))}
+            </div>
 </div>
 
 <div id="experience" className="scroll-mt-[100px] w-full">
