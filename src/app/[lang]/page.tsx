@@ -49,15 +49,15 @@ export default function Home() {
 
 
       // Get the closest section to our target zone (100px from top)
-      const activeSection = sectionDistances.reduce((closest, current) => {
+      const newActiveSection = sectionDistances.reduce((closest, current) => {
         const closestDistance = Math.abs(closest.distance - 100);
         const currentDistance = Math.abs(current.distance - 100);
         return currentDistance < closestDistance ? current : closest;
       }, sectionDistances[0]);
 
-      if (activeSection) {
-        setActiveSection(activeSection.id as "toTop" | "skills" | "experience" | "education" | "links");
-        window.history.replaceState(null, '', `#${activeSection.id}`);
+      if (newActiveSection && newActiveSection.id !== activeSection) {
+        setActiveSection(newActiveSection.id as "toTop" | "skills" | "experience" | "education" | "links");
+        window.history.replaceState(null, '', `#${newActiveSection.id}`);
       }
     };
 
@@ -74,7 +74,7 @@ export default function Home() {
         mainElement.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [loaded]);
+  }, [loaded, activeSection]);
 
   // Add this new useEffect for initial anchor scroll
   useEffect(() => {
