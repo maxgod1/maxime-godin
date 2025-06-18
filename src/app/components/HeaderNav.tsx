@@ -26,7 +26,7 @@ const HeaderNav = () => {
 
   return (
     <header
-      className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none lg:px-2 px-0
+      className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none lg:pr-2 px-0
       lg:w-[800px] lg:h-[50px] lg:min-w-[800px] min-w-0 lg:max-w-[calc(100vw-30px)]
       h-[110px]  w-full 
       rounded-0 mx-auto -translate-x-1/2 lg:rounded-full 
@@ -35,7 +35,7 @@ const HeaderNav = () => {
     >
       <nav className="w-full flex items-center h-full">
         <ul className="w-full h-full lg:py-0 py-2 flex items-center lg:justify-between justify-evenly flex-wrap rounded">
-          <li className="flex items-center lg:gap-5 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
+          <li className="flex items-center lg:gap-3 gap-2 no-scrollbar overflow-x-auto lg:px-3 px-1">
             {links.map(({ href, label, color, }) => {
               const selected = loaded && path === href;
 
