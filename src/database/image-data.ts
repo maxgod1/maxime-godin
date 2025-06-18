@@ -35,9 +35,21 @@ const images= {
         title:"tempura_logo-dark",
         fileKey:"v36jPNhxiejtaw1MdfQntcTmR3KiW0eNrp7lDB8fOIvYHaZ5"
     },
+    "forgigs_pages":{
+        title:"forgigs_pages",
+        fileKey:"v36jPNhxiejtKNUXNvwGmeO0d81phRgzP5vFJ2fYbBQwyEjs"
+    },
     "forgigs":{
         title:"forgigs",
         fileKey:"v36jPNhxiejtv53Pj7hxiejtcMQLn4BEqY7wk9ZNOhuSdWga"
+    },
+    "forgigs_pages_logo-light":{
+        title:"forgigs_pages_logo-light",
+        fileKey:"v36jPNhxiejt2oaWqZEgx5U7e9mpaPRcv4uznHMhiNsZb1lK"
+    },
+    "forgigs_pages_logo-dark":{
+        title:"forgigs_pages_logo-dark",
+        fileKey:"v36jPNhxiejtcyPiU710qjCxu1R9JlLI2G43Ye5natg7FPoU"
     },
     "forgigs_logo-light":{
         title:"forgigs_logo-light",

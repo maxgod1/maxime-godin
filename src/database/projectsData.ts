@@ -3,6 +3,20 @@ import { Project } from "../types/project";
 
 export const projectsData: Project[] = [
     {
+        title: "Forgigs Pages",
+        subtitle: { "en-GB": "CTO - 2025", fr: "CTO - 2024", ja: "CTO - 2024" },
+        description: {
+            "en-GB": "A website builder specifically tailored for musicians and artists. It allows them to create a website with a custom domain, upload their music, and sell their music directly to their fans.",
+            fr: "Un constructeur de site web spécifiquement conçu pour les musiciens et les artistes. Il leur permet de créer un site web avec un domaine personnalisé, de télécharger leur musique et de la vendre directement à leurs fans.",
+            ja: "音楽家やアーティスト向けのウェブサイトビルダー。カスタムドメインを使用してウェブサイトを作成し、音楽をアップロードし、直接ファンに販売できます。"
+        },
+        image: "forgigs_pages",
+        link: "https://pages.forgigs.com",
+        logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
+        videoLink: "",
+        tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Vercel", "Srtipe", "PostHog"]
+    },
+    {
         title: "JBTimeConcept",
         subtitle: { "en-GB": "CTO - 2024", fr: "CTO - 2024", ja: "CTO - 2024" },
         description: {
@@ -25,7 +39,7 @@ export const projectsData: Project[] = [
         ja: "音楽ストリーミング業界で10年間働いた間に、音楽業界の配信側とライブパフォーマンスの間にギャップがあることに気付きました。私はそのギャップを埋めるための取り組みを始め、独立アーティストがツアーを組織することを容易にすることを目指しました。コンサートの組織をストリーミングプラットフォームでの音楽配信と同じくらい簡単にすることがアイデアです。"
     },
     image: "forgigs",
-    link: "https://forgigs.com",
+    link: "https://bookking.forgigs.com",
     logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
     videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
     tags: ["React", "React-native", "Next.js", "Expo", "Typescript", "NodeJs", "Mongodb", "AWS", "Vercel", "Stripe", "Sendgrid", "Google Analytics"]
