@@ -18,10 +18,13 @@ const artemisLogoImageDark = images["artemis_logo-dark"];
 const forgigsImage = images["forgigs"];
 const forgigsLogoImageLight = images["forgigs_logo-light"];
 const forgigsLogoImageDark = images["forgigs_logo-dark"];
+const forgigsPagesLogoImageLight = images["forgigs_pages_logo-light"];
+const forgigsPagesLogoImageDark = images["forgigs_pages_logo-dark"];
 const tempuraImage = images["tempura"];
 const tempuraLogoImageLight = images["tempura_logo-light"];
 const tempuraLogoImageDark = images["tempura_logo-dark"];
 const jbtcImage = images["jbtc"];
+const forgigsPagesImage = images["forgigs_pages"];
 const jbtcLogoImageLight = images["jbtc_logo-light"];
 const jbtcLogoImageDark = images["jbtc_logo-dark"];
 
@@ -42,7 +45,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 + index * 0.1 } },
   };
 
-  const src = [artemisImage, forgigsImage, tempuraImage, jbtcImage].find((s) => s.title.includes(image));
+  const src = [artemisImage, forgigsImage, tempuraImage, jbtcImage, forgigsPagesImage].find((s) => s.title.includes(image));
   const logoSrc = [
     artemisLogoImageLight,
     artemisLogoImageDark,
@@ -51,8 +54,12 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     tempuraLogoImageLight,
     tempuraLogoImageDark,
     jbtcLogoImageLight,
-    jbtcLogoImageDark
+    jbtcLogoImageDark,
+    forgigsPagesLogoImageLight,
+    forgigsPagesLogoImageDark
   ].find((s) => s.title.includes(theme) && s.title.includes(image) && s.title.includes("logo"));
+
+   console.log(image,logoSrc);
 
   return (
     <motion.div

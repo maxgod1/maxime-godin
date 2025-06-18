@@ -6,7 +6,7 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                protocol: 'https',
+                protocol: 'https', 
                 hostname: 'qdsaso162l.ufs.sh',
                 port: '',
                 pathname: '/f/**',
