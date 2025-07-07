@@ -3,6 +3,34 @@ import { Experience } from "../types/experience";
 
 export const experiencesData: Experience[] = [
     {
+        companyName: "JB Time Concept",
+        companyLogo: "jbtc.png",
+        dates: [new Date(2024, 3, 1), null],
+        title: {
+            "en-GB": "CTO and Lead Developer",
+            fr: "CTO et Lead Developer",
+            ja: "CTOとリードデベロッパー"
+        },
+        location: {
+            "en-GB": "Tokyo, Japan / Belgium",
+            fr: "Tokyo, Japon / Belgique",
+            ja: "東京、日本 / ベルギー"
+        },
+        description: {
+            "en-GB": `- Designed, developed, and launched a comprehensive, web-based live results and ranking platform for international historic rallies, serving organizers and participants globally.
+- Engineered the full-stack solution from the ground up, including an intuitive admin panel for rally creation and management, real-time participant/organizer interfaces for live rankings, and integrated notification systems.
+- Delivered a fully independent, scalable system that streamlined operations for non-technical teams, now utilized in major European races.`,
+            fr: `- Conçu, développé et lancé une plateforme web de résultats et de classement en direct pour les rallyes historiques internationales, servant aux organisateurs et aux participants à travers le monde.
+- Conçu et développé une solution full-stack de zéro, incluant un panel d'administration intuitif pour la création et la gestion des rallyes, des interfaces en temps réel pour les participants et les organisateurs, et des systèmes de notification intégrés.
+- Livré un système entièrement autonome et scalable, qui a simplifié les opérations pour les équipes non techniques, maintenant utilisé dans les grands rallyes européens.`,
+            ja: `- 国際的な歴史的なレースのための、包括的でウェブベースのライブ結果とランキングプラットフォームを設計、開発、およびリリースしました。
+- 全スタックソリューションをゼロから設計、開発しました。これには、レースの作成と管理のための直感的な管理パネル、ライブランキングのための参加者/オーガナイザーインターフェース、および統合された通知システムが含まれています。
+- 非技術的なチームのための完全に独立した、スケーラブルなシステムを提供し、今では主要なヨーロッパのレースで使用されています。`
+        },
+        tags: ["React", "Next.js", "Express", "Expo", "Typescript", "NodeJs", "Vercel", "Stripe", "Supabase", "Tailwind", "Posthog", "full-stack"],
+        link: "https://jbtc.be",
+    },
+    {
         companyName: "Qobuz",
         companyLogo: "qobuz.png",
         dates: [new Date(2021, 0, 11), new Date(2024, 4, 1)],
