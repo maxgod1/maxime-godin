@@ -177,7 +177,7 @@ const Modal = ({
               </span>
             ))}
           </div>
-          <p className="text-2lg py-3 ">{description?.[lang]}</p>
+          <p className="text-2lg py-3 whitespace-pre-line">{description?.[lang]}</p>
           {link && (
             <Link href={link} className="text-2lg py-3 italic outline-none hover:opacity-70 transition-all" target="_blank" rel="noopener noreferrer">
               {link}
