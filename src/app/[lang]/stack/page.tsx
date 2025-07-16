@@ -38,7 +38,7 @@ export default function Stack() {
       <div className="flex flex-wrap items-center justify-center lg:gap-24 gap-14 lg:px-2 px-3 pt-14 w-fit mx-auto">
         {(theme === "dark" ? logosDark : logosLight).map((l) => (
           <motion.div key={l.title + theme} initial={initial} animate={animate} className=" relative lg:w-[200px] lg:h-[50px] w-[100px] h-[30px]">
-            <Image key={l.title + theme} style={{ objectFit: "contain" }} src={getStaticImgUrl(l.fileKey)} fill alt={l.title + theme} />
+            <Image key={l.title + theme} style={{ objectFit: "contain" }} src={getStaticImgUrl(l.fileKey)} fill alt={l.title + theme} priority={true} />
           </motion.div>
         ))}
       </div>
