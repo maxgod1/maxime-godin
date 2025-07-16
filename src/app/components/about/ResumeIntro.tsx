@@ -37,7 +37,7 @@ export default function ResumeIntro({ strings }: { strings: Record<string, strin
           </p>
         </div>
       </div>
-      <p className="w-full pt-3 pb-2 lg:text-lg ">{injectVariables(strings.short_description, { years: _calculateAge(new Date("2019/01/01")) })}</p>
+      <p className="w-full pt-3 pb-2 lg:text-lg ">{injectVariables(strings.short_description, { years: _calculateAge(new Date("2018/01/07")) })}</p>
       <div className="w-full mb-2">
         <Button
           customClass=" bg-transparent dark:bg-slate-950/0 px-0 font-light"
