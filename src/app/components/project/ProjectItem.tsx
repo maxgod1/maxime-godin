@@ -114,6 +114,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
                 src={getStaticImgUrl(src.fileKey)}
                 fill
                 style={{ objectFit: "contain" }}
+                priority={true}
               />
             )}
             <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
