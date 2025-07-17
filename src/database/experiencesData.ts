@@ -175,7 +175,7 @@ export const experiencesData: Experience[] = [
     {
         companyName: "NOVA",
         companyLogo: "nova.png",
-        dates: [new Date(2012, 1, 1), new Date(2023, 10, 1)],
+        dates: [new Date(2012, 1, 1), new Date(2013, 10, 1)],
         title: {
             "en-GB": "French Language Instructor",
             fr: "Enseignant de langue française",
@@ -186,7 +186,7 @@ export const experiencesData: Experience[] = [
     {
         companyName: "HSBC",
         companyLogo: "hsbc.png",
-        dates: [new Date(2011, 2, 1), new Date(2023, 11, 1)],
+        dates: [new Date(2011, 2, 1), new Date(2012, 11, 1)],
         title: {
             "en-GB": "Personal Banker",
             fr: "Conseiller financier",
