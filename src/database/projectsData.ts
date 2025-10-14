@@ -14,7 +14,7 @@ export const projectsData: Project[] = [
         link: "https://pages.forgigs.com",
         logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
         videoLink: "",
-        tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Vercel", "Srtipe", "PostHog"]
+        tags: ["React", "Next.js", "Typescript", "NodeJs", "Convex", "Vercel", "Srtipe", "PostHog"]
     },
     {
         title: "JBTimeConcept",
