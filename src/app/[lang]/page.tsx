@@ -24,13 +24,13 @@ const sideTab = [
 
 export default function Home() {
   const { strings, lang } = useContext(GlobalContext);
-  const [activeSection, setActiveSection] = useState<"toTop" | "skills" | "experience" | "education" | "links"|undefined>();
+  const [activeSection, setActiveSection] = useState<"toTop" | "skills" | "experience" | "education" | "links" | undefined>();
   const [loaded, setLoaded] = useState(false);
   const mainContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!loaded) return;
-    console.log(loaded)
+    console.log(loaded);
     const handleScroll = () => {
       // Get all sections
       const sections = sideTab.map(tab => ({
@@ -80,8 +80,7 @@ export default function Home() {
   useEffect(() => {
     // Get the hash without the # symbol
     const hash = window.location.hash.slice(1);
-    console.log(hash);
-    
+
     // Check if it's one of our valid sections
     if (sideTab.some(tab => tab.id === hash)) {
       // Small timeout to ensure DOM is ready
@@ -89,7 +88,7 @@ export default function Home() {
         const element = document.getElementById(hash);
         console.log(element);
         if (element) {
-          element.scrollIntoView({ 
+          element.scrollIntoView({
             behavior: 'instant',
             block: 'start'
           });
@@ -102,9 +101,9 @@ export default function Home() {
 
   return (
     <>
-      
+
       <div
-      
+
         className="absolute transition-all w-auto z-30 no-scrollbar right-0 xl:right-[5%] 2xl:right-[15%] lg:top-[150px] lg:bottom-auto bottom-[120px] py-2 lg:pl-2 pl-1 pr-2 lg:p-0  backdrop-blur-sm  lg:bg-transparent lg:dark:bg-transparent dark:bg-slate-950/20 bg-white/20  rounded-l-lg"
       >
         {/* <div className="bg-red-500 h-[80%] w-2 rounded-r absolute" /> */}
@@ -115,47 +114,47 @@ export default function Home() {
         </div>
       </div>
 
-      <div 
+      <div
         ref={mainContentRef}
         className="fade-in w-full flex flex-col gap-10 items-center lg:mb-10 mb-20 pb-[70dvh]  scroll-mt-[100px]"
       >
-          <div id="toTop" className="pt-[100px] -mt-[100px]">
-            <ResumeIntro strings={strings} />
-          </div>
+        <div id="toTop" className="pt-[100px] -mt-[100px]">
+          <ResumeIntro strings={strings} />
+        </div>
         <div className="max-w-[800px] w-full md:px-0 px-1">
           <div className="pl-[6px] flex flex-col items-start gap-6 w-full relative ">
             <ResumeSideBar />
 
-<div id="skills" className="scroll-mt-[100px] w-full">
+            <div id="skills" className="scroll-mt-[100px] w-full">
 
-            <ResumeTitle title={strings.skills}  />
-            <div className="flex flex-col gap-3">
-            {skillsData.map((data, i) => (
-              <SkillItem key={i + data["en-GB"]} data={data} />
-            ))}
+              <ResumeTitle title={strings.skills} />
+              <div className="flex flex-col gap-3">
+                {skillsData.map((data, i) => (
+                  <SkillItem key={i + data["en-GB"]} data={data} />
+                ))}
+              </div>
             </div>
-</div>
 
-<div id="experience" className="scroll-mt-[100px] w-full">
+            <div id="experience" className="scroll-mt-[100px] w-full">
 
-            <ResumeTitle title={strings.experience} />
-            {experiencesData.map((data, i) => (
-              <ExperienceItem key={i + data.companyName} data={data} />
-            ))}
-</div>
-<div id="education" className="scroll-mt-[100px] w-full">
+              <ResumeTitle title={strings.experience} />
+              {experiencesData.map((data, i) => (
+                <ExperienceItem key={i + data.companyName} data={data} />
+              ))}
+            </div>
+            <div id="education" className="scroll-mt-[100px] w-full">
 
-            <ResumeTitle title={strings.education}  />
-            {educationData.map((data) => (
-              <EducationItem key={data.name} data={data} />
-            ))}
-</div>
-<div id="links" className="scroll-mt-[100px] w-full">
+              <ResumeTitle title={strings.education} />
+              {educationData.map((data) => (
+                <EducationItem key={data.name} data={data} />
+              ))}
+            </div>
+            <div id="links" className="scroll-mt-[100px] w-full">
 
-            <ResumeTitle title={strings.links} />
-            {linkData.map((data) => (
-              <LinkData key={data.title[lang]} data={data} />
-            ))}
+              <ResumeTitle title={strings.links} />
+              {linkData.map((data) => (
+                <LinkData key={data.title[lang]} data={data} />
+              ))}
             </div>
           </div>
         </div>
@@ -185,8 +184,8 @@ const SideBarTab = ({
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const element = document.getElementById(id);
-   if (element) {
-      element.scrollIntoView({ 
+    if (element) {
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -209,9 +208,9 @@ const SideBarTab = ({
   );
 };
 
-const ResumeTitle = ({ title,  }: { title: string;  }) => (
+const ResumeTitle = ({ title, }: { title: string; }) => (
   <div className="w-full text-start fade-in relative">
-    <div  className="absolute -top-[100px]" />
+    <div className="absolute -top-[100px]" />
     <p className="text-4xl font-bold mb-2 pl-5">{title}</p>
     <div className="-mt-[5px] flex w-full">
       <div className="h-[2px] w-1/2 bg-black/20 dark:bg-white/20" />

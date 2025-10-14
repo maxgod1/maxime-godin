@@ -28,8 +28,8 @@ const forgigsPagesImage = images["forgigs_pages"];
 const jbtcLogoImageLight = images["jbtc_logo-light"];
 const jbtcLogoImageDark = images["jbtc_logo-dark"];
 
-export default function ProjectItem({ data, index }: { data: Project; index: number }) {
-  const { title,  image, link,  tags } = data;
+export default function ProjectItem({ data, index }: { data: Project; index: number; }) {
+  const { title, image, link, tags, videoLink } = data;
   const { lang, strings, theme } = useContext(GlobalContext);
   const controls = useAnimation();
   const ref = useRef(null);
@@ -59,7 +59,6 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     forgigsPagesLogoImageDark
   ].find((s) => s.title.includes(theme) && s.title.includes(image) && s.title.includes("logo"));
 
-   console.log(image,logoSrc);
 
   return (
     <motion.div
@@ -105,7 +104,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       </div>
       <div className="lg:w-1/3 relative lg:-mt-2 mt-4 flex items-center">
         <div className="h-52 w-full relative">
-          <Link href={link} target="_blank" rel="noopener noreferrer">
+          <Link href={link || videoLink || ""} target="_blank" rel="noopener noreferrer">
             {src && (
               <Image
                 // blurDataURL={source}
