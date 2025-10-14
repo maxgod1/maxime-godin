@@ -7,31 +7,32 @@ import { motion } from "framer-motion";
 import images from "../../../database/image-data";
 import { getStaticImgUrl } from "../../../utils/utils";
 
-const nextjsDark = images["nextjs-dark"]
-const nextjsLight = images["nextjs-light"]
-const vercelDark = images["vercel-dark"]
-const vercelLight = images["vercel-light"]
-const tailwindcssDark = images["tailwindcss-dark"]
-const tailwindcssLight = images["tailwindcss-light"]
-const supabaseDark = images["supabase-dark"]
-const supabaseLight = images["supabase-light"]
-const mongodbDark = images["mongodb-dark"]
-const mongodbLight = images["mongodb-light"]
-const typescriptDark = images["typescript-dark"]
-const typescriptLight = images["typescript-light"]
-const expoDark = images["expo-dark"]
-const expoLight = images["expo-light"]
-const stripeDark = images["stripe-dark"]
-const stripeLight = images["stripe-light"]
-const shadcnDark = images["shadcn:ui-dark"]
-const shadcnLight = images["shadcn:ui-light"]
+const nextjsDark = images["nextjs-dark"];
+const nextjsLight = images["nextjs-light"];
+const vercelDark = images["vercel-dark"];
+const vercelLight = images["vercel-light"];
+const tailwindcssDark = images["tailwindcss-dark"];
+const tailwindcssLight = images["tailwindcss-light"];
+const supabaseDark = images["supabase-dark"];
+const supabaseLight = images["supabase-light"];
+
+const typescriptDark = images["typescript-dark"];
+const typescriptLight = images["typescript-light"];
+const expoDark = images["expo-dark"];
+const expoLight = images["expo-light"];
+const stripeDark = images["stripe-dark"];
+const stripeLight = images["stripe-light"];
+const shadcnDark = images["shadcn:ui-dark"];
+const shadcnLight = images["shadcn:ui-light"];
+const convexDark = images["convex-dark"];
+const convexLight = images["convex-light"];
 
 export default function Stack() {
   const { theme, strings } = useContext(GlobalContext);
   const initial = { scale: 0, opacity: 0 };
   const animate = { opacity: 1, scale: 1, transition: { duration: 0.5 } };
-  const logosDark = [nextjsDark, vercelDark, tailwindcssDark, supabaseDark, mongodbDark, typescriptDark, expoDark, stripeDark, shadcnDark];
-  const logosLight = [nextjsLight, vercelLight, tailwindcssLight, supabaseLight, mongodbLight, typescriptLight, expoLight, stripeLight, shadcnLight];
+  const logosDark = [nextjsDark, vercelDark, tailwindcssDark, convexDark, supabaseDark, typescriptDark, expoDark, stripeDark, shadcnDark];
+  const logosLight = [nextjsLight, vercelLight, tailwindcssLight, convexLight, supabaseLight, typescriptLight, expoLight, stripeLight, shadcnLight];
   return (
     <div className="flex flex-col items-center mx-auto max-w-[1200px] w-full">
       <p className="lg:text-3xl lg:px-0 text-2xl font-bold lg:mb-8 mb-4 mt-10 px-6 text-center fade-in duration-500">{strings.the_tech_i_use}</p>
