@@ -59,7 +59,6 @@ const images = {
         title: "forgigs_logo-dark",
         fileKey: "v36jPNhxiejtcyPiU710qjCxu1R9JlLI2G43Ye5natg7FPoU"
     },
-
     "nextjs-dark": {
         title: "nextjs-dark",
         fileKey: "v36jPNhxiejtLfkZ2MBVxYFm0WqkHcONLgsB3a6dApKvrCDX"
@@ -152,7 +151,18 @@ const images = {
         title: "convex-light",
         fileKey: "v36jPNhxiejthUAwy6cNItmwWylSEMXaJV8BQTYvLDxjRFzO"
     },
-
+    "tds": {
+        title: "tds",
+        fileKey: "v36jPNhxiejtzQkKHaeWRoS2kV6Gy0QfjDNisL3clbY9EqJC"
+    },
+    "tds_logo-light": {
+        title: "tds_logo-light",
+        fileKey: "v36jPNhxiejtT5cxbv5jQywL1WHqEVvUzJ9pBGNur2DZtgaj"
+    },
+    "tds_logo-dark": {
+        title: "tds_logo-dark",
+        fileKey: "v36jPNhxiejt5TPpOtvcUVjeK0Q26mt14bSgNYoRJvBEpyx8"
+    },
 };
 
 export default images;

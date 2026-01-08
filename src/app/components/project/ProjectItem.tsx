@@ -27,7 +27,9 @@ const jbtcImage = images["jbtc"];
 const forgigsPagesImage = images["forgigs_pages"];
 const jbtcLogoImageLight = images["jbtc_logo-light"];
 const jbtcLogoImageDark = images["jbtc_logo-dark"];
-
+const tdsImage = images["tds"];
+const tdsLogoImageLight = images["tds_logo-light"];
+const tdsLogoImageDark = images["tds_logo-dark"];
 export default function ProjectItem({ data, index }: { data: Project; index: number; }) {
   const { title, image, link, tags, videoLink } = data;
   const { lang, strings, theme } = useContext(GlobalContext);
@@ -45,7 +47,7 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: 0.2 + index * 0.1 } },
   };
 
-  const src = [artemisImage, forgigsImage, tempuraImage, jbtcImage, forgigsPagesImage].find((s) => s.title.includes(image));
+  const src = [artemisImage, forgigsImage, tempuraImage, jbtcImage, forgigsPagesImage, tdsImage].find((s) => s.title.includes(image));
   const logoSrc = [
     artemisLogoImageLight,
     artemisLogoImageDark,
@@ -56,7 +58,9 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
     jbtcLogoImageLight,
     jbtcLogoImageDark,
     forgigsPagesLogoImageLight,
-    forgigsPagesLogoImageDark
+    forgigsPagesLogoImageDark,
+    tdsLogoImageLight,
+    tdsLogoImageDark
   ].find((s) => s.title.includes(theme) && s.title.includes(image) && s.title.includes("logo"));
 
 
