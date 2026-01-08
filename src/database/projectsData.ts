@@ -3,18 +3,32 @@ import { Project } from "../types/project";
 
 export const projectsData: Project[] = [
     {
+        title: "tokyo design season",
+        subtitle: { "en-GB": "Lead Engineer - 2025", fr: "Lead Engineer - 2025", ja: "Lead Engineer - 2025" },
+        description: {
+            "en-GB": "This is a platform to find design events and festivals in Tokyo during Design Season, with a full admin csm system to manage the events.",
+            fr: "C'est une plateforme pour trouver des événements et des festivals de design à Tokyo pendant la saison du design, avec un système d'administration complet pour gérer les événements.",
+            ja: "デザインの季節を、もっと自由に。デザイナーの方々にとって、もっと便利に。"
+        },
+        image: "tds",
+        link: "https://tokyodesignseason.jp",
+        logo: { light: "tds_logo-light", dark: "tds_logo-dark" },
+        videoLink: "",
+        tags: ["React", "Next.js", "Typescript", "NodeJs", "Convex", "Vercel", "Stripe", "PostHog"]
+    },
+    {
         title: "Forgigs Pages",
         subtitle: { "en-GB": "CTO - 2025", fr: "CTO - 2024", ja: "CTO - 2024" },
         description: {
-            "en-GB": "A website builder specifically tailored for musicians and artists. It allows them to create a website with a custom domain, upload their music, and sell their music directly to their fans.",
-            fr: "Un constructeur de site web spécifiquement conçu pour les musiciens et les artistes. Il leur permet de créer un site web avec un domaine personnalisé, de télécharger leur musique et de la vendre directement à leurs fans.",
-            ja: "音楽家やアーティスト向けのウェブサイトビルダー。カスタムドメインを使用してウェブサイトを作成し、音楽をアップロードし、直接ファンに販売できます。"
+            "en-GB": "A website builder specifically tailored for musicians and venues and creatores. It allows them to create a website with a custom domain, upload their music, and sell their music directly to their fans.",
+            fr: "Un constructeur de site web spécifiquement conçu pour les musiciens, les lieux  et les créateurs. Il leur permet de créer un site web avec un domaine personnalisé, de télécharger leur musique et de la vendre directement à leurs fans.",
+            ja: "アーティストや会場、クリエイター向けのウェブサイトビルダー。カスタムドメインを使用してウェブサイトを作成し、音楽をアップロードし、直接ファンに販売できます。"
         },
         image: "forgigs_pages",
         link: "https://pages.forgigs.com",
         logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
         videoLink: "",
-        tags: ["React", "Next.js", "Typescript", "NodeJs", "Convex", "Vercel", "Srtipe", "PostHog"]
+        tags: ["React", "Next.js", "Typescript", "NodeJs", "Convex", "Vercel", "Stripe", "PostHog"]
     },
     {
         title: "JBTimeConcept",
@@ -58,20 +72,7 @@ export const projectsData: Project[] = [
         videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
         tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Stripe", "Mailchimp", "Calameo", "Google Analytics"]
     },
-    {
-        title: "Artemis Care　🏗️",
-        subtitle: { "en-GB": "Lead developer - 2023", fr: "Développeur principal - 2023", ja: "リードデベロッパー - 2023" },
-        description: {
-            "en-GB": "Artemis Care is a France Base project aiming to give access to easy to understand information about infertility to people whether they are just curious, worried about their fertility, or already have fertility issues. For this project, I have built a platform consisting of: a list of resources that users can browse and add to their favorites, an AI assistant capable of giving users reliable information based on the resources, and additional features such as a pre-diagnosis to guide users even more through getting the information they need.",
-            fr: "Artemis Care est un projet basé en France visant à donner accès à des informations faciles à comprendre sur l'infertilité aux personnes qu'elles soient simplement curieuses, inquiètes de leur fertilité ou rencontrent déjà des problèmes de fertilité. Pour ce projet, j'ai construit une plateforme composée : d'une liste de ressources que les utilisateurs peuvent parcourir et ajouter à leurs favoris, d'un assistant d'intelligence artificielle capable de fournir aux utilisateurs des informations fiables basées sur les ressources, et de fonctionnalités supplémentaires telles qu'un pré-diagnostic pour guider encore plus les utilisateurs dans l'obtention des informations dont ils ont besoin.",
-            ja: "Artemis Careはフランス拠点のプロジェクトで、不妊について簡単に理解できる情報にアクセスできるようにすることを目指しています。その人が単に好奇心を持っているだけでなく、自分の妊娠力について心配している人やすでに不妊の問題を抱えている人にも。このプロジェクトでは、ユーザーが参照してお気に入りに追加できるリソースのリスト、リソースに基づいた信頼性の高い情報をユーザーに提供することができるAIアシスタント、必要な情報をより詳しく案内するための予備診断などの追加機能から構成されるプラットフォームを構築しました。"
-        },
-        image: "artemis",
-        link: "https://artemis-1mv4jyjbu-forgigs.vercel.app",
-        logo: { light: "artemis_logo-light", dark: "artemis_logo-dark" },
-        videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
-        tags: ["React", "Next.js", "Typescript", "NodeJs", "Supabase", "Stripe", "Openai API", "PostHog"]
-    }
-    ,
+
+
 ];
 export default projectsData;
