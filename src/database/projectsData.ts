@@ -20,9 +20,9 @@ export const projectsData: Project[] = [
         title: "Forgigs Pages",
         subtitle: { "en-GB": "CTO - 2025", fr: "CTO - 2024", ja: "CTO - 2024" },
         description: {
-            "en-GB": "A website builder specifically tailored for musicians and venues and creatores. It allows them to create a website with a custom domain, upload their music, and sell their music directly to their fans.",
-            fr: "Un constructeur de site web spécifiquement conçu pour les musiciens, les lieux  et les créateurs. Il leur permet de créer un site web avec un domaine personnalisé, de télécharger leur musique et de la vendre directement à leurs fans.",
-            ja: "アーティストや会場、クリエイター向けのウェブサイトビルダー。カスタムドメインを使用してウェブサイトを作成し、音楽をアップロードし、直接ファンに販売できます。"
+            "en-GB": "A unique website builder that lets you showcase your work in a beautiful way but without the complexity of endless customization options. Forgigs Pages aimes to be an easy-to-use tool that artists and other independants can rely on to create and curate their online presence while retaining ownership and control over their content. Think of it as a linktree hosted on your own domain without compromising on looks and packed with features like an online shop and email collection.",
+            fr: "Un créateur de site web unique qui vous permet de présenter votre travail de manière élégante, sans vous perdre dans une multitude d'options de personnalisation. Forgigs Pages se veut un outil facile à utiliser sur lequel les artistes et autres indépendants peuvent compter pour créer et gérer leur présence en ligne tout en conservant la propriété et le contrôle de leur contenu. Considérez-le comme un linktree hébergé sur votre propre domaine, sans compromis sur l'esthétique et doté de nombreuses fonctionnalités telles qu'une boutique en ligne et une collecte d'adresses e-mail.",
+            ja: "複雑なカスタマイズオプションに煩わされることなく、作品を美しく紹介できるユニークなウェブサイトビルダー。Forgigs Pagesは、アーティストやフリーランスがコンテンツの所有権と管理権を保持しながら、オンライン上の存在感を構築・管理できる使いやすいツールを目指しています。見た目を損なうことなく、オンラインショップやメール収集機能などを備えた、独自ドメインでホストされるLinktreeのようなものと考えてください。"
         },
         image: "forgigs_pages",
         link: "https://pages.forgigs.com",
