@@ -39,7 +39,7 @@ export const projectsData: Project[] = [
             ja: "JBTime Conceptはアマチュアやヒストリックカーラリーに特化した計算センターです。ラリーの作成と管理のための管理者インターフェース、参加者がリアルタイムのランキングやラリー情報を確認できるSMSによるリアルタイム通知機能付きプラットフォーム、そして主催者がイベントをリアルタイムで追跡できるモニタリングインターフェースを含む包括的なシステムを開発しました。"
         },
         image: "jbtc",
-        link: "https://new.jbtc.be/live/yhr2024",
+        link: "https://new.jbtc.be",
         logo: { light: "jbtc_logo-light", dark: "jbtc_logo-dark" },
         videoLink: "",
         tags: ["React", "Next.js", "Typescript", "NodeJs", "Express", "Supabase", "Vercel", "Twilio", "PostHog"]
