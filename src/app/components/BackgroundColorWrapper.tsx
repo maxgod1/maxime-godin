@@ -9,6 +9,14 @@ export default function BackgroundColorWrapper({ children }: { children: React.R
   const { lang } = useContext(GlobalContext);
   const pathname = usePathname().split(lang)[1] || "/";
 
+  if (pathname.startsWith("/regul")) {
+    return (
+      <div className="h-[100dvh] w-full overflow-hidden bg-white text-slate-900" style={{ colorScheme: "light" }}>
+        {children}
+      </div>
+    );
+  }
+
   // const variants = {
   //   initial: { opacity: 0 },
   //   animate: {

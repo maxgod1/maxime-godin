@@ -24,6 +24,8 @@ const HeaderNav = () => {
     setLoaded(true);
   }, []);
 
+  if (path.startsWith("/regul")) return null;
+
   return (
     <header
       className={` absolute left-1/2 lg:top-5 bottom-0 z-40 flex-none lg:pr-2 px-0
