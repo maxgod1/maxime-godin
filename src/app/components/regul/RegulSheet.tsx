@@ -8,7 +8,6 @@ import {
   buildRows,
   formatClock,
   formatKm,
-  formatMilliCompact,
   formatMilliDisplay,
   parseMilli,
   secondsPerKmDisplay,
@@ -17,28 +16,24 @@ import {
 } from "../../../utils/regul-times";
 
 const MOYENNE_KEY = "regul-moyenne";
-const COEF_KEY = "regul-coef";
 
-export default function RegulSheet({ initialUnlocked }: { initialUnlocked: boolean; }) {
+export default function RegulSheet({ initialUnlocked }: { initialUnlocked: boolean }) {
   const [unlocked, setUnlocked] = useState(initialUnlocked);
   const [moyenne, setMoyenne] = useState("76");
-  const [coef, setCoef] = useState("1");
   const [marked, setMarked] = useState<number | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
     const savedMoyenne = localStorage.getItem(MOYENNE_KEY);
-    const savedCoef = localStorage.getItem(COEF_KEY);
     if (savedMoyenne) setMoyenne(savedMoyenne);
-    if (savedCoef) setCoef(savedCoef);
+    localStorage.removeItem("regul-coef");
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
     localStorage.setItem(MOYENNE_KEY, moyenne);
-    localStorage.setItem(COEF_KEY, coef);
-  }, [hydrated, moyenne, coef]);
+  }, [hydrated, moyenne]);
 
   if (!unlocked) {
     return (
@@ -55,10 +50,8 @@ export default function RegulSheet({ initialUnlocked }: { initialUnlocked: boole
   return (
     <Sheet
       moyenne={moyenne}
-      coef={coef}
       marked={marked}
       onMoyenne={setMoyenne}
-      onCoef={setCoef}
       onMark={setMarked}
       onLock={async () => {
         await lockRegul();
@@ -68,7 +61,7 @@ export default function RegulSheet({ initialUnlocked }: { initialUnlocked: boole
   );
 }
 
-function LockScreen({ onUnlock }: { onUnlock: (code: string) => Promise<boolean>; }) {
+function LockScreen({ onUnlock }: { onUnlock: (code: string) => Promise<boolean> }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
   const [pending, setPending] = useState(false);
@@ -182,25 +175,20 @@ function KeypadButton({
 
 function Sheet({
   moyenne,
-  coef,
   marked,
   onMoyenne,
-  onCoef,
   onMark,
   onLock,
 }: {
   moyenne: string;
-  coef: string;
   marked: number | null;
   onMoyenne: (value: string) => void;
-  onCoef: (value: string) => void;
   onMark: (hundredths: number) => void;
   onLock: () => void;
 }) {
   const avgMilli = parseMilli(moyenne);
-  const coefMilli = parseMilli(coef);
-  const perKm = avgMilli !== null && coefMilli !== null ? secondsPerKmDisplay(avgMilli, coefMilli) : null;
-  const rows = useMemo(() => buildRows(avgMilli, coefMilli), [avgMilli, coefMilli]);
+  const perKm = avgMilli !== null ? secondsPerKmDisplay(avgMilli) : null;
+  const rows = useMemo(() => buildRows(avgMilli), [avgMilli]);
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-white text-slate-900">
@@ -210,8 +198,6 @@ function Sheet({
             <h1 className="text-lg font-bold leading-none">Moyennes</h1>
             <p className="mt-1 text-sm font-semibold tabular-nums text-slate-600">
               {avgMilli === null ? "—" : formatMilliDisplay(avgMilli)} km/h
-              <span className="mx-1.5 text-slate-300">·</span>
-              coef {coefMilli === null ? "—" : formatMilliCompact(coefMilli)}
             </p>
             <p className="mt-1 text-2xl font-bold tabular-nums leading-none">
               {perKm ?? "—"}
@@ -228,7 +214,7 @@ function Sheet({
           </button>
         </div>
 
-        <div className="mx-auto mt-3 grid w-full max-w-5xl grid-cols-2 gap-3">
+        <div className="mx-auto mt-3 w-full max-w-5xl">
           <Stepper
             id="moyenne"
             label="Moyenne km/h"
@@ -238,19 +224,7 @@ function Sheet({
             decreaseLabel="Diminuer la moyenne"
             increaseLabel="Augmenter la moyenne"
           />
-          <Stepper
-            id="coef"
-            label="Coeff."
-            value={coef}
-            onChange={onCoef}
-            onStep={(delta) => onCoef(stepInput(coef, delta, 1))}
-            decreaseLabel="Diminuer le coefficient"
-            increaseLabel="Augmenter le coefficient"
-            step={0.01}
-          />
         </div>
-
-
       </div>
 
       <div className="min-h-0 flex-1 overflow-auto overscroll-contain pb-[env(safe-area-inset-bottom)]">

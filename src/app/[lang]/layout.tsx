@@ -45,8 +45,8 @@ export async function generateMetadata(props: { params: Promise<{ lang: Language
       images: [
         {
           url: getStaticImgUrl(images["og-image"].fileKey),
-          width: 800,
-          height: 600,
+          width: 667,
+          height: 667,
         },
       ],
       type: "website",

@@ -1,7 +1,7 @@
 const images = {
     "og-image": {
         title: "og-image",
-        fileKey: "v36jPNhxiejtcyPiU710qjCxu1R9JlLI2G43Ye5natg7FPoU"
+        fileKey: "v36jPNhxiejtBHHQ6MTy6AGDjs3SV7czXPqaF2O5t8enHvEQ"
     },
     "me": {
         title: "me",

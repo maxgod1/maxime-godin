@@ -49,21 +49,17 @@ export function formatMilliDisplay(value: Milli, digits = 2): string {
   return `${sign}${whole}.${fraction.padEnd(digits, "0")}`;
 }
 
-export function formatMilliCompact(value: Milli): string {
-  return formatMilli(value);
-}
-
 /** s/km displayed to 2 decimals, computed with integer rounding. */
-export function secondsPerKmDisplay(avgMilli: Milli, coefMilli: Milli): string {
-  // 3600 * coef / avg, then round to 0.01
-  // = round(3600 * coefMilli * 100 / avgMilli) / 100
-  const hundredths = divRound(THREE_SIX_HUNDRED * coefMilli * HUNDRED, avgMilli);
+export function secondsPerKmDisplay(avgMilli: Milli): string {
+  // 3600 / avg, then round to 0.01
+  // = round(3600 * SCALE * 100 / avgMilli) / 100
+  const hundredths = divRound(THREE_SIX_HUNDRED * SCALE * HUNDRED, avgMilli);
   const whole = hundredths / HUNDRED;
   const frac = (hundredths % HUNDRED).toString().padStart(2, "0");
   return `${whole}.${frac}`;
 }
 
-export function buildRows(avgMilli: Milli | null, coefMilli: Milli | null): RegulRow[] {
+export function buildRows(avgMilli: Milli | null): RegulRow[] {
   const rows: RegulRow[] = [];
 
   for (let step = 1; step <= STEP_COUNT; step++) {
@@ -72,10 +68,7 @@ export function buildRows(avgMilli: Milli | null, coefMilli: Milli | null): Regu
     rows.push({
       hundredths,
       km,
-      seconds:
-        avgMilli === null || coefMilli === null
-          ? null
-          : Number(secondsAtHundredths(BigInt(hundredths), avgMilli, coefMilli)),
+      seconds: avgMilli === null ? null : Number(secondsAtHundredths(BigInt(hundredths), avgMilli)),
     });
   }
 
@@ -84,11 +77,11 @@ export function buildRows(avgMilli: Milli | null, coefMilli: Milli | null): Regu
 
 /**
  * Exact regularity clock in whole seconds.
- * time = km * 3600 * coef / avg, with km = hundredths / 100
- * => seconds = round(hundredths * 36 * coef / avg)
+ * time = km * 3600 / avg, with km = hundredths / 100
+ * => seconds = round(hundredths * 36 * SCALE / avgMilli)
  */
-export function secondsAtHundredths(hundredths: bigint, avgMilli: Milli, coefMilli: Milli): bigint {
-  return divRound(hundredths * THIRTY_SIX * coefMilli, avgMilli);
+export function secondsAtHundredths(hundredths: bigint, avgMilli: Milli): bigint {
+  return divRound(hundredths * THIRTY_SIX * SCALE, avgMilli);
 }
 
 export function formatClock(totalSeconds: number | bigint): string {
