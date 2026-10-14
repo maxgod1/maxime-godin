@@ -10,9 +10,7 @@ import {
   formatKm,
   formatMilliCompact,
   formatMilliDisplay,
-  nearestHundredths,
   parseMilli,
-  parsePositive,
   secondsPerKmDisplay,
   stepInput,
   type RegulRow,
@@ -199,22 +197,10 @@ function Sheet({
   onMark: (hundredths: number) => void;
   onLock: () => void;
 }) {
-  const [jump, setJump] = useState("");
   const avgMilli = parseMilli(moyenne);
   const coefMilli = parseMilli(coef);
   const perKm = avgMilli !== null && coefMilli !== null ? secondsPerKmDisplay(avgMilli, coefMilli) : null;
   const rows = useMemo(() => buildRows(avgMilli, coefMilli), [avgMilli, coefMilli]);
-
-  function goToKm(event: React.FormEvent) {
-    event.preventDefault();
-    const target = parsePositive(jump);
-    if (target === null) return;
-    const hundredths = nearestHundredths(target);
-    onMark(hundredths);
-    const nodes = document.querySelectorAll<HTMLElement>(`[data-km="${hundredths}"]`);
-    const visible = Array.from(nodes).find((node) => node.getClientRects().length > 0);
-    visible?.scrollIntoView({ block: "center", behavior: "smooth" });
-  }
 
   return (
     <div className="flex h-full min-h-0 flex-col bg-white text-slate-900">
