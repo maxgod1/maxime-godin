@@ -1,6 +1,7 @@
-import { availableCountries } from "../../database/countries";
+import { availableCountries, defaultLocale, isLanguage } from "../../database/countries";
 import { LanguageStrings } from "../../types/countries";
-  import HeaderNav from "../components/HeaderNav";
+import HeaderNav from "../components/HeaderNav";
+import { redirect } from "next/navigation";
 import "./globals.css";
 import { ContextProvider, PostHogPageview } from "../providers/GlobalProvider";
 import { getDictionary } from "../../utils/dictionaries/_dictionaries";
@@ -24,9 +25,15 @@ export async function generateStaticParams() {
   return availableCountries.map((c) => ({ lang: c.langCode }));
 }
 
-export async function generateMetadata(props: { params: Promise<{ lang: LanguageStrings }> }) {
+function supportedLang(lang: string): LanguageStrings {
+  if (!isLanguage(lang)) redirect(`/${defaultLocale}`);
+  return lang;
+}
+
+export async function generateMetadata(props: { params: Promise<{ lang: string }> }) {
   const params = await props.params;
-  const { title, description } = await getDictionary("metadata", params.lang);
+  const lang = supportedLang(params.lang);
+  const { title, description } = await getDictionary("metadata", lang);
   return {
     title,
     description,
@@ -68,26 +75,26 @@ export async function generateMetadata(props: { params: Promise<{ lang: Language
 }
 
 export default async function RootLayout(
-  props: { children: React.ReactNode; params: Promise<{ lang: LanguageStrings }> }
+  props: { children: React.ReactNode; params: Promise<{ lang: string }> }
 ) {
   const params = await props.params;
-  
+  const lang = supportedLang(params.lang);
 
   const {
     children
   } = props;
 
-  const [theme, strings] = await Promise.all([getTheme(), getDictionary("home", params.lang)]);
+  const [theme, strings] = await Promise.all([getTheme(), getDictionary("home", lang)]);
   const headersList = await headers();
   const referer = headersList.get("referer");
 
   return (
-    <html lang={params.lang} className={`${sans.className} ${theme || "dark"} scroll-smooth`} style={{ colorScheme: theme || "dark" }}>
+    <html lang={lang} className={`${sans.className} ${theme || "dark"} scroll-smooth`} style={{ colorScheme: theme || "dark" }}>
       <SpeedInsights />
       <Suspense>
         <PostHogPageview />
       </Suspense>
-      <ContextProvider lang={params.lang} theme={theme} previousUrl={referer || ""} strings={strings}>
+      <ContextProvider lang={lang} theme={theme} previousUrl={referer || ""} strings={strings}>
         <body className="">
           <HeaderNav />
           <main className="scroll-smooth w-screen h-[100dvh] overflow-scroll transition-all lg:bg-gradient-to-b bg-gradient-to-t lg:to-80% to-80% from-gray-300 to-white dark:from-slate-950 dark:to-slate-700">
