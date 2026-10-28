@@ -30,9 +30,20 @@ const jbtcLogoImageDark = images["jbtc_logo-dark"];
 const tdsImage = images["tds"];
 const tdsLogoImageLight = images["tds_logo-light"];
 const tdsLogoImageDark = images["tds_logo-dark"];
+const statusStyles = {
+  offline: "bg-amber-200 text-amber-950",
+  inactive: "bg-slate-200 text-slate-800",
+} as const;
+
+const statusDot = {
+  offline: "bg-amber-600",
+  inactive: "bg-slate-500",
+} as const;
+
 export default function ProjectItem({ data, index }: { data: Project; index: number; }) {
-  const { title, image, link, tags, videoLink } = data;
+  const { title, image, link, tags, videoLink, status } = data;
   const { lang, strings, theme } = useContext(GlobalContext);
+  const statusLabel = status === "offline" ? strings.project_offline : status === "inactive" ? strings.project_inactive : "";
   const controls = useAnimation();
   const ref = useRef(null);
   const inView = useInView(ref);
@@ -74,9 +85,9 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       className=" max-w-[800px] lg:min-w-[800px] min-w-[200px] flex lg:flex-row flex-col items-strech gap-4 lg:px-3 px-1 py-4 relative"
     >
       <div className="lg:w-2/3 relative pl-3">
-        <div className="flex gap-2 items-center mb-2">
+        <div className="flex gap-2 items-start mb-2">
           {logoSrc && (
-            <div className="h-[50px] w-[50px] relative rounded-lg overflow-hidden">
+            <div className="h-[50px] w-[50px] shrink-0 relative rounded-lg overflow-hidden">
               <Image
                 // blurDataURL={source}
                 className=""
@@ -87,9 +98,15 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
               />
             </div>
           )}
-          <div className="flex flex-col gap-1">
+          <div className="flex min-w-0 flex-col gap-1">
             <p className="text-xl font-black">{data.title}</p>
             <p className="text-md font-black">{data.subtitle?.[lang]}</p>
+            {status && (
+              <span className={`mt-0.5 inline-flex w-fit items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium ${statusStyles[status]}`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${statusDot[status]}`} />
+                {statusLabel}
+              </span>
+            )}
           </div>
         </div>
         <p className="whitespace-pre-wrap text-sm">{data.description[lang]}</p>
@@ -108,30 +125,44 @@ export default function ProjectItem({ data, index }: { data: Project; index: num
       </div>
       <div className="lg:w-1/3 relative lg:-mt-2 mt-4 flex items-center">
         <div className="h-52 w-full relative">
-          <Link href={link || videoLink || ""} target="_blank" rel="noopener noreferrer">
-            {src && (
-              <Image
-                // blurDataURL={source}
-                className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
-                alt={image}
-                src={getStaticImgUrl(src.fileKey)}
-                fill
-                style={{ objectFit: "contain" }}
-                priority={true}
-              />
-            )}
-            <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
-              <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
+          {status ? (
+            <div>
+              {src && (
+                <Image
+                  className="lg:px-3 grayscale-[0.45] opacity-80"
+                  alt={image}
+                  src={getStaticImgUrl(src.fileKey)}
+                  fill
+                  style={{ objectFit: "contain" }}
+                  priority={true}
+                />
+              )}
             </div>
-            <div
-              className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
+          ) : (
+            <Link href={link || videoLink || ""} target="_blank" rel="noopener noreferrer">
+              {src && (
+                <Image
+                  className="lg:px-3 hover:opacity-5 drop-shadow-md hover:drop-shadow-lg transition-all hover:scale-105 cursor-pointer"
+                  alt={image}
+                  src={getStaticImgUrl(src.fileKey)}
+                  fill
+                  style={{ objectFit: "contain" }}
+                  priority={true}
+                />
+              )}
+              <div className="lg:hidden absolute flex w-full items-center justify-center -bottom-7 gap-2">
+                <span className="text-sm">{strings.visit}</span> <ArrowUpCircleIcon className="w-5" />
+              </div>
+              <div
+                className="flex items-center justify-center absolute bottom-0 right-0 top-0 lef-0  w-full rounded-2xl duration-500
             lg:hover:backdrop-blur lg:hover:text-black lg:hover:dark:text-white lg:hover:dark:bg-slate-950/60 lg:hover:bg-white/60
             text-transparent transition-all bg-white/0 supports-backdrop-blur:bg-white/60 sdark:upports-backdrop-blur:bg-slate-950/60
             "
-            >
-              <span className="text-center">{link}</span>
-            </div>
-          </Link>
+              >
+                <span className="text-center">{link}</span>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </motion.div>

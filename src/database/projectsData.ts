@@ -14,6 +14,7 @@ export const projectsData: Project[] = [
         link: "https://tokyodesignseason.jp",
         logo: { light: "tds_logo-light", dark: "tds_logo-dark" },
         videoLink: "",
+        status: "offline",
         tags: ["React", "Next.js", "Typescript", "NodeJs", "Convex", "Vercel", "Stripe", "PostHog"]
     },
     {
@@ -54,6 +55,7 @@ export const projectsData: Project[] = [
         },
         image: "forgigs",
         link: "https://booking.forgigs.com",
+        status: "inactive",
         logo: { light: "forgigs_logo-light", dark: "forgigs_logo-dark" },
         videoLink: "https://www.youtube.com/embed/2jF9Y2aQ9qk",
         tags: ["React", "React-native", "Next.js", "Expo", "Typescript", "NodeJs", "Mongodb", "AWS", "Vercel", "Stripe", "Sendgrid", "Google Analytics"]

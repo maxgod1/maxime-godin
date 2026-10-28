@@ -19,16 +19,21 @@ export const skillsData: Skill[] = [
             { "en-GB": "Typescript", fr: "Typescript ", ja: "Typescript", ranking: 5 },
             { "en-GB": "React/Next.Js", fr: "React/Next.Js ", ja: "React/Next.Js", ranking: 5 },
             { "en-GB": "React Native/Expo", fr: "React Native/Expo ", ja: "React Native/Expo", ranking: 5 },
-            { "en-GB": "MongoDB", fr: "MongoDB ", ja: "MongoDB", ranking: 3 },
+            { "en-GB": "Node.js", fr: "Node.js", ja: "Node.js", ranking: 4 },
+            { "en-GB": "Convex", fr: "Convex", ja: "Convex", ranking: 4 },
+            { "en-GB": "Vercel", fr: "Vercel", ja: "Vercel", ranking: 4 },
+            { "en-GB": "Stripe", fr: "Stripe", ja: "Stripe", ranking: 4 },
+            { "en-GB": "shadcn/ui", fr: "shadcn/ui", ja: "shadcn/ui", ranking: 4 },
             { "en-GB": "Tailwind CSS", fr: "Tailwind CSS ", ja: "Tailwind CSS", ranking: 4 },
-            { "en-GB": "Supabase", fr: "Supabase ", ja: "Supabase", ranking: 3 },
+            { "en-GB": "Supabase", fr: "Supabase ", ja: "Supabase", ranking: 4 },
+            { "en-GB": "MongoDB", fr: "MongoDB ", ja: "MongoDB", ranking: 3 },
         ], links: []
     },
     {
         "en-GB": "Other", fr: "Autre", ja: "他の", subSkills: [
             { "en-GB": "Music production (Ableton)", fr: "Production musical (Ableton)", ja: "音楽制作 (Ableton)", ranking: 5 },
             { "en-GB": "Video Editing (Adobe Premiere)", fr: "Montage Vidéo (Adobe Premiere)", ja: "ビデオ編集（Adobe Premiere）", ranking: 4 },
-            { "en-GB": "Live Concert Production", fr: "Production de concerts", ja: "ライブ制作", ranking: 3 },
+            { "en-GB": "Live Concert Production", fr: "Production de concerts", ja: "ライブ制作", ranking: 4 },
         ], links: []
 
     }];

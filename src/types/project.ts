@@ -9,4 +9,6 @@ export interface Project {
     videoLink?: string;
     tags: string[];
     logo: { light: string, dark: string; },
+    /** Site is down, or the product has been shut down. */
+    status?: "offline" | "inactive";
 };
