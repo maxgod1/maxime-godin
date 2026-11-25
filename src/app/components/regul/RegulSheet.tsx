@@ -1,11 +1,24 @@
 "use client";
 
-import { BackspaceIcon, LockClosedIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BackspaceIcon, LockClosedIcon, TrashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
-import { lockRegul, unlockRegul } from "../../../actions/regulAuth";
 import { cn } from "../../../utils/utils";
+import { RegulInstallHint, RegulIosHint, RegulOffline, useRegulInstall, type RegulInstallState } from "./RegulOffline";
 import {
+  checkRegulCode,
+  getRegulInterval,
+  getRegulSegments,
+  getRegulStep,
+  getRegulUnlocked,
+  setRegulInterval,
+  setRegulSegments,
+  setRegulStep,
+  setRegulUnlocked,
+} from "./regul-store";
+import {
+  appendSegment,
   buildRows,
+  insertSegment,
   formatClock,
   formatCompteur,
   formatInterval,
@@ -18,7 +31,6 @@ import {
   removeSegment,
   secondsPerKmDisplay,
   segmentBounds,
-  splitSegment,
   stepInput,
   stepKm,
   type RegulRow,
@@ -26,93 +38,72 @@ import {
   type SpeedSegment,
 } from "../../../utils/regul-times";
 
-const MOYENNE_KEY = "regul-moyenne";
-const SEGMENTS_KEY = "regul-segments";
-
-const DEFAULT_SEGMENTS: SpeedSegment[] = [{ id: "seg-0", endKm: "", speed: "76" }];
+const DEFAULT_SEGMENTS: SpeedSegment[] = [{ id: "seg-0", endKm: "50", speed: "76" }];
 
 export default function RegulSheet({ initialUnlocked }: { initialUnlocked: boolean }) {
+  const install = useRegulInstall();
   const [unlocked, setUnlocked] = useState(initialUnlocked);
   const [segments, setSegments] = useState<SpeedSegment[]>(DEFAULT_SEGMENTS);
   const [marked, setMarked] = useState<number | null>(null);
-  const [hydrated, setHydrated] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem(SEGMENTS_KEY);
-    const stored = saved ? parseStoredSegments(saved) : null;
-    if (stored) {
-      setSegments(stored);
-    } else {
-      const savedMoyenne = localStorage.getItem(MOYENNE_KEY);
-      if (savedMoyenne) setSegments([{ id: "seg-0", endKm: "", speed: savedMoyenne }]);
-    }
-    localStorage.removeItem("regul-coef");
-    setHydrated(true);
-  }, []);
+    let cancelled = false;
+    void (async () => {
+      const [storedUnlocked, storedSegments] = await Promise.all([getRegulUnlocked(), getRegulSegments()]);
+      if (cancelled) return;
+      const nextUnlocked = storedUnlocked ?? initialUnlocked;
+      if (storedUnlocked === null) void setRegulUnlocked(nextUnlocked);
+      if (storedSegments) setSegments(storedSegments);
+      setUnlocked(nextUnlocked);
+      setReady(true);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [initialUnlocked]);
 
   useEffect(() => {
-    if (!hydrated) return;
-    localStorage.setItem(SEGMENTS_KEY, JSON.stringify(segments));
-    if (segments.length === 1) localStorage.setItem(MOYENNE_KEY, segments[0].speed);
-  }, [hydrated, segments]);
-
-  if (!unlocked) {
-    return (
-      <LockScreen
-        onUnlock={async (code) => {
-          const result = await unlockRegul(code);
-          if (result.ok) setUnlocked(true);
-          return result.ok;
-        }}
-      />
-    );
-  }
+    if (!ready) return;
+    void setRegulSegments(segments);
+  }, [ready, segments]);
 
   return (
-    <Sheet
-      segments={segments}
-      marked={marked}
-      onSegments={setSegments}
-      onMark={setMarked}
-      onLock={async () => {
-        await lockRegul();
-        setUnlocked(false);
-      }}
-    />
+    <>
+      <RegulOffline />
+      {!ready ? (
+        <div className="h-full bg-white" />
+      ) : !unlocked ? (
+        <LockScreen
+          install={install}
+          onUnlock={async (code) => {
+            if (!checkRegulCode(code)) return false;
+            await setRegulUnlocked(true);
+            setUnlocked(true);
+            return true;
+          }}
+        />
+      ) : (
+        <Sheet
+          install={install}
+          segments={segments}
+          marked={marked}
+          onSegments={setSegments}
+          onMark={setMarked}
+          onLock={() => {
+            void setRegulUnlocked(false);
+            setUnlocked(false);
+          }}
+        />
+      )}
+    </>
   );
-}
-
-function parseStoredSegments(raw: string): SpeedSegment[] | null {
-  try {
-    const data = JSON.parse(raw) as unknown;
-    if (!Array.isArray(data) || data.length === 0) return null;
-
-    const segments: SpeedSegment[] = [];
-    for (const item of data) {
-      if (!item || typeof item !== "object") return null;
-      const record = item as Record<string, unknown>;
-      if (typeof record.id !== "string" || typeof record.speed !== "string") return null;
-      segments.push({
-        id: record.id,
-        endKm: typeof record.endKm === "string" ? record.endKm : "",
-        speed: record.speed,
-      });
-    }
-
-    const last = segments.length - 1;
-    segments[last] = { ...segments[last], endKm: "" };
-    return segments;
-  } catch {
-    return null;
-  }
 }
 
 function createSegmentId(): string {
   return `seg-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-const STEP_KEY = "regul-step";
-const INTERVAL_KEY = "regul-interval";
 const INTERVAL_PRESETS = [
   { thousandths: 1000, label: "1 km" },
   { thousandths: 500, label: "500 m" },
@@ -132,7 +123,13 @@ function isUnfinishedDecimal(raw: string): boolean {
   return trimmed === "" || /[.,]$/.test(trimmed);
 }
 
-function LockScreen({ onUnlock }: { onUnlock: (code: string) => Promise<boolean> }) {
+function LockScreen({
+  install,
+  onUnlock,
+}: {
+  install: RegulInstallState;
+  onUnlock: (code: string) => Promise<boolean>;
+}) {
   const [code, setCode] = useState("");
   const [error, setError] = useState(false);
   const [pending, setPending] = useState(false);
@@ -188,6 +185,8 @@ function LockScreen({ onUnlock }: { onUnlock: (code: string) => Promise<boolean>
   return (
     <div className="flex h-full flex-col items-center justify-center bg-white px-6 text-slate-900">
       <h1 className="text-2xl font-bold tracking-tight">Moyennes</h1>
+      <RegulInstallHint install={install} />
+      <RegulIosHint install={install} />
       <div className="mt-6 flex gap-3" aria-label="Code">
         {[0, 1, 2, 3].map((index) => (
           <span
@@ -245,12 +244,14 @@ function KeypadButton({
 }
 
 function Sheet({
+  install,
   segments,
   marked,
   onSegments,
   onMark,
   onLock,
 }: {
+  install: RegulInstallState;
   segments: SpeedSegment[];
   marked: number | null;
   onSegments: (segments: SpeedSegment[]) => void;
@@ -260,7 +261,6 @@ function Sheet({
   const [endDrafts, setEndDrafts] = useState<Record<string, string>>({});
   const [openId, setOpenId] = useState<string | null>(null);
   const [editorOpen, setEditorOpen] = useState(false);
-  const [intervalOpen, setIntervalOpen] = useState(false);
   const [step, setStep] = useState(0.1);
   const [interval, setIntervalThousandths] = useState(200);
   const segmentsRef = useRef(segments);
@@ -274,25 +274,27 @@ function Sheet({
   const perKm = singleSpeed !== null ? secondsPerKmDisplay(singleSpeed) : null;
 
   useEffect(() => {
-    const saved = localStorage.getItem(STEP_KEY);
-    if (saved === "0.01" || saved === "0.1" || saved === "1") setStep(Number(saved));
-    const savedInterval = Number(localStorage.getItem(INTERVAL_KEY));
-    if (Number.isInteger(savedInterval) && parseIntervalThousandths(`${savedInterval} m`)) {
-      setIntervalThousandths(savedInterval);
-    }
+    let cancelled = false;
+    void (async () => {
+      const [savedStep, savedInterval] = await Promise.all([getRegulStep(), getRegulInterval()]);
+      if (cancelled) return;
+      if (savedStep !== null) setStep(savedStep);
+      if (savedInterval !== null && parseIntervalThousandths(`${savedInterval} m`)) setIntervalThousandths(savedInterval);
+    })();
     return () => {
+      cancelled = true;
       Object.values(endTimer.current).forEach((timer) => window.clearTimeout(timer));
     };
   }, []);
 
   function chooseInterval(next: number) {
     setIntervalThousandths(next);
-    localStorage.setItem(INTERVAL_KEY, String(next));
+    void setRegulInterval(next);
   }
 
   function chooseStep(next: number) {
     setStep(next);
-    localStorage.setItem(STEP_KEY, String(next));
+    void setRegulStep(next);
   }
 
   function writeSegments(next: SpeedSegment[]) {
@@ -328,6 +330,13 @@ function Sheet({
     const segment = current.find((item) => item.id === id);
     clearDraft(id);
     if (!bound || !segment || bound.startThousandths < 0 || bound.maxEndThousandths === null) return;
+
+    if (raw.trim() === "") {
+      if (!bound.isLast || segment.endKm === "") return;
+      writeSegments(current.map((item) => (item.id === id ? { ...item, endKm: "" } : item)));
+      return;
+    }
+
     const normalized = normalizeEndKm(raw, bound.startThousandths, bound.maxEndThousandths);
     if (!normalized || normalized === segment.endKm) return;
     writeSegments(current.map((item) => (item.id === id ? { ...item, endKm: normalized } : item)));
@@ -350,16 +359,29 @@ function Sheet({
     const current = segmentsRef.current;
     const bound = segmentBounds(current).find((item) => item.id === id);
     const segment = current.find((item) => item.id === id);
-    if (!bound || !segment || bound.startThousandths < 0 || bound.maxEndThousandths === null) return;
-    const next = stepKm(endLatest.current[id] ?? segment.endKm, delta, bound.startThousandths, bound.maxEndThousandths);
+    if (!bound || !segment || bound.startThousandths < 0) return;
+    const typed = endLatest.current[id];
     clearDraft(id);
+
+    if (bound.maxEndThousandths === null) return;
+    const next = stepKm(typed ?? segment.endKm, delta, bound.startThousandths, bound.maxEndThousandths);
     if (next === segment.endKm) return;
     writeSegments(current.map((item) => (item.id === id ? { ...item, endKm: next } : item)));
   }
 
+  function appendAfter() {
+    const newId = createSegmentId();
+    const next = appendSegment(segmentsRef.current, newId);
+    if (next === segmentsRef.current) return;
+    writeSegments(next);
+    setOpenId(newId);
+  }
+
   function insertAfter(id: string) {
     const newId = createSegmentId();
-    writeSegments(splitSegment(segmentsRef.current, id, newId));
+    const next = insertSegment(segmentsRef.current, id, newId);
+    if (next === segmentsRef.current) return;
+    writeSegments(next);
     setOpenId(newId);
   }
 
@@ -375,6 +397,8 @@ function Sheet({
   }
 
   function closeEditor() {
+    const active = document.activeElement;
+    if (active instanceof HTMLElement) active.blur();
     for (const [id, raw] of Object.entries(endLatest.current)) commitEnd(id, raw);
     setEditorOpen(false);
   }
@@ -399,40 +423,29 @@ function Sheet({
               <p className="mt-1 text-sm font-semibold text-slate-600">{segments.length} tronçons</p>
             )}
           </div>
-          <button
-            type="button"
-            onClick={onLock}
-            aria-label="Verrouiller"
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 touch-manipulation active:bg-slate-200"
-          >
-            <LockClosedIcon className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="mx-auto mt-3 w-full max-w-5xl space-y-2">
           <div className="flex items-center gap-2">
-            <div className="flex h-12 min-w-0 flex-1 items-center justify-between gap-3 rounded-xl bg-slate-100 px-3">
-              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Entre les temps</span>
-              <span className="text-base font-semibold tabular-nums text-slate-900">{formatInterval(interval)}</span>
-            </div>
+            <RegulInstallHint install={install} compact />
             <button
               type="button"
-              onClick={() => setIntervalOpen(true)}
-              aria-label="Modifier l'intervalle entre les temps"
-              className="h-12 shrink-0 rounded-xl bg-slate-900 px-3.5 text-sm font-semibold text-white touch-manipulation active:bg-slate-700"
+              onClick={onLock}
+              aria-label="Verrouiller"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-100 touch-manipulation active:bg-slate-200"
             >
-              Modifier
+              <LockClosedIcon className="h-5 w-5" />
             </button>
           </div>
-          <RangeStrip bounds={bounds} onEdit={() => setEditorOpen(true)} />
+        </div>
+        <RegulIosHint install={install} className="mx-auto mt-2 w-full max-w-5xl text-sm font-medium leading-snug text-slate-600" />
+
+        <div className="mx-auto mt-3 w-full max-w-5xl">
+          <RangeStrip bounds={bounds} interval={interval} onEdit={() => setEditorOpen(true)} />
         </div>
       </div>
 
-      <EditorDialog open={intervalOpen} title="Entre les temps" titleId="regul-interval-title" onClose={() => setIntervalOpen(false)}>
+      <EditorDialog open={editorOpen} title="Moyennes" titleId="regul-ranges-title" tall onClose={closeEditor}>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Entre les temps</p>
         <IntervalControl value={interval} onChange={chooseInterval} />
-      </EditorDialog>
-
-      <EditorDialog open={editorOpen} title="Tronçons" titleId="regul-ranges-title" tall onClose={closeEditor}>
+        <p className="mb-1 mt-4 text-xs font-semibold uppercase tracking-wide text-slate-500">Tronçons</p>
         <StepSize step={step} onChange={chooseStep} />
         <RangeTimeline
           bounds={bounds}
@@ -446,6 +459,7 @@ function Sheet({
           onDraft={editEnd}
           onCommit={commitEnd}
           onStepEnd={stepEnd}
+          onAppend={appendAfter}
           onInsert={insertAfter}
           onRemove={remove}
           onToggle={toggleBand}
@@ -463,34 +477,55 @@ function Sheet({
 
 const RAIL = "3.75rem";
 
-function RangeStrip({ bounds, onEdit }: { bounds: SegmentBound[]; onEdit: () => void }) {
+function RangeStrip({
+  bounds,
+  interval,
+  onEdit,
+}: {
+  bounds: SegmentBound[];
+  interval: number;
+  onEdit: () => void;
+}) {
   const closing = bounds[bounds.length - 1]?.endThousandths ?? -1;
 
   return (
-    <div className="mt-3 flex items-center gap-2">
+    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
       <div className="min-w-0 flex-1 overflow-x-auto overscroll-x-contain">
-        <div className="flex w-max min-w-full px-4 pb-1">
+        <div className="flex w-max min-w-full px-5 pb-1">
+          <div className="relative mr-5 min-w-[6.5rem] flex-1 border-r border-slate-200 pr-4 pt-6 sm:mr-6 sm:max-w-[9rem] sm:min-w-0 sm:pr-5">
+            <span className="absolute left-0 top-0 -translate-x-1/2 text-sm font-semibold tabular-nums leading-none text-slate-700 sm:text-[11px]">0</span>
+            <span aria-hidden className="absolute left-0 top-[1.15rem] z-10 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-white bg-slate-900 sm:top-3.5 sm:h-2.5 sm:w-2.5" />
+            <span aria-hidden className="absolute left-0 right-4 top-6 h-1 bg-slate-300 sm:right-5 sm:top-4 sm:h-0.5" />
+            <span className="absolute right-4 top-0 translate-x-1/2 text-sm font-semibold tabular-nums leading-none text-slate-700 sm:right-5 sm:text-[11px]">
+              {kmTick(interval)}
+            </span>
+            <span aria-hidden className="absolute right-4 top-[1.15rem] z-10 h-3 w-3 translate-x-1/2 rounded-full border-2 border-white bg-slate-900 sm:right-5 sm:top-3.5 sm:h-2.5 sm:w-2.5" />
+            <p className="px-1 pt-4 text-center text-xl font-semibold tabular-nums leading-tight text-slate-900 sm:pt-3 sm:text-sm">
+              {formatInterval(interval)}
+              <span className="mt-0.5 block text-sm font-semibold text-slate-500 sm:text-[11px]">entre les temps</span>
+            </p>
+          </div>
           {bounds.map((bound) => (
             <div
               key={bound.id}
-              className={cn("relative flex-1 pt-5", bounds.length > 4 ? "min-w-[5.5rem]" : "min-w-0")}
+              className={cn("relative flex-1 pt-6", bounds.length > 3 ? "min-w-[7rem]" : "min-w-[6.5rem] sm:min-w-0")}
             >
-              <span className="absolute left-0 top-0 -translate-x-1/2 text-[11px] font-semibold tabular-nums leading-none text-slate-700">
+              <span className="absolute left-0 top-0 -translate-x-1/2 text-sm font-semibold tabular-nums leading-none text-slate-700 sm:text-[11px]">
                 {kmTick(bound.startThousandths)}
               </span>
-              <span aria-hidden className="absolute left-0 top-3.5 z-10 h-2.5 w-2.5 -translate-x-1/2 rounded-full border-2 border-white bg-slate-900" />
-              <span aria-hidden className={cn("absolute left-0 right-0 top-4 h-0.5", zoneRail(bound.index))} />
-              {bound.isLast ? (
+              <span aria-hidden className="absolute left-0 top-[1.15rem] z-10 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-white bg-slate-900 sm:top-3.5 sm:h-2.5 sm:w-2.5" />
+              <span aria-hidden className={cn("absolute left-0 right-0 top-6 h-1 sm:top-4 sm:h-0.5", zoneRail(bound.index))} />
+              {bound.isLast && closing >= 0 ? (
                 <>
-                  <span className="absolute right-0 top-0 translate-x-1/2 text-[11px] font-semibold tabular-nums leading-none text-slate-700">
+                  <span className="absolute right-0 top-0 translate-x-1/2 text-sm font-semibold tabular-nums leading-none text-slate-700 sm:text-[11px]">
                     {kmTick(closing)}
                   </span>
-                  <span aria-hidden className="absolute right-0 top-3.5 z-10 h-2.5 w-2.5 translate-x-1/2 rounded-full border-2 border-white bg-slate-900" />
+                  <span aria-hidden className="absolute right-0 top-[1.15rem] z-10 h-3 w-3 translate-x-1/2 rounded-full border-2 border-white bg-slate-900 sm:top-3.5 sm:h-2.5 sm:w-2.5" />
                 </>
               ) : null}
-              <p className="px-1 pt-3 text-center text-sm font-semibold tabular-nums leading-tight text-slate-900">
+              <p className="px-1 pt-4 text-center text-xl font-semibold tabular-nums leading-tight text-slate-900 sm:pt-3 sm:text-sm">
                 {bound.speedMilli === null ? bound.speed || "—" : formatMilli(bound.speedMilli)}
-                <span className="mt-0.5 block text-[11px] font-semibold text-slate-500">
+                <span className="mt-0.5 block text-sm font-semibold text-slate-500 sm:text-[11px]">
                   {bound.perKm ?? "—"} s/km
                 </span>
               </p>
@@ -501,8 +536,8 @@ function RangeStrip({ bounds, onEdit }: { bounds: SegmentBound[]; onEdit: () => 
       <button
         type="button"
         onClick={onEdit}
-        aria-label="Modifier les tronçons"
-        className="h-12 shrink-0 rounded-xl bg-slate-900 px-3.5 text-sm font-semibold text-white touch-manipulation active:bg-slate-700"
+        aria-label="Modifier l'intervalle et les tronçons"
+        className="h-14 w-full shrink-0 rounded-xl bg-slate-900 text-base font-semibold text-white touch-manipulation active:bg-slate-700 sm:h-12 sm:w-auto sm:px-3.5 sm:text-sm"
       >
         Modifier
       </button>
@@ -582,6 +617,7 @@ function RangeTimeline({
   onDraft,
   onCommit,
   onStepEnd,
+  onAppend,
   onInsert,
   onRemove,
   onToggle,
@@ -597,6 +633,7 @@ function RangeTimeline({
   onDraft: (id: string, value: string) => void;
   onCommit: (id: string, raw: string) => void;
   onStepEnd: (id: string, delta: number) => void;
+  onAppend: () => void;
   onInsert: (id: string) => void;
   onRemove: (id: string) => void;
   onToggle: (id: string) => void;
@@ -607,16 +644,30 @@ function RangeTimeline({
     <div className="mt-3">
       <div className="relative">
         <div aria-hidden className="pointer-events-none absolute bottom-2.5 top-2.5 w-px -translate-x-1/2 bg-slate-300" style={{ left: RAIL }} />
-        {bounds.map((bound) => (
+        {bounds.map((bound) => {
+          const segment = segments[bound.index];
+
+          return (
           <Fragment key={bound.id}>
-            <KmMark thousandths={bound.startThousandths} unit={bound.index === 0} />
+            <KmMark
+              thousandths={bound.startThousandths}
+              unit={bound.index === 0}
+              plus={
+                bound.index > 0 &&
+                bound.startThousandths >= 0 &&
+                bound.endThousandths !== null &&
+                bound.endThousandths - bound.startThousandths >= 2
+                  ? { label: "Insérer un tronçon", onClick: () => onInsert(bounds[bound.index - 1].id) }
+                  : undefined
+              }
+            />
             <div className="grid grid-cols-[3.75rem_minmax(0,1fr)]">
               <div />
               <div className="py-1.5 pl-3">
                 {openId === bound.id ? (
                   <SegmentCard
                     bound={bound}
-                    segment={segments[bound.index]}
+                    segment={segment}
                     draft={drafts[bound.id]}
                     step={step}
                     canRemove={canRemove}
@@ -626,7 +677,6 @@ function RangeTimeline({
                     onDraft={(value) => onDraft(bound.id, value)}
                     onCommit={(raw) => onCommit(bound.id, raw)}
                     onStep={(delta) => onStepEnd(bound.id, delta)}
-                    onInsert={() => onInsert(bound.id)}
                     onRemove={() => onRemove(bound.id)}
                     onClose={() => onToggle(bound.id)}
                   />
@@ -641,51 +691,77 @@ function RangeTimeline({
                       zoneBorder(bound.index)
                     )}
                   >
+                    <span className="text-base font-semibold tabular-nums text-slate-900">
+                      {bandSpan(bound)}
+                    </span>
                     <span className="text-lg font-semibold tabular-nums text-slate-900">
                       {bound.speedMilli === null ? bound.speed || "—" : formatMilli(bound.speedMilli)}
                       <span className="ml-1 text-sm font-semibold text-slate-500">km/h</span>
-                    </span>
-                    <span className="text-sm font-semibold tabular-nums text-slate-600">
-                      {bound.perKm ?? "—"}
-                      <span className="ml-1 text-slate-400">s/km</span>
                     </span>
                   </button>
                 )}
               </div>
             </div>
           </Fragment>
-        ))}
-        <KmMark thousandths={closing} />
+          );
+        })}
+        {closing >= 0 ? (
+          <KmMark
+            thousandths={closing}
+            plus={{ label: "Ajouter un tronçon", onClick: onAppend }}
+          />
+        ) : null}
       </div>
-      <button
-        type="button"
-        onClick={() => onInsert(bounds[bounds.length - 1]?.id ?? "")}
-        disabled={!bounds[bounds.length - 1]?.canSplit}
-        className="mt-2 h-12 w-full rounded-xl bg-slate-900 text-base font-semibold text-white touch-manipulation active:bg-slate-700 disabled:opacity-40"
-      >
-        Ajouter un tronçon
-      </button>
     </div>
   );
+}
+
+function KmMark({
+  thousandths,
+  unit = false,
+  plus,
+}: {
+  thousandths: number;
+  unit?: boolean;
+  plus?: { label: string; onClick: () => void };
+}) {
+  const label = thousandths < 0 ? "—" : formatKmPrecise(thousandths);
+
+  return (
+    <div className="relative grid h-10 grid-cols-[3.75rem_minmax(0,1fr)] items-center">
+      <span className="pr-3 text-right text-xs font-semibold tabular-nums text-slate-800">{label}</span>
+      <span aria-hidden className="absolute top-1/2 z-10 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-slate-900" style={{ left: RAIL }} />
+      <span className="flex items-center gap-2 pl-3">
+        {plus ? (
+          <button
+            type="button"
+            aria-label={plus.label}
+            onClick={plus.onClick}
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-lg font-semibold leading-none text-slate-700 ring-1 ring-slate-300 touch-manipulation active:bg-slate-100"
+          >
+            +
+          </button>
+        ) : null}
+        {unit ? <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">km</span> : null}
+      </span>
+    </div>
+  );
+}
+
+function bandSpan(bound: SegmentBound): string {
+  const from = bound.startThousandths < 0 ? null : formatKmPrecise(bound.startThousandths);
+  const to = bound.endThousandths === null ? null : formatKmPrecise(bound.endThousandths);
+  if (from === null) return "— km";
+  if (to === null) return `Dès ${from} km`;
+  return `${from}-${to} km`;
 }
 
 function bandLabel(bound: SegmentBound): string {
   const from = bound.startThousandths < 0 ? null : formatKmPrecise(bound.startThousandths);
   const to = bound.endThousandths === null ? null : formatKmPrecise(bound.endThousandths);
-  if (from === null || to === null) return "Tronçon";
+  if (from === null) return "Tronçon";
+  if (to === null) return `Tronçon à partir de ${from} km`;
   return `Tronçon de ${from} à ${to} km`;
-}
-
-function KmMark({ thousandths, unit = false }: { thousandths: number; unit?: boolean }) {
-  const label = thousandths < 0 ? "—" : formatKmPrecise(thousandths);
-
-  return (
-    <div className="relative grid h-6 grid-cols-[3.75rem_minmax(0,1fr)] items-center">
-      <span className="pr-3 text-right text-xs font-semibold tabular-nums text-slate-800">{label}</span>
-      <span aria-hidden className="absolute top-1/2 z-10 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-slate-900" style={{ left: RAIL }} />
-      {unit ? <span className="pl-3 text-[11px] font-semibold uppercase tracking-wide text-slate-400">km</span> : <span />}
-    </div>
-  );
 }
 
 function IntervalControl({ value, onChange }: { value: number; onChange: (thousandths: number) => void }) {
@@ -793,7 +869,6 @@ function SegmentCard({
   onDraft,
   onCommit,
   onStep,
-  onInsert,
   onRemove,
   onClose,
 }: {
@@ -808,40 +883,29 @@ function SegmentCard({
   onDraft: (value: string) => void;
   onCommit: (raw: string) => void;
   onStep: (delta: number) => void;
-  onInsert: () => void;
   onRemove: () => void;
   onClose: () => void;
 }) {
+  const fromLabel = bound.startThousandths < 0 ? "—" : formatKmPrecise(bound.startThousandths);
+  const endMax = bound.maxEndThousandths;
   const draftInvalid =
     draft !== undefined &&
     draft.trim() !== "" &&
     !draft.trim().endsWith(".") &&
-    (bound.startThousandths < 0 ||
-      bound.maxEndThousandths === null ||
-      normalizeEndKm(draft, bound.startThousandths, bound.maxEndThousandths) === null);
-
-  const showInsert = !bound.isLast && bound.canSplit;
+    (bound.startThousandths < 0 || endMax === null || normalizeEndKm(draft, bound.startThousandths, endMax) === null);
 
   return (
     <div className={cn("rounded-2xl border border-slate-200 border-l-4 bg-slate-50 p-2.5", zoneBorder(bound.index))}>
-      {showInsert || canRemove || collapsible ? (
+      {canRemove || collapsible ? (
         <div className="mb-2 flex items-center justify-end gap-1.5">
           {collapsible ? (
             <button
               type="button"
               onClick={onClose}
-              className="mr-auto h-10 rounded-xl px-2 text-sm font-semibold text-slate-500 touch-manipulation active:text-slate-800"
+              aria-label="Fermer le tronçon"
+              className="mr-auto flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-700 ring-1 ring-slate-200 touch-manipulation active:bg-slate-100"
             >
-              Fermer
-            </button>
-          ) : null}
-          {showInsert ? (
-            <button
-              type="button"
-              onClick={onInsert}
-              className="h-10 rounded-xl bg-white px-3 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 touch-manipulation active:bg-slate-100"
-            >
-              Insérer
+              <XMarkIcon className="h-5 w-5" />
             </button>
           ) : null}
           {canRemove ? (
@@ -851,28 +915,27 @@ function SegmentCard({
               aria-label="Retirer le tronçon"
               className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-slate-700 ring-1 ring-slate-200 touch-manipulation active:bg-slate-100"
             >
-              <XMarkIcon className="h-5 w-5" />
+              <TrashIcon className="h-5 w-5" />
             </button>
           ) : null}
         </div>
       ) : null}
 
-      {!bound.isLast ? (
-        <Stepper
-          id={`end-${bound.id}`}
-          label="Jusqu'à km"
-          value={draft ?? segment.endKm}
-          step={step}
-          invalid={draftInvalid}
-          onChange={onDraft}
-          onBlur={onCommit}
-          onStep={onStep}
-          decreaseLabel="Reculer la fin du tronçon"
-          increaseLabel="Avancer la fin du tronçon"
-        />
-      ) : null}
+      <Stepper
+        id={`end-${segment.id}`}
+        label={`De ${fromLabel} à`}
+        value={draft ?? segment.endKm}
+        step={step}
+        invalid={draftInvalid}
+        aside={<span className="text-sm font-semibold text-slate-500">km</span>}
+        onChange={onDraft}
+        onBlur={onCommit}
+        onStep={onStep}
+        decreaseLabel="Reculer la fin du tronçon"
+        increaseLabel="Avancer la fin du tronçon"
+      />
 
-      <div className={cn(!bound.isLast && "mt-3")}>
+      <div className="mt-3">
         <Stepper
           id={`speed-${bound.id}`}
           label="Moyenne km/h"
@@ -907,6 +970,7 @@ function Stepper({
   aside,
   invalid = false,
   step = 0.1,
+  placeholder,
 }: {
   id: string;
   label: string;
@@ -919,6 +983,7 @@ function Stepper({
   aside?: React.ReactNode;
   invalid?: boolean;
   step?: number;
+  placeholder?: string;
 }) {
   const stepRef = useRef(step);
   const onStepRef = useRef(onStep);
@@ -986,6 +1051,7 @@ function Stepper({
           inputMode="decimal"
           enterKeyHint="done"
           autoComplete="off"
+          placeholder={placeholder}
           className={cn(
             "h-14 min-w-0 flex-1 rounded-xl border bg-white px-3 text-center text-2xl font-semibold tabular-nums text-slate-900 outline-none",
             invalid ? "border-red-500 focus:border-red-500" : "border-slate-300 focus:border-slate-900"
@@ -1083,15 +1149,15 @@ function TimeTable({
       </caption>
       <thead className="sticky top-0 z-10 bg-slate-900 text-white">
         <tr>
-          <th scope="col" className="w-[22%] px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide">
+          <th scope="col" className="w-[22%] px-3 py-2.5 text-left text-sm font-semibold uppercase tracking-wide sm:py-2 sm:text-xs">
             km
           </th>
-          <th scope="col" className="w-[30%] px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide">
+          <th scope="col" className="w-[28%] px-3 py-2.5 text-left text-sm font-semibold uppercase tracking-wide sm:w-[30%] sm:py-2 sm:text-xs">
             Compteur
           </th>
-          <th scope="col" className="w-[48%] px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide">
+          <th scope="col" className="w-[50%] px-3 py-2.5 text-right text-sm font-semibold uppercase tracking-wide sm:w-[48%] sm:py-2 sm:text-xs">
             Temps
-            <span className="mt-0.5 block text-[10px] font-normal normal-case tracking-normal text-white/70">h:m:s</span>
+            <span className="mt-0.5 block text-xs font-normal normal-case tracking-normal text-white/70 sm:text-[10px]">h:m:s</span>
           </th>
         </tr>
       </thead>
@@ -1105,7 +1171,7 @@ function TimeTable({
             <Fragment key={row.thousandths}>
               {row.banner ? (
                 <tr className="bg-slate-900 text-white">
-                  <td colSpan={3} className="px-3 py-2 text-sm font-semibold tabular-nums">
+                  <td colSpan={3} className="px-3 py-2.5 text-base font-semibold tabular-nums sm:py-2 sm:text-sm">
                     {row.banner}
                   </td>
                 </tr>
@@ -1124,11 +1190,11 @@ function TimeTable({
                       )
                 )}
               >
-                <td className={cn("px-3 py-2.5 text-base tabular-nums", wholeKm && "font-bold")}>
+                <td className={cn("px-3 py-3.5 text-xl tabular-nums sm:py-2.5 sm:text-base", wholeKm && "font-bold")}>
                   {formatKmPrecise(row.thousandths)}
                 </td>
-                <td className="px-3 py-2.5 text-base tabular-nums text-slate-500">{formatCompteur(row.thousandths)}</td>
-                <td className="px-3 py-2.5 text-right text-xl font-bold tabular-nums tracking-tight">
+                <td className="px-3 py-3.5 text-lg tabular-nums text-slate-500 sm:py-2.5 sm:text-base">{formatCompteur(row.thousandths)}</td>
+                <td className="px-3 py-3.5 text-right text-3xl font-bold tabular-nums tracking-tight sm:py-2.5 sm:text-xl">
                   {row.seconds === null ? "—" : formatClock(row.seconds)}
                 </td>
               </tr>

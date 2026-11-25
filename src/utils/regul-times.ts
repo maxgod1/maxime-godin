@@ -1,5 +1,6 @@
 export const STEP_KM = 0.2;
-export const MAX_KM = 50;
+/** Safety ceiling for a typed end. The sheet itself stops at the last end that was entered. */
+export const MAX_KM = 999;
 
 const STEP_COUNT = Math.round(MAX_KM / STEP_KM);
 const ZERO = BigInt(0);
@@ -21,7 +22,7 @@ export type RegulRow = {
   banner: string | null;
 };
 
-/** One imposed average. The last segment's endKm is "" and runs to MAX_KM. */
+/** One imposed average, from the previous end (or 0) up to endKm. An empty end stops the sheet. */
 export type SpeedSegment = {
   id: string;
   endKm: string;
@@ -46,8 +47,6 @@ export type SegmentBound = {
   speed: string;
   speedMilli: Milli | null;
   perKm: string | null;
-  canSplit: boolean;
-  splitAt: string | null;
 };
 
 /** Fixed-point value in thousandths, e.g. 76 -> 76000, 1.01 -> 1010. */
@@ -119,13 +118,9 @@ export function segmentBounds(segments: SpeedSegment[]): SegmentBound[] {
     let endThousandths: number | null = null;
 
     if (!blocked) {
-      if (isLast) {
-        endThousandths = MAX_THOUSANDTHS;
-      } else {
-        const parsed = parseKmThousandths(segment.endKm);
-        if (parsed !== null && parsed > cursor && parsed < MAX_THOUSANDTHS) {
-          endThousandths = parsed;
-        }
+      const parsed = parseKmThousandths(segment.endKm);
+      if (parsed !== null && parsed > cursor && parsed <= MAX_THOUSANDTHS) {
+        endThousandths = parsed;
       }
     }
 
@@ -139,8 +134,6 @@ export function segmentBounds(segments: SpeedSegment[]): SegmentBound[] {
       speed: segment.speed,
       speedMilli,
       perKm: speedMilli ? secondsPerKmDisplay(speedMilli) : null,
-      canSplit: false,
-      splitAt: null,
     });
 
     if (blocked) return;
@@ -152,21 +145,12 @@ export function segmentBounds(segments: SpeedSegment[]): SegmentBound[] {
   });
 
   bounds.forEach((bound, index) => {
-    const end = bound.endThousandths;
     const start = bound.startThousandths;
-    if (start < 0 || end === null) return;
+    if (start < 0) return;
 
-    if (!bound.isLast) {
-      const nextEnd = bounds[index + 1]?.endThousandths ?? MAX_THOUSANDTHS;
-      const maxEnd = nextEnd - 1;
-      bound.maxEndThousandths = maxEnd > start ? maxEnd : null;
-    }
-
-    const split = suggestSplitThousandths(start, end);
-    if (split !== null) {
-      bound.canSplit = true;
-      bound.splitAt = formatKmPrecise(split);
-    }
+    const nextEnd = bound.isLast ? null : bounds[index + 1]?.endThousandths;
+    const ceiling = nextEnd === null || nextEnd === undefined ? MAX_THOUSANDTHS : nextEnd - 1;
+    bound.maxEndThousandths = ceiling > start ? ceiling : null;
   });
 
   return bounds;
@@ -195,12 +179,12 @@ export function normalizeEndKm(raw: string, minExclusive: number, maxInclusive: 
   return formatKmPrecise(parsed);
 }
 
-/** Step a boundary by whole kilometers, staying inside (min, max]. */
+/** Step an end, staying inside (min, max]. An empty field starts from min. */
 export function stepKm(current: string, deltaKm: number, minExclusive: number, maxInclusive: number): string {
-  const fallback = Math.min(maxInclusive, minExclusive + 5000);
   const base = parseKmThousandths(current);
-  const origin = base === null || base <= minExclusive || base > maxInclusive ? fallback : base;
-  if (origin <= minExclusive || origin > maxInclusive) return current;
+  let origin = base === null ? minExclusive : base;
+  if (origin > maxInclusive) origin = maxInclusive;
+  if (origin < minExclusive) origin = minExclusive;
 
   let next = origin + Math.round(deltaKm * Number(SCALE));
   if (next <= minExclusive) return current;
@@ -209,31 +193,46 @@ export function stepKm(current: string, deltaKm: number, minExclusive: number, m
   return formatKmPrecise(next);
 }
 
-export function splitSegment(segments: SpeedSegment[], id: string, newId: string): SpeedSegment[] {
-  const bound = segmentBounds(segments).find((item) => item.id === id);
-  if (!bound?.canSplit || !bound.splitAt) return segments;
+/** Add the next tronçon after the last end. Its start is that end, and its own end is still blank. */
+export function appendSegment(segments: SpeedSegment[], newId: string): SpeedSegment[] {
+  const last = segmentBounds(segments).at(-1);
+  if (!last || last.endThousandths === null || last.endThousandths >= MAX_THOUSANDTHS) return segments;
+  const speed = segments[segments.length - 1]?.speed || "76";
+  return [...segments, { id: newId, endKm: "", speed }];
+}
 
-  const current = segments[bound.index];
-  const inserted: SpeedSegment = {
-    id: newId,
-    endKm: current.endKm,
-    speed: current.speed,
-  };
+/** A cut 5 km after the start, or the middle when the gap is shorter. */
+function suggestCut(start: number, end: number): number | null {
+  if (end - start < 2) return null;
+  const preferred = start + 5000;
+  if (preferred < end) return preferred;
+  const mid = start + Math.floor((end - start) / 2);
+  const rounded = Math.round(mid / 100) * 100;
+  if (rounded > start && rounded < end) return rounded;
+  if (mid > start && mid < end) return mid;
+  return null;
+}
 
+/** Insert a tronçon after this one. It starts at this end and stops before the following end. */
+export function insertSegment(segments: SpeedSegment[], afterId: string, newId: string): SpeedSegment[] {
+  const bounds = segmentBounds(segments);
+  const after = bounds.find((bound) => bound.id === afterId);
+  if (!after || after.isLast || after.endThousandths === null) return segments;
+  const next = bounds[after.index + 1];
+  if (!next || next.endThousandths === null || next.startThousandths !== after.endThousandths) return segments;
+  const cut = suggestCut(after.endThousandths, next.endThousandths);
+  if (cut === null) return segments;
+  const speed = segments[next.index]?.speed || "76";
   return [
-    ...segments.slice(0, bound.index),
-    { ...current, endKm: bound.splitAt },
-    inserted,
-    ...segments.slice(bound.index + 1),
+    ...segments.slice(0, after.index + 1),
+    { id: newId, endKm: formatKmPrecise(cut), speed },
+    ...segments.slice(after.index + 1),
   ];
 }
 
 export function removeSegment(segments: SpeedSegment[], id: string): SpeedSegment[] {
   if (segments.length <= 1) return segments;
-  const next = segments.filter((segment) => segment.id !== id);
-  const last = next.length - 1;
-  next[last] = { ...next[last], endKm: "" };
-  return next;
+  return segments.filter((segment) => segment.id !== id);
 }
 
 export const DEFAULT_INTERVAL_THOUSANDTHS = 200;
@@ -279,10 +278,11 @@ function clampInterval(thousandths: number): number | null {
 export function buildRows(segments: SpeedSegment[], intervalThousandths = DEFAULT_INTERVAL_THOUSANDTHS): RegulRow[] {
   const interval = clampInterval(intervalThousandths) ?? DEFAULT_INTERVAL_THOUSANDTHS;
   const zones = resolveSegments(segments);
+  const sheetEnd = zones.at(-1)?.endThousandths ?? 0;
   const rows: RegulRow[] = [];
   let previousZone = -1;
 
-  for (let thousandths = interval; thousandths <= MAX_THOUSANDTHS; thousandths += interval) {
+  for (let thousandths = interval; thousandths <= sheetEnd; thousandths += interval) {
     const km = thousandths / 1000;
     const zoneIndex = zoneAt(thousandths, zones);
     const seconds = zoneIndex < 0 ? null : Number(cumulativeSeconds(thousandths, zones));
@@ -349,20 +349,6 @@ function zoneAt(thousandths: number, zones: ResolvedSegment[]): number {
     if (thousandths < zone.endThousandths || thousandths === zone.endThousandths) return index;
   }
   return -1;
-}
-
-/** Prefer a cut 5 km after the start. Otherwise cut near the middle, on a tenth when that fits. */
-function suggestSplitThousandths(start: number, end: number): number | null {
-  if (end - start < 2) return null;
-
-  const preferred = start + 5000;
-  if (preferred < end) return preferred;
-
-  const mid = start + Math.floor((end - start) / 2);
-  const rounded = Math.round(mid / 100) * 100;
-  if (rounded > start && rounded < end) return rounded;
-  if (mid > start && mid < end) return mid;
-  return null;
 }
 
 function gcd(a: bigint, b: bigint): bigint {
