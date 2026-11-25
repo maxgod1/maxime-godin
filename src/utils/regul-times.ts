@@ -11,9 +11,43 @@ const THREE_SIX_HUNDRED = BigInt(3600);
 const SCALE = BigInt(1000);
 
 export type RegulRow = {
-  hundredths: number;
+  /** Distance from the start, in thousandths of a kilometer (1 = 1 m). */
+  thousandths: number;
   km: number;
   seconds: number | null;
+  /** -1 when this distance has no usable moyenne. */
+  zoneIndex: number;
+  /** Set on the first row that enters a new tronçon, when there is more than one. */
+  banner: string | null;
+};
+
+/** One imposed average. The last segment's endKm is "" and runs to MAX_KM. */
+export type SpeedSegment = {
+  id: string;
+  endKm: string;
+  speed: string;
+};
+
+export type ResolvedSegment = {
+  startThousandths: number;
+  endThousandths: number;
+  speedMilli: Milli;
+};
+
+export type SegmentBound = {
+  id: string;
+  index: number;
+  isLast: boolean;
+  /** -1 when a previous boundary is invalid and this start is unknown. */
+  startThousandths: number;
+  endThousandths: number | null;
+  /** Highest end still leaving the next tronçon at least 0.001 km. */
+  maxEndThousandths: number | null;
+  speed: string;
+  speedMilli: Milli | null;
+  perKm: string | null;
+  canSplit: boolean;
+  splitAt: string | null;
 };
 
 /** Fixed-point value in thousandths, e.g. 76 -> 76000, 1.01 -> 1010. */
@@ -59,17 +93,212 @@ export function secondsPerKmDisplay(avgMilli: Milli): string {
   return `${whole}.${frac}`;
 }
 
-export function buildRows(avgMilli: Milli | null): RegulRow[] {
-  const rows: RegulRow[] = [];
+const MAX_THOUSANDTHS = MAX_KM * Number(SCALE);
+const TEN = BigInt(10);
 
-  for (let step = 1; step <= STEP_COUNT; step++) {
-    const hundredths = step * 20;
-    const km = hundredths / 100;
-    rows.push({
-      hundredths,
-      km,
-      seconds: avgMilli === null ? null : Number(secondsAtHundredths(BigInt(hundredths), avgMilli)),
+/** Kilometers as thousandths (1 = 0.001 km). Three decimal places, same as the moyennes. */
+export function parseKmThousandths(raw: string): number | null {
+  const milli = parseMilli(raw);
+  if (milli === null || milli > BigInt(MAX_THOUSANDTHS)) return null;
+  return Number(milli);
+}
+
+export function formatKmPrecise(thousandths: number): string {
+  return formatMilli(BigInt(Math.round(thousandths)));
+}
+
+export function segmentBounds(segments: SpeedSegment[]): SegmentBound[] {
+  const bounds: SegmentBound[] = [];
+  let cursor = 0;
+  let blocked = false;
+
+  segments.forEach((segment, index) => {
+    const isLast = index === segments.length - 1;
+    const speedMilli = parseMilli(segment.speed);
+    const startThousandths = blocked ? -1 : cursor;
+    let endThousandths: number | null = null;
+
+    if (!blocked) {
+      if (isLast) {
+        endThousandths = MAX_THOUSANDTHS;
+      } else {
+        const parsed = parseKmThousandths(segment.endKm);
+        if (parsed !== null && parsed > cursor && parsed < MAX_THOUSANDTHS) {
+          endThousandths = parsed;
+        }
+      }
+    }
+
+    bounds.push({
+      id: segment.id,
+      index,
+      isLast,
+      startThousandths,
+      endThousandths,
+      maxEndThousandths: null,
+      speed: segment.speed,
+      speedMilli,
+      perKm: speedMilli ? secondsPerKmDisplay(speedMilli) : null,
+      canSplit: false,
+      splitAt: null,
     });
+
+    if (blocked) return;
+    if (endThousandths === null) {
+      blocked = true;
+      return;
+    }
+    cursor = endThousandths;
+  });
+
+  bounds.forEach((bound, index) => {
+    const end = bound.endThousandths;
+    const start = bound.startThousandths;
+    if (start < 0 || end === null) return;
+
+    if (!bound.isLast) {
+      const nextEnd = bounds[index + 1]?.endThousandths ?? MAX_THOUSANDTHS;
+      const maxEnd = nextEnd - 1;
+      bound.maxEndThousandths = maxEnd > start ? maxEnd : null;
+    }
+
+    const split = suggestSplitThousandths(start, end);
+    if (split !== null) {
+      bound.canSplit = true;
+      bound.splitAt = formatKmPrecise(split);
+    }
+  });
+
+  return bounds;
+}
+
+export function resolveSegments(segments: SpeedSegment[]): ResolvedSegment[] {
+  const zones: ResolvedSegment[] = [];
+
+  for (const bound of segmentBounds(segments)) {
+    if (bound.startThousandths < 0 || bound.endThousandths === null || bound.speedMilli === null) break;
+    if (bound.endThousandths <= bound.startThousandths) break;
+    zones.push({
+      startThousandths: bound.startThousandths,
+      endThousandths: bound.endThousandths,
+      speedMilli: bound.speedMilli,
+    });
+  }
+
+  return zones;
+}
+
+/** Commit a typed end. Returns null when it is not strictly inside (min, max]. */
+export function normalizeEndKm(raw: string, minExclusive: number, maxInclusive: number): string | null {
+  const parsed = parseKmThousandths(raw);
+  if (parsed === null || parsed <= minExclusive || parsed > maxInclusive) return null;
+  return formatKmPrecise(parsed);
+}
+
+/** Step a boundary by whole kilometers, staying inside (min, max]. */
+export function stepKm(current: string, deltaKm: number, minExclusive: number, maxInclusive: number): string {
+  const fallback = Math.min(maxInclusive, minExclusive + 5000);
+  const base = parseKmThousandths(current);
+  const origin = base === null || base <= minExclusive || base > maxInclusive ? fallback : base;
+  if (origin <= minExclusive || origin > maxInclusive) return current;
+
+  let next = origin + Math.round(deltaKm * Number(SCALE));
+  if (next <= minExclusive) return current;
+  if (next > maxInclusive) next = maxInclusive;
+  if (next <= minExclusive) return current;
+  return formatKmPrecise(next);
+}
+
+export function splitSegment(segments: SpeedSegment[], id: string, newId: string): SpeedSegment[] {
+  const bound = segmentBounds(segments).find((item) => item.id === id);
+  if (!bound?.canSplit || !bound.splitAt) return segments;
+
+  const current = segments[bound.index];
+  const inserted: SpeedSegment = {
+    id: newId,
+    endKm: current.endKm,
+    speed: current.speed,
+  };
+
+  return [
+    ...segments.slice(0, bound.index),
+    { ...current, endKm: bound.splitAt },
+    inserted,
+    ...segments.slice(bound.index + 1),
+  ];
+}
+
+export function removeSegment(segments: SpeedSegment[], id: string): SpeedSegment[] {
+  if (segments.length <= 1) return segments;
+  const next = segments.filter((segment) => segment.id !== id);
+  const last = next.length - 1;
+  next[last] = { ...next[last], endKm: "" };
+  return next;
+}
+
+export const DEFAULT_INTERVAL_THOUSANDTHS = 200;
+const MIN_INTERVAL_THOUSANDTHS = 10;
+
+/**
+ * Gap between time rows.
+ * "1", "1 km" and "0.5" are kilometers. "200", "500 m" and "1.5 km" too when the unit is written.
+ * A bare number of 10 or more is meters, so 200 means 200 m and 1 means 1 km.
+ */
+export function parseIntervalThousandths(raw: string): number | null {
+  const cleaned = raw.trim().toLowerCase().replace(/\s+/g, "");
+  if (!cleaned || /[.,]$/.test(cleaned)) return null;
+
+  const km = cleaned.match(/^(\d+(?:[.,]\d+)?)km$/);
+  const meters = cleaned.match(/^(\d+(?:[.,]\d+)?)m$/);
+  if (km) return clampInterval(Number(km[1].replace(",", ".")) * 1000);
+  if (meters) return clampInterval(Number(meters[1].replace(",", ".")));
+
+  const plain = Number(cleaned.replace(",", "."));
+  if (!Number.isFinite(plain)) return null;
+  return clampInterval(plain >= 10 ? plain : plain * 1000);
+}
+
+export function formatInterval(thousandths: number): string {
+  if (thousandths % 1000 === 0) return `${thousandths / 1000} km`;
+  if (thousandths > 1000 && thousandths % 100 === 0) return `${(thousandths / 1000).toFixed(1)} km`;
+  return `${thousandths} m`;
+}
+
+export function formatCompteur(thousandths: number): string {
+  const decimals = thousandths % 10 === 0 ? 2 : 3;
+  return (thousandths / 1000).toFixed(decimals);
+}
+
+function clampInterval(thousandths: number): number | null {
+  if (!Number.isFinite(thousandths)) return null;
+  const rounded = Math.round(thousandths);
+  if (rounded < MIN_INTERVAL_THOUSANDTHS || rounded > MAX_THOUSANDTHS) return null;
+  return rounded;
+}
+
+export function buildRows(segments: SpeedSegment[], intervalThousandths = DEFAULT_INTERVAL_THOUSANDTHS): RegulRow[] {
+  const interval = clampInterval(intervalThousandths) ?? DEFAULT_INTERVAL_THOUSANDTHS;
+  const zones = resolveSegments(segments);
+  const rows: RegulRow[] = [];
+  let previousZone = -1;
+
+  for (let thousandths = interval; thousandths <= MAX_THOUSANDTHS; thousandths += interval) {
+    const km = thousandths / 1000;
+    const zoneIndex = zoneAt(thousandths, zones);
+    const seconds = zoneIndex < 0 ? null : Number(cumulativeSeconds(thousandths, zones));
+    let banner: string | null = null;
+
+    if (zones.length > 1 && zoneIndex > 0 && zoneIndex !== previousZone) {
+      const zone = zones[zoneIndex];
+      const previous = zones[zoneIndex - 1];
+      if (zone.speedMilli !== previous.speedMilli) {
+        banner = `Dès ${formatKmPrecise(zone.startThousandths)} km, ${formatMilli(zone.speedMilli)} km/h`;
+      }
+    }
+
+    if (zoneIndex >= 0) previousZone = zoneIndex;
+
+    rows.push({ thousandths, km, seconds, zoneIndex, banner });
   }
 
   return rows;
@@ -82,6 +311,69 @@ export function buildRows(avgMilli: Milli | null): RegulRow[] {
  */
 export function secondsAtHundredths(hundredths: bigint, avgMilli: Milli): bigint {
   return divRound(hundredths * THIRTY_SIX * SCALE, avgMilli);
+}
+
+/**
+ * Cumulative time across tronçons.
+ * Each piece is km * 3600 / avg. The pieces are summed exactly, then rounded once,
+ * so a single tronçon matches secondsAtHundredths.
+ */
+function cumulativeSeconds(thousandths: number, zones: ResolvedSegment[]): bigint {
+  let numer = ZERO;
+  let denom = ONE;
+
+  for (const zone of zones) {
+    if (thousandths <= zone.startThousandths) break;
+    const end = thousandths < zone.endThousandths ? thousandths : zone.endThousandths;
+    const delta = end - zone.startThousandths;
+    if (delta <= 0) continue;
+
+    const addN = BigInt(delta) * THIRTY_SIX * SCALE;
+    const addD = TEN * zone.speedMilli;
+    numer = numer * addD + addN * denom;
+    denom = denom * addD;
+    const divisor = gcd(numer, denom);
+    numer /= divisor;
+    denom /= divisor;
+
+    if (thousandths <= zone.endThousandths) break;
+  }
+
+  return divRound(numer, denom);
+}
+
+function zoneAt(thousandths: number, zones: ResolvedSegment[]): number {
+  for (let index = 0; index < zones.length; index++) {
+    const zone = zones[index];
+    if (thousandths <= zone.startThousandths) continue;
+    if (thousandths < zone.endThousandths || thousandths === zone.endThousandths) return index;
+  }
+  return -1;
+}
+
+/** Prefer a cut 5 km after the start. Otherwise cut near the middle, on a tenth when that fits. */
+function suggestSplitThousandths(start: number, end: number): number | null {
+  if (end - start < 2) return null;
+
+  const preferred = start + 5000;
+  if (preferred < end) return preferred;
+
+  const mid = start + Math.floor((end - start) / 2);
+  const rounded = Math.round(mid / 100) * 100;
+  if (rounded > start && rounded < end) return rounded;
+  if (mid > start && mid < end) return mid;
+  return null;
+}
+
+function gcd(a: bigint, b: bigint): bigint {
+  let x = a < ZERO ? -a : a;
+  let y = b < ZERO ? -b : b;
+  while (y !== ZERO) {
+    const remainder = x % y;
+    x = y;
+    y = remainder;
+  }
+  return x === ZERO ? ONE : x;
 }
 
 export function formatClock(totalSeconds: number | bigint): string {
@@ -115,7 +407,7 @@ function toMilli(value: number): Milli {
   return BigInt(Math.round(value * Number(SCALE)));
 }
 
-function formatMilli(value: Milli): string {
+export function formatMilli(value: Milli): string {
   const negative = value < ZERO;
   const abs = negative ? -value : value;
   const whole = abs / SCALE;
