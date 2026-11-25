@@ -128,7 +128,7 @@ export function RegulIosHint({ install, className }: { install: RegulInstallStat
 
   return (
     <p className={className ?? "mt-4 max-w-[280px] text-center text-sm font-medium text-slate-600"}>
-      Hors ligne, touchez Partager, puis Sur l'écran d'accueil.{" "}
+      {"Hors ligne, touchez Partager, puis Sur l'écran d'accueil. "}
       <button type="button" onClick={install.dismissIos} className="font-semibold text-slate-900 underline">
         OK
       </button>
